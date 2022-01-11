@@ -1,0 +1,13 @@
+doctype html 
+html(lang="en")
+    include ../includes/head.pug
+    block body
+        body
+            block aside
+                include ../includes/aside.pug
+            main.main-wrap
+                include ../includes/main-header-navbar.pug
+                include ../includes/message.pug
+                block main_content
+    include ../includes/foot.pug
+    block scriptjs

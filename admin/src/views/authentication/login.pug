@@ -1,0 +1,32 @@
+extends ../layouts/default.pug
+
+block body
+    main
+        header.main-header.navbar
+            .col-brand
+                a.brand-wrap(href='/')
+                    img.logo(src='/images/logo.svg' height='46' alt='Ecommerce dashboard template')
+            .col-nav
+                button.btn.btn-icon.btn-mobile.me-auto(data-trigger='#offcanvas_aside')
+                    i.md-28.material-icons.md-menu
+                ul.nav
+                    li.nav-item
+                        a.nav-link.btn-icon(onclick='darkmode(this)' title='Dark mode' href='#')
+                            i.material-icons.md-nights_stay
+        section.content-main
+            .card.shadow.mx-auto(style='max-width: 380px; margin-top: 100px')
+                .card-body
+                    h4.card-title.mb-4 Đăng nhập
+                    if loginError
+                        p.text-danger=loginError                      
+                    form(action='/auth/login' method="POST")
+                        .mb-3
+                            input.form-control(placeholder='Email' name="email" type='text')
+                        .mb-3
+                            input.form-control(placeholder='Mật khẩu' name="password" type='password')
+                        .mb-4
+                            button.btn.btn-primary.w-100(type='submit') Đăng nhập
+                    p.text-center.mb-4 Chưa có tài khoản? 
+                        a(href="/auth/register") Đăng ký
+
+

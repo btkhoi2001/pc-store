@@ -1,0 +1,17 @@
+extends ../layouts/default.pug
+
+block main
+    .breadcrumb-area
+        .container
+            .breadcrumb-content
+                ul
+                    li
+                        a(href='/') Trang chủ
+                    li.active Đăng ký - Đăng nhập
+    .page-section.mb-60
+        .container
+            .row
+                .col-sm-12.col-md-12.col-xs-12.col-lg-6.mb-30
+                    include ./login
+                .col-sm-12.col-md-12.col-lg-6.col-xs-12
+                    include ./register

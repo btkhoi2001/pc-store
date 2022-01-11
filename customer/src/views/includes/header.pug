@@ -1,0 +1,37 @@
+header
+    .header-middle.pl-sm-0.pr-sm-0.pl-xs-0.pr-xs-0
+        .container
+            .row
+                .col-lg-3
+                    .logo.pb-sm-30.pb-xs-30
+                        a(href='/')
+                            img(src='/images/menu/logo/1.jpg' alt='')
+                .col-lg-9.pl-0.ml-sm-15.ml-xs-15
+                    form.hm-searchbox(action='#')
+                        input(type='text' placeholder='Nhập từ khóa cần tìm')
+                        button.li-btn(type='submit')
+                            i.fa.fa-search
+                    include ./menu-right
+    .header-bottom.header-sticky.d-none.d-lg-block
+        .container
+            .row
+                .col-lg-12
+                    .hb-menu.hb-menu-2.d-xl-block
+                        nav
+                            ul
+                                li.hb-info.f-right.p-0.d-sm-none.d-lg-block
+                                    if user 
+                                        .ht-setting-trigger
+                                            span= user.fullName 
+                                        ul.setting.ht-setting 
+                                            li 
+                                                a(href="/user") Tài khoản của tôi
+                                            li
+                                                a(href="/auth/logout") Đăng xuất
+                                    else 
+                                        a(href='/auth')
+                                            span Đăng ký - Đăng nhập
+    .mobile-menu-area.d-lg-none.d-xl-none.col-12
+        .container
+            .row
+                .mobile-menu

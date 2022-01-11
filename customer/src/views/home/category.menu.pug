@@ -1,0 +1,326 @@
+//- -
+//-     const categories = [
+//-         {
+//-             category: "Linh kiện",
+//-             lists: [
+//-                 {
+//-                     type: "Vi xử lý",
+//-                     filters: [
+//-                         "Intel Processor",
+//-                         "AMD Processor",
+//-                         "Server Processor"
+//-                     ]
+//-                 },
+//-                 {
+//-                     type: "Tản nhiệt",
+//-                     filters: [
+//-                         "Air Cooling",
+//-                         "Water Cooling",
+//-                         "Case Fan",
+//-                         "Thermal Grease"
+//-                     ]
+//-                 },
+//-                 {
+//-                     type: "Bo mạch chủ",
+//-                     filters: [
+//-                         "AMD Mainboard",
+//-                         "Intel Mainboard",
+//-                         "Server Mainboard"
+//-                     ]
+//-                 }
+//-                 {
+//-                     type: "Lưu trữ",
+//-                     filters: [
+//-                         "HDD - Ổ đĩa cứng",
+//-                         "SSD - Ổ cứng thể rắn"
+//-                     ]
+//-                 }
+//-             ]
+//-         }
+//-     ]
+
+//- .category-menu
+//-     .category-heading
+//-         h2.categories-toggle
+//-             span Danh mục sản phẩm
+//-     #cate-toggle.category-menu-list
+//-         ul
+//-             each category in categories
+//-                 li.right-menu 
+//-                     a(href='/')= category.category
+//-                     ul.cat-mega-menu
+//-                         each list in category.lists
+//-                             li.right-menu.cat-mega-title
+//-                                 a(href='/')= list.type
+//-                                 ul
+//-                                     each filter in list.filters
+//-                                         li 
+//-                                             a(href='/')= filter
+
+.category-menu
+    .category-heading
+        h2.categories-toggle
+            span Danh mục sản phẩm
+    #cate-toggle.category-menu-list
+        ul
+            li.right-menu
+                a(href='#') Linh kiện
+                ul.cat-mega-menu
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') Vi xử lý
+                        ul
+                            li
+                                a(href='category/man-hinh') Intel Processor
+                            li
+                                a(href='category/man-hinh') AMD Processor
+                            li
+                                a(href='category/man-hinh') Server Processor
+                        a(href='category/man-hinh') Tản nhiệt
+                        ul
+                            li
+                                a(href='category/man-hinh') Air Cooling
+                            li
+                                a(href='category/man-hinh') Water Cooling
+                            li
+                                a(href='category/man-hinh') Case Fan
+                            li
+                                a(href='category/man-hinh') Thermal Grease
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') Bo mạch chủ
+                        ul
+                            li
+                                a(href='category/man-hinh') AMD Mainboard
+                            li
+                                a(href='category/man-hinh') Intel Mainboard
+                            li
+                                a(href='category/man-hinh') Server Mainboard
+                        a(href='category/man-hinh') L&#x1B0;u tr&#x1EEF;
+                        ul
+                            li
+                               a(href='category/man-hinh') HDD - Ổ đĩa cứng
+                            li
+                               a(href='category/man-hinh') SSD - Ổ cứng thể rắn
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') Card đồ họa
+                        ul
+                            li
+                                a(href='category/man-hinh') AMD Graphics Card
+                            li
+                                a(href='category/man-hinh') Nvidia Graphics Card
+                        a(href='category/man-hinh') Bộ nhớ
+                        ul
+                            li
+                                a(href='category/man-hinh') Desktop memory
+                            li
+                                a(href='category/man-hinh') Laptop Memory
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') Vỏ máy tính
+                        a(href='category/man-hinh') Nguồn
+                        a(href='category/man-hinh') Card âm thanh
+            li.right-menu
+                a(href='category/man-hinh') Màn hình
+                ul.cat-mega-menu
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') Thương hiệu
+                        ul
+                            li
+                                a(href='category/man-hinh') ASUS
+                            li
+                                a(href='category/man-hinh') Acer
+                            li
+                                a(href='category/man-hinh') BenQ
+                            li
+                                a(href='category/man-hinh') Dell
+                            li
+                                a(href='category/man-hinh') GIGABYTE
+                            li
+                                a(href='category/man-hinh') LG
+                            li
+                                a(href='category/man-hinh') MSI
+                            li
+                                a(href='category/man-hinh') Samsung
+                            li
+                                a(href='category/man-hinh') ViewSonic
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') Giá tiền
+                        ul
+                            li
+                                a(href='category/man-hinh') Dưới 5 triệu
+                            li
+                                a(href='category/man-hinh') 5 triệu - 10 triệu
+                            li
+                                a(href='category/man-hinh') 10 triệu - 15 triệu
+                            li
+                                a(href='category/man-hinh') 15 triệu - 20 triệu
+                            li
+                                a(href='category/man-hinh') Trên 20 triệu
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') &Dstrok;&#x1ED9; ph&acirc;n giải
+                        ul
+                            li
+                                a(href='category/man-hinh') Full HD 1080p
+                            li
+                                a(href='category/man-hinh') 2K 1440p
+                            li
+                                a(href='category/man-hinh') UHD 4K
+            li.right-menu
+                a(href='category/man-hinh') Bàn ph&iacute;m
+                ul.cat-mega-menu.cat-mega-menu-2
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') Th&#x1B0;&#x1A1;ng hi&#x1EC7;u
+                        ul
+                            li
+                                a(href='category/man-hinh') Akko
+                            li
+                                a(href='category/man-hinh') Leopold
+                            li
+                                a(href='category/man-hinh') Keychron
+                            li
+                                a(href='category/man-hinh') CORSAIR
+                            li
+                                a(href='category/man-hinh') Ducky
+                            li
+                                a(href='category/man-hinh') Filco
+                            li
+                                a(href='category/man-hinh') E-Dra
+                            li
+                                a(href='category/man-hinh') SteelSeries
+                            li
+                                a(href='category/man-hinh') Logitech
+                            li
+                                a(href='category/man-hinh') Razer
+                            li
+                                a(href='category/man-hinh') Ikbc
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') Giá ti&#x1EC1;n
+                        ul
+                            li
+                                a(href='category/man-hinh') D&#x1B0;&#x1EDB;i 1 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') 1 tri&#x1EC7;u - 2 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') 2 tri&#x1EC7;u - 3 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') 3 tri&#x1EC7;u - 4 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') Tr&ecirc;n 4 tri&#x1EC7;u
+            li.right-menu
+                a(href='category/man-hinh') Chu&#x1ED9;t
+                ul.cat-mega-menu.cat-mega-menu-2
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') Th&#x1B0;&#x1A1;ng hi&#x1EC7;u chu&#x1ED9;t
+                        ul
+                            li
+                                a(href='category/man-hinh') ASUS
+                            li
+                                a(href='category/man-hinh') CORSAIR
+                            li
+                                a(href='category/man-hinh') Logitech
+                            li
+                                a(href='category/man-hinh') SteelSeries
+                            li
+                                a(href='category/man-hinh') Razer
+                            li
+                                a(href='category/man-hinh') Akko
+                            li
+                                a(href='category/man-hinh') E-Dra
+                            li
+                                a(href='category/man-hinh') BenQ
+                            li
+                                a(href='category/man-hinh') DareU
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') Giá ti&#x1EC1;n
+                        ul
+                            li
+                                a(href='category/man-hinh') D&#x1B0;&#x1EDB;i 500.000
+                            li
+                                a(href='category/man-hinh') 500.000 - 1 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') 1 tri&#x1EC7;u - 2 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') 2 tri&#x1EC7;u - 3 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') Tr&ecirc;n 3 tri&#x1EC7;u
+            li.right-menu
+                a(href='category/man-hinh') Tai nghe
+                ul.cat-mega-menu.cat-mega-menu-2
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') Th&#x1B0;&#x1A1;ng hi&#x1EC7;u
+                        ul
+                            li
+                                a(href='category/man-hinh') ASUS
+                            li
+                                a(href='category/man-hinh') CORSAIR
+                            li
+                                a(href='category/man-hinh') Kingston
+                            li
+                                a(href='category/man-hinh') Logitech
+                            li
+                                a(href='category/man-hinh') Razer
+                            li
+                                a(href='category/man-hinh') SteelSeries
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') Giá ti&#x1EC1;n
+                        ul
+                            li
+                                a(href='category/man-hinh') D&#x1B0;&#x1EDB;i 1 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') 1 tri&#x1EC7;u - 2 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') 2 tri&#x1EC7;u - 3 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') 3 tri&#x1EC7;u - 4 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') Tr&ecirc;n 4 tri&#x1EC7;u
+            li.right-menu
+                a(href='category/man-hinh') Loa
+                ul.cat-mega-menu.cat-mega-menu-2
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') Th&#x1B0;&#x1A1;ng hi&#x1EC7;u
+                        ul
+                            li
+                                a(href='category/man-hinh') Creative
+                            li
+                                a(href='category/man-hinh') Logitech
+                            li
+                                a(href='category/man-hinh') Razer
+                            li
+                                a(href='category/man-hinh') Audioengine
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') Giá ti&#x1EC1;n
+                        ul
+                            li
+                                a(href='category/man-hinh') D&#x1B0;&#x1EDB;i 1 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') 1 tri&#x1EC7;u - 2 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') 2 tri&#x1EC7;u - 3 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') 3 tri&#x1EC7;u - 5 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') 5 tri&#x1EC7;u - 10 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') Tr&ecirc;n 10 tri&#x1EC7;u
+            li.right-menu
+                a(href='category/man-hinh') Bàn ghế gaming
+                ul.cat-mega-menu.cat-mega-menu-2
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') Th&#x1B0;&#x1A1;ng hi&#x1EC7;u
+                        ul
+                            li
+                                a(href='category/man-hinh') ASUS
+                            li
+                                a(href='category/man-hinh') AKRacing
+                            li
+                                a(href='category/man-hinh') E-Dra
+                            li
+                                a(href='category/man-hinh') DXRacer
+                    li.right-menu.cat-mega-title
+                        a(href='category/man-hinh') Giá ti&#x1EC1;n
+                        ul
+                            li
+                                a(href='category/man-hinh') 5 tri&#x1EC7;u - 7 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') 7 tri&#x1EC7;u - 10 tri&#x1EC7;u
+                            li
+                                a(href='category/man-hinh') Tr&ecirc;n 10 tri&#x1EC7;u

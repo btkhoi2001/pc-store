@@ -1,0 +1,71 @@
+-
+    const menu = [
+        {
+            href: "/dashboard",
+            text: "Bảng điều khiển",
+            icon: "icon material-icons md-home"
+        },
+        {
+            href: "/products",
+            text: "Sản phẩm",
+            icon: "icon material-icons md-shopping_bag"
+        },
+        {
+            href: "/add-product",
+            text: "Thêm sản phẩm",
+            icon: "icon material-icons md-add_box"
+        },
+        {
+            href: "/orders",
+            text: "Đơn hàng",
+            icon: "icon material-icons md-shopping_cart"
+        },
+        {
+            href: "/users",
+            text: "Người dùng",
+            icon: "icon material-icons md-person"
+        },
+        {
+            href: "/admins",
+            text: "Quản trị viên    ",
+            icon: "icon material-icons md-people"
+        },        
+        {
+            href: "/reviews",
+            text: "Nhận xét",
+            icon: "icon material-icons md-comment"
+        }                  
+    ]
+
+aside#offcanvas_aside.navbar-aside
+    .aside-top
+        a.brand-wrap(href='index.html')
+            img.logo(src='/images/logo.svg' height='46' alt='Ecommerce dashboard template')
+        div
+            button.btn.btn-icon.btn-aside-minimize
+                i.text-muted.material-icons.md-menu_open
+    nav
+        ul.menu-aside
+            each item in menu 
+                if (title == item.text)
+                    li.menu-item.active 
+                        a.menu-link(href=item.href)
+                            i(class=item.icon)
+                            span.text= item.text
+                else 
+                    li.menu-item
+                        a.menu-link(href=item.href)
+                            i(class=item.icon)
+                            span.text= item.text
+        hr
+        ul.menu-aside
+            if (title == menu[menu.length - 1].text)
+                li.menu-item.active
+                    a.menu-link(href='/settings')
+                        i.icon.material-icons.md-settings
+                        span.text Cài đặt
+            else 
+                li.menu-item
+                    a.menu-link(href='/settings')
+                        i.icon.material-icons.md-settings
+                        span.text Cài đặt

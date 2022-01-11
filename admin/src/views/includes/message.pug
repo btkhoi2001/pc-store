@@ -1,0 +1,23 @@
+- if (typeof info != 'undefined' && info.length)
+    .fade.show.alert.alert-info.alert-dismissible.sticky-top(role="alert")
+        strong= info
+        button.close(type="button" data-dismiss="alert")
+            span(aria-hidden="true") &times;
+
+- if (typeof error != 'undefined' && error.length)
+    .fade.show.alert.alert-danger.alert-dismissible.sticky-top(role="alert")
+        strong= error
+        button.close(type="button" data-dismiss="alert")
+            span(aria-hidden="true") &times;
+
+- if (typeof success != 'undefined' && success.length)
+    .fade.show.alert.alert-success.alert-dismissible.sticky-top(role="alert")
+        strong= success
+        button.close(type="button" data-dismiss="alert")
+            span(aria-hidden="true") &times;
+
+- if (typeof warning != 'undefined' && warning.length)
+    .fade.show.alert.alert-warning.alert-dismissible.sticky-top(role="alert")
+        strong= warning
+        button.close(type="button" data-dismiss="alert")
+            span(aria-hidden="true") &times;

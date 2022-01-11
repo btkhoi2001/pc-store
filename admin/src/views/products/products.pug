@@ -1,0 +1,94 @@
+extends ../layouts/default.pug
+
+block main_content
+    - currentPage = parseInt(currentPage)
+    - totalPages = parseInt(totalPages)
+    section.content-main
+        .content-header
+            h2.content-title Sản phẩm
+        .card.mb-4
+            header.card-header
+                .row.gx-3
+                    .col-lg-4.col-md-6.me-auto
+                        input.form-control(type='text' placeholder='Tìm kiếm...' value=pattern)
+                    .col-lg-2.col-6.col-md-3
+                        select.form-select
+                            option Mặt hàng
+                            option Màn hình
+                            option Vi xử lý
+                            option Bàn phím
+                    .col-lg-2.col-6.col-md-3
+                        select.form-select
+                            option Mới thêm
+                            option Giá thấp nhất
+                            option Giá cao nhất
+            .card-body
+                .row.gx-3.row-cols-1.row-cols-sm-2.row-cols-md-3.row-cols-xl-4.row-cols-xxl-5
+                    each product in products 
+                        .col 
+                            .card.card-product-grid 
+                                a.img-wrap(href='#')
+                                    img(src=product.imageUrl alt=product.name)
+                                .info-wrap 
+                                    a.title.text-truncate(href='#')= product.name 
+                                    .price.mb-2= product.price + " VNĐ"
+                                    a.btn.btn-sm.btn-light(href=`/products/${product.id}/edit`)
+                                        i.material-icons.md-edit
+                                        | Sửa
+                                    div.btn.btn-sm.btn-outline-danger(data-id=product.id)
+                                        i.material-icons.md-delete_forever
+                                        | Xóa
+        nav.float-end.mt-4(aria-label='Page navigation')
+            ul.pagination
+                if currentPage > 1
+                    li.page-item
+                        a.page-link(href=`?page=${currentPage - 1}`) Trước
+                else 
+                    li.page-item.disabled
+                        a.page-link(href="#") Trước
+
+                if totalPages == 1
+                    li.page-item.active 
+                        a.page-link(href="#") 1
+                else if totalPages == 2
+                    if currentPage == 1
+                        li.page-item.active 
+                            a.page-link(href="#") 1
+                        li.page-item
+                            a.page-link(href=`?page=2`) 2
+                    else
+                        li.page-item
+                            a.page-link(href=`?page=1`) 1
+                        li.page-item.active 
+                            a.page-link(href="#") 2
+                else
+                    if currentPage <= 1
+                        li.page-item.active 
+                            a.page-link(href="#") 1
+                        li.page-item
+                            a.page-link(href=`?page=2`) 2
+                        li.page-item
+                            a.page-link(href=`?page=3`) 3
+                    else if currentPage >= totalPages 
+                        li.page-item
+                            a.page-link(href=`?page=${totalPages - 2}`)= totalPages - 2
+                        li.page-item
+                            a.page-link(href=`?page=${totalPages - 1}`)= totalPages - 1
+                        li.page-item.active 
+                            a.page-link(href="#")= totalPages 
+                    else
+                        li.page-item
+                            a.page-link(href=`?page=${currentPage - 1}`)= currentPage - 1
+                        li.page-item.active
+                            a.page-link(href="#")= currentPage
+                        li.page-item 
+                            a.page-link(href=`?page=${currentPage + 1}`)= currentPage + 1
+
+                if currentPage >= totalPages
+                    li.page-item.disabled
+                        a.page-link(href="#") Sau
+                else
+                    li.page-item
+                        //- a.page-link(href="#") Sau
+                        a.page-link(href=`?page=${currentPage + 1}`) Sau
+

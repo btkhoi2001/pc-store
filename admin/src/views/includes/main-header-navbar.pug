@@ -1,0 +1,16 @@
+header.main-header.navbar
+    .col-search
+    .col-nav
+        button.btn.btn-icon.btn-mobile.me-auto(data-trigger='#offcanvas_aside')
+            i.md-28.material-icons.md-menu
+        ul.nav
+            li.nav-item
+                a.nav-link.btn-icon(onclick='darkmode(this)' title='Dark mode' href='#')
+                    i.material-icons.md-nights_stay
+            if user
+                li.dropdown.nav-item
+                    a.dropdown-toggle(data-bs-toggle='dropdown' href='#')
+                        img.img-xs.rounded-circle(src='/images/people/avatar4.jpg' alt='User')
+                    .dropdown-menu.dropdown-menu-end
+                        a.dropdown-item(href='/settings') Cài đặt
+                        a.dropdown-item.text-danger(href='/auth/logout') Đăng xuất

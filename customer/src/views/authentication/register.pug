@@ -1,0 +1,21 @@
+form(action='/auth/register' method="POST")
+    .login-form
+        h4.login-title Đăng ký
+        .row
+            .col-12 
+                if (typeof registerError != 'undefined')
+                    p.text-danger=registerError        
+            .col-md-12.mb-20
+                label Họ và tên
+                input.mb-0(type='text' name="name")
+            .col-md-12.mb-20
+                label Email
+                input.mb-0(type='email' name="email")
+            .col-md-6.mb-20
+                label Mật khẩu
+                input.mb-0(type='password' name="password")
+            .col-md-6.mb-20
+                label Nhập lại mật khẩu
+                input.mb-0(type='password' name="rePassword")
+            .col-12
+                button.register-button.mt-0 Đăng ký

@@ -1,0 +1,78 @@
+extends ../layouts/default.pug
+
+block main
+    .Shopping-cart-area.pt-60.pb-60
+        .container
+            .row
+                .col-12
+                    form(action='#')
+                        .table-content.table-responsive
+                            table.table
+                                thead
+                                    tr
+                                        th.li-product-remove Xo&aacute;
+                                        th.li-product-thumbnail H&igrave;nh &#x1EA3;nh
+                                        th.cart-product-name S&#x1EA3;n ph&#x1EA9;m
+                                        th.li-product-price Gi&aacute;
+                                        th.li-product-quantity Số lượng
+                                        th.li-product-subtotal &Dstrok;&#x1A1;n gi&aacute;
+                                tbody
+                                    tr
+                                        td.li-product-remove
+                                            a(href='#')
+                                                i.fa.fa-times
+                                        td.li-product-thumbnail
+                                            a(href='/products/1')
+                                                img(src='/images/product/small-size/5.jpg' alt="Li's Product Image")
+                                        td.li-product-name
+                                            a(href='/products/1') Dell UltraSharp U3421WE Curved Monitor - 34 inch, WQHD, IPS, USB-C Hub
+                                        td.li-product-price
+                                            span.amount 22.960.00 VNĐ
+                                        td.quantity
+                                            label S&oacute; l&#x1B0;&#x1EE3;ng
+                                            .cart-plus-minus
+                                                input.cart-plus-minus-box(value='1' type='text')
+                                                .dec.qtybutton
+                                                    i.fa.fa-angle-down
+                                                .inc.qtybutton
+                                                    i.fa.fa-angle-up
+                                                .dec.qtybutton
+                                                    i.fa.fa-angle-down
+                                                .inc.qtybutton
+                                                    i.fa.fa-angle-up
+                                        td.product-subtotal
+                                            span.amount 22.960.00 VNĐ
+                                    tr
+                                        td.li-product-remove
+                                            a(href='#')
+                                                i.fa.fa-times
+                                        td.li-product-thumbnail
+                                            a(href='/products/1')
+                                                img(src='/images/product/small-size/6.jpg' alt="Li's Product Image")
+                                        td.li-product-name
+                                            a(href='/products/1') BenQ ZOWIE XL2746S eSports Gaming Monitor - 27 inch, FHD, 240Hz, DyAc+
+                                        td.li-product-price
+                                            span.amount 17.890.000 VNĐ
+                                        td.quantity
+                                            label Số lượng
+                                            .cart-plus-minus
+                                                input.cart-plus-minus-box(value='1' type='text')
+                                                .dec.qtybutton
+                                                    i.fa.fa-angle-down
+                                                .inc.qtybutton
+                                                    i.fa.fa-angle-up
+                                                .dec.qtybutton
+                                                    i.fa.fa-angle-down
+                                                .inc.qtybutton
+                                                    i.fa.fa-angle-up
+                                        td.product-subtotal
+                                            span.amount 17.890.000 VNĐ
+                        .row
+                            .col-md-5.ml-auto
+                                .cart-page-total
+                                    h2 Thanh to&aacute;n
+                                    ul
+                                        li
+                                            | Th&agrave;nh ti&#x1EC1;n
+                                            span 40.850.000 VNĐ
+                                    a(href='#') Thanh to&aacute;n

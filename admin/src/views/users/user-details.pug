@@ -1,0 +1,46 @@
+extends ../layouts/default.pug
+
+block main_content
+    section.content-main
+        .content-header
+            a.btn.btn-light(href='javascript:history.back()')
+                i.material-icons.md-arrow_back
+                |  Quay lại
+        .card.mb-4
+            .card-header.bg-warning(style='height: 150px')
+            .card-body
+                .row
+                    .col-xl.col-lg.flex-grow-0(style='flex-basis: 230px')
+                        .img-thumbnail.shadow.w-100.bg-white.position-relative.text-center(style='height: 190px; width: 200px; margin-top: -120px;')
+                            img.center-xy.img-fluid(src='/images/people/avatar1.jpg' alt='Avatar')
+                    .col-xl.col-lg
+                        h3 Eleanor Pena
+                    .col-xl-4.text-md-end
+                        select.form-select.w-auto.d-inline-block
+                            option Thao t&aacute;c
+                            option Kh&oacute;a
+                            option M&#x1EDF; kh&oacute;a
+                        a.btn.btn-outline-primary(href='#')
+                            | L&#x1B0;u
+                            i.material-icons.md-launch
+                hr.my-4
+                .row.g-4
+                    .col-md-12.col-lg-4.col-xl-2
+                        article.box
+                            p.mb-0.text-muted T&#x1ED5;ng s&#x1EA3;n ph&#x1EA9;m
+                            h5.text-success 3
+                            p.mb-0.text-muted T&#x1ED5;ng thanh to&aacute;n
+                            h5.text-success.mb-0 2.380.000 VNĐ
+                    .col-sm-6.col-lg-4.col-xl-3
+                        h6 Li&ecirc;n h&#x1EC7;
+                        p
+                            | info@example.com 
+                            br
+                            | (229) 555-0109, (808) 555-0111
+                    .col-sm-6.col-lg-4.col-xl-3
+                        h6 &Dstrok;&#x1ECB;a ch&#x1EC9;
+                        p
+                            | Th&agrave;nh ph&#x1ED1;: H&#x1ED3; Ch&iacute; Minh 
+                            br
+                            | S&#x1ED1; nh&agrave;: 1 B&ugrave;i Th&#x1ECB; Xu&acirc;n
+                            br

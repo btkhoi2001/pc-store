@@ -1,0 +1,35 @@
+extends ../layouts/default.pug
+
+block main_content
+    section.content-main(style='max-width: 720px')
+        .content-header
+            h2.content-title Thêm sản phẩm
+            div
+                a.btn.btn-outline-danger(href='#') &times; Loại bỏ
+        .card.mb-4
+            .card-body
+                include ./form-add.pug
+
+block scriptjs
+    script(type="text/javascript").
+        const categoryBrands = !{JSON.stringify(data)};
+        
+        $("#category select").on("change load", () => {
+            const categoryId = $("#category select").val();
+            $("#brand select").empty();
+
+            for (const categoryBrand of categoryBrands) {
+                if (categoryBrand.categoryId == categoryId) {
+                    for (const brand of categoryBrand.brands) {
+                        $("#brand select").append(
+                            $("<option>", {
+                                value: brand.brandId,
+                                text: brand.brandContent,
+                            })
+                        );
+                    }
+
+                    break;
+                }
+            }
+        })                

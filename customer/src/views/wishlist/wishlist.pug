@@ -1,0 +1,58 @@
+extends ../layouts/default.pug
+
+block main
+    .breadcrumb-area
+        .container
+            .breadcrumb-content
+                ul
+                    li
+                        a(href='/index.html') Trang ch&#x1EE7;
+                    li.active S&#x1EA3;n ph&#x1EA9;m y&ecirc;u Thích
+    // Li's Breadcrumb Area End Here
+    // Wishlist Area Strat
+    .wishlist-area.pt-60.pb-60
+        .container
+            .row
+                .col-12
+                    form(action='#')
+                        .table-content.table-responsive
+                            table.table
+                                thead
+                                    tr
+                                        th.li-product-remove X&oacute;a
+                                        th.li-product-thumbnail H&igrave;nh &#x1EA3;nh
+                                        th.cart-product-name S&#x1EA3;n ph&#x1EA9;m
+                                        th.li-product-price Gi&aacute;
+                                        th.li-product-stock-status T&igrave;nh Tr&#x1EA1;ng
+                                        th.li-product-add-cart Th&ecirc;m v&agrave;o gi&#x1ECF; h&agrave;ng
+                                tbody
+                                    tr
+                                        td.li-product-remove
+                                            a(href='#')
+                                                i.fa.fa-times
+                                        td.li-product-thumbnail
+                                            a(href='/products/1')
+                                                img(src='/images/wishlist-thumb/1.jpg' alt='')
+                                        td.li-product-name
+                                            a(href='/products/1') Dell S2421HN Monitor - 23.8 inch, FHD, IPS, 75Hz, 2x HDMI
+                                        td.li-product-price
+                                            span.amount 4.489.000 VNĐ
+                                        td.li-product-stock-status
+                                            span.in-stock C&ograve;n h&agrave;ng
+                                        td.li-product-add-cart
+                                            a(href='#') Th&ecirc;m v&agrave;o gi&#x1ECF; h&agrave;ng
+                                    tr
+                                        td.li-product-remove
+                                            a(href='#')
+                                                i.fa.fa-times
+                                        td.li-product-thumbnail
+                                            a(href='/products/1')
+                                                img(src='/images/wishlist-thumb/3.jpg' alt='')
+                                        td.li-product-name
+                                            a(href='/products/1') Dell E2016HV Monitor - 19.5 inch, 1600&times;900
+                                        td.li-product-price
+                                            span.amount 3.350.000 VNĐ
+                                        td.li-product-stock-status
+                                            span.out-stock H&#x1EBF;t h&agrave;ng
+                                        td.li-product-add-cart
+                                            a(href='#') Th&ecirc;m v&agrave;o gi&#x1ECF; h&agrave;ng

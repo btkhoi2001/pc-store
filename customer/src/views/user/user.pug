@@ -1,0 +1,104 @@
+extends ../layouts/default.pug
+
+block main
+    .page-content-wrapper
+        .container 
+            .row
+                .col-lg-12
+                    .myaccount-page-wrapper
+                        .row 
+                            .col-lg-3
+                                .myaccount-tab-menu.nav(role='tablist')
+                                    a.active(href='#account-info' data-toggle='tab')
+                                        i.fa.fa-user
+                                        | Thông tin tài khoản
+                                    a(href='#change-password' data-toggle='tab')
+                                        i.fa.fa-key
+                                        | Đổi mật khẩu
+                                    a(href='#orders' data-toggle='tab')
+                                        i.fa.fa-cart-arrow-down
+                                        | Đơn hàng
+                                    a(href='/auth/logout')
+                                        i.fa.fa-sign-out
+                                        | Đăng xuất
+                            .col-lg-9.mt-15.mt-lg-0
+                                #myaccountContent.tab-content
+                                    #account-info.tab-pane.fade.show.active(role='tabpanel')
+                                        .myaccount-content
+                                            h3 Thông Tin Tài Khoản
+                                            .account-details-form
+                                                form(action='#')
+                                                    .single-input-item
+                                                        label(for='avatar') Ảnh đại diện
+                                                        .avatar-wrapper
+                                                            img.profile-pic(src='')
+                                                            .upload-button
+                                                                i.fa.fa-arrow-circle-up(aria-hidden='true')
+                                                            input.file-upload(type='file' accept='image/*')
+                                                    .single-input-item
+                                                        label Email
+                                                        p= user.email
+                                                    .single-input-item
+                                                        label(for='full-name') Họ Và Tên
+                                                        input#display-name(type='text' placeholder='Họ Và Tên' name="name" value=user.fullName)
+                                                    .single-input-item
+                                                        label(for='address') Địa Chỉ
+                                                        input#display-name(type='text' placeholder='Địa Chỉ' name="address" value=user.address)
+                                                    .single-input-item
+                                                        label(for='phone-number') Số Điện Thoại
+                                                        input#display-name(type='text' placeholder='Số Điện Thoại' name="phoneNumber" value=user.phoneNumber)
+                                                    .single-input-item
+                                                        button.btn Lưu
+                                    #change-password.tab-pane.fade(role='tabpanel')
+                                        .myaccount-content
+                                            h3 Đổi Mật Khẩu
+                                            .account-details-form
+                                                form(action='#')
+                                                    .single-input-item
+                                                        label.required(for='current-pwd') Mật Khẩu Hiện Tại
+                                                        input#current-pwd(type='password' placeholder='Mật Khẩu Hiện Tại' name='currentPassword')
+                                                    .row
+                                                        .col-lg-6
+                                                            .single-input-item
+                                                                label.required(for='new-pwd') Mật Khẩu Mới
+                                                                input#new-pwd(type='password' placeholder='Mật Khẩu Mới' name="newPassword")
+                                                        .col-lg-6
+                                                            .single-input-item
+                                                                label.required(for='confirm-pwd') Xác Nhận Mật Khẩu
+                                                                input#confirm-pwd(type='password' placeholder='Xác Nhận Mật Khẩu' name="confirmPassword")
+                                                    .single-input-item
+                                                        button.btn Xác nhận
+                                    #orders.tab-pane.fade(role='tabpanel')
+                                        .myaccount-content
+                                            h3 Đơn mua
+                                            .myaccount-table.table-responsive.text-center
+                                                table.table.table-bordered
+                                                    thead.thead-light
+                                                        tr
+                                                            th Order
+                                                            th Date
+                                                            th Status
+                                                            th Total
+                                                            th Action
+                                                    tbody
+                                                        tr
+                                                            td 1
+                                                            td Aug 22, 2018
+                                                            td Pending
+                                                            td $3000
+                                                            td
+                                                                a.btn(href='cart.html') View
+                                                        tr
+                                                            td 2
+                                                            td July 22, 2018
+                                                            td Approved
+                                                            td $200
+                                                            td
+                                                                a.btn(href='cart.html') View
+                                                        tr
+                                                            td 3
+                                                            td June 12, 2017
+                                                            td On Hold
+                                                            td $990
+                                                            td
+                                                                a.btn(href='cart.html') View

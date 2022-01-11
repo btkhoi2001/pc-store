@@ -1,0 +1,270 @@
+/*------------------------------------------------------------------
+[Table of contents ]
+   00.   Custom Row // helper Classes
+        0.1 -  Margin & Padding
+   01.  Theme Typography Style Start
+   02.  Start Header Section
+		2.1 - Start Header Style Three & Four
+		2.2 - Start Main Menu Area
+   03.  Start Products Area
+   04.  Start Popular Categories
+   05.  Start Slider Area // index2.html
+   06.  Start Products Area // index2.html
+   07.  Home Sidebar
+   08.  Start Sale Feature Products index4.html
+   09.  Start Products Area index4.html
+   10.  Start Shop Page Content
+   11.  Single Product Start
+   12.  Cart Page Content Start
+   13.  Checkout Page Content Area
+   14.  Compare Page Content Start
+   15.  404 Error Page Start
+   16.  Login & Register Start
+   17.  My Account Page Start
+   18.  Blog Content Start
+   19.  Single Blog Page Content
+   20.  Start Contact Form
+   21.  Start Footer Area
+   22.  All Elements Style Start
+        22.1 - Dropdown Style Start
+        22.2 - Quick View Modal Style
+        22.3 - Start Call To Action
+   23.  Product Style Here
+   24.  Recent Post Area Start
+   25.  Client Reviews Area Start
+   26.  Sidebar Recent Post Style // index3.html
+   27.  Start Brand Carousel Area
+   28.  Start Newsletter Area
+   29.  Start Sidebar Style
+-------------------------------------------------------------------*/
+/*== Theme Typography Style Start ==*/
+html {
+    font-size: 62.5%;
+}
+
+/* Button Style Start */
+.btn {
+    background-color: #fed700;
+    border: none;
+    color: #ffffff;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0;
+    padding: 15px 35px;
+    text-transform: uppercase;
+    outline: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    font-size: 1.4rem;
+    -webkit-transition: all 0.4s ease-out;
+    -moz-transition: all 0.4s ease-out;
+    -o-transition: all 0.4s ease-out;
+    transition: all 0.4s ease-out;
+}
+
+.btn:focus,
+.btn:active {
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    color: #fff;
+}
+
+.btn:hover {
+    background-color: #242424;
+    color: #ffffff;
+}
+
+.single-input-item {
+    margin-top: 20px;
+}
+
+.single-input-item label {
+    color: #262626;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.single-input-item input,
+.single-input-item textarea {
+    background-color: #f4f5f7;
+    border: 1px solid #c5c5c5;
+    padding: 15px 20px;
+    outline: none;
+    -webkit-transition: all 0.4s ease-out;
+    -moz-transition: all 0.4s ease-out;
+    -o-transition: all 0.4s ease-out;
+    transition: all 0.4s ease-out;
+    width: 100%;
+}
+
+.single-input-item input:active,
+.single-input-item input:focus,
+.single-input-item textarea:active,
+.single-input-item textarea:focus {
+    border-color: #fed700;
+    background-color: #fff;
+}
+
+.single-input-item button {
+    cursor: pointer;
+    -webkit-transition: all 0.4s ease-out;
+    -moz-transition: all 0.4s ease-out;
+    -o-transition: all 0.4s ease-out;
+    transition: all 0.4s ease-out;
+    padding: 15px 40px;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    margin-top: 10px;
+}
+
+@media only screen and (max-width: 479px) {
+    .single-input-item button {
+        padding: 10px 30px;
+    }
+}
+
+/*== My Account Page Start ==*/
+.myaccount-tab-menu {
+    -webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.myaccount-tab-menu a {
+    border: 1px solid #eeeeee;
+    border-bottom: none;
+    color: #555555;
+    font-weight: 600;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    display: block;
+    padding: 15px;
+    text-transform: uppercase;
+}
+
+.myaccount-tab-menu a:last-child {
+    border-bottom: 1px solid #eeeeee;
+}
+
+.myaccount-tab-menu a:hover,
+.myaccount-tab-menu a.active {
+    background-color: #fed700;
+    color: #fff;
+}
+
+.myaccount-tab-menu a i.fa {
+    font-size: 1.6rem;
+    line-height: 1.5;
+    text-align: center;
+    width: 25px;
+}
+
+.myaccount-content {
+    font-size: 1.6rem;
+    line-height: 1.5;
+    border: 1px solid #eeeeee;
+    padding: 30px;
+}
+
+.myaccount-content form {
+    margin-top: -20px;
+}
+
+@media only screen and (max-width: 575px) {
+    .myaccount-content {
+        padding: 20px 15px;
+    }
+}
+
+.myaccount-content h3 {
+    font-size: 2.2rem;
+    line-height: 1.5;
+    border-bottom: 1px dashed #eeeeee;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+
+.myaccount-table {
+    white-space: nowrap;
+    font-size: 1.5rem;
+    line-height: 1.5;
+}
+
+.myaccount-table table th,
+.myaccount-table .table th {
+    color: #262626;
+    padding: 10px;
+}
+
+.myaccount-table table td,
+.myaccount-table .table td {
+    padding: 20px 10px;
+    vertical-align: middle;
+}
+
+.myaccount-table table .btn,
+.myaccount-table .table .btn {
+    padding: 10px 20px;
+}
+
+/*== My Account Page End ==*/
+
+.avatar-wrapper {
+    position: relative;
+    height: 200px;
+    width: 200px;
+    margin: 50px auto;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 1px 1px 15px -5px black;
+    transition: all 0.3s ease;
+}
+.avatar-wrapper:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+.avatar-wrapper:hover .profile-pic {
+    opacity: 0.5;
+}
+.avatar-wrapper .profile-pic {
+    height: 100%;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+.avatar-wrapper .profile-pic:after {
+    font-family: FontAwesome;
+    content: "\f007";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    font-size: 190px;
+    background: #ecf0f1;
+    color: #34495e;
+    text-align: center;
+}
+.avatar-wrapper .upload-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+.avatar-wrapper .upload-button .fa-arrow-circle-up {
+    position: absolute;
+    font-size: 234px;
+    top: -17px;
+    left: 0;
+    text-align: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+    color: #34495e;
+}
+.avatar-wrapper .upload-button:hover .fa-arrow-circle-up {
+    opacity: 0.9;
+}

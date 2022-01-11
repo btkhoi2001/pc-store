@@ -1,0 +1,18 @@
+form(action='/auth/login' method="POST")
+    .login-form
+        h4.login-title Đăng nhập
+        .row
+            .col-12 
+                if (typeof loginError != 'undefined')
+                    p.text-danger=loginError
+            .col-md-12.col-12.mb-20
+                label Email
+                input.mb-0(type='email' name="email")
+            .col-12.mb-20
+                label Mật khẩu
+                input.mb-0(type='password' name="password")
+            .col-md-8
+            .col-md-4.mt-10.mb-20.text-left.text-md-right
+                a(href='#') Quên mật khẩu
+            .col-md-12
+                button.register-button.mt-0 Đăng nhập

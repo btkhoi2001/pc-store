@@ -1,0 +1,87 @@
+extends ../layouts/default.pug
+
+block main_content
+    section.content-main
+        .content-header
+            h2.content-title Quản trị viên
+        .card.mb-4
+            header.card-header
+                .row.gx-3
+                    .col-lg-4.col-md-6.me-auto
+                        input.form-control(type='text' placeholder='Tìm kiếm...')
+                    .col-lg-2.col-6.col-md-3
+                        select.form-select
+                            option Tình trạng
+                            option Đã kích hoạt
+                            option Chưa kích hoạt
+            .card-body
+                .table-responsive
+                    table.table.table-hover
+                        thead
+                            tr
+                                th Tên
+                                th Email
+                                th Tình trạng
+                                th Thời gian
+                                th.text-end
+                        tbody
+                            each admin in admins 
+                                tr
+                                    td(width='40%')
+                                        a.itemside(href='#')
+                                            .left
+                                                img.img-sm.img-avatar(src='/images/people/avatar3.jpg' alt='Userpic')
+                                            .info.pl-3
+                                                h6.mb-0.title= admin.fullName
+                                                small.text-muted= `ID: #${admin.id}`
+                                    td= admin.email
+                                    td
+                                        if admin.activated
+                                            span.badge.rounded-pill.alert-success Đã kích hoạt
+                                        else 
+                                            span.badge.rounded-pill.alert-danger Chưa kích hoạt
+                                    td 08.07.2020
+                                    td.text-end
+                                        a.btn.btn-light(href='users/1') Xem
+                            tr
+                                td(width='40%')
+                                    a.itemside(href='#')
+                                        .left
+                                            img.img-sm.img-avatar(src='/images/people/avatar1.jpg' alt='Userpic')
+                                        .info.pl-3
+                                            h6.mb-0.title Eleanor Pena
+                                            small.text-muted ID: #439
+                                td eleanor2020@example.com
+                                td
+                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; k&iacute;ch ho&#x1EA1;t
+                                td 08.07.2020
+                                td.text-end
+                                    a.btn.btn-light(href='users/1') Xem
+                            tr
+                                td(width='40%')
+                                    a.itemside(href='#')
+                                        .left
+                                            img.img-sm.img-avatar(src='/images/people/avatar3.jpg' alt='Userpic')
+                                        .info.pl-3
+                                            h6.mb-0.title Jonatan Ive
+                                            small.text-muted ID: #400
+                                td mrjohn@example.com
+                                td
+                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; k&iacute;ch ho&#x1EA1;t
+                                td 08.07.2020
+                                td.text-end
+                                    a.btn.btn-light(href='users/1') Xem
+                            tr
+                                td(width='40%')
+                                    a.itemside(href='#')
+                                        .left
+                                            img.img-sm.img-avatar(src='/images/people/avatar4.jpg' alt='Userpic')
+                                        .info.pl-3
+                                            h6.mb-0.title Eleanor Pena
+                                            small.text-muted ID: #439
+                                td eleanor2020@example.com
+                                td
+                                    span.badge.rounded-pill.alert-danger Ch&#x1B0;a k&iacute;ch ho&#x1EA1;t
+                                td 08.07.2020
+                                td.text-end
+                                    a.btn.btn-light(href='users/1') Xem

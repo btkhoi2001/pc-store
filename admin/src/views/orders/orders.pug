@@ -1,0 +1,268 @@
+extends ../layouts/default.pug
+
+block main_content
+    section.content-main
+        .content-header
+            h2.content-title &Dstrok;&#x1A1;n h&agrave;ng
+        .card.mb-4
+            header.card-header
+                .row.gx-3
+                    .col-lg-4.col-md-6.me-auto
+                        input.form-control(type='text' placeholder='Tìm kiếm...')
+                    .col-lg-2.col-6.col-md-3
+                        select.form-select
+                            option T&igrave;nh tr&#x1EA1;ng
+                            option &Dstrok;&atilde; giao
+                            option &Dstrok;ang x&#x1EED; l&yacute;
+                            option &Dstrok;&atilde; h&#x1EE7;y
+            .card-body
+                .table-responsive
+                    table.table.table-hover
+                        thead
+                            tr
+                                th #ID
+                                th(scope='col') T&ecirc;n
+                                th(scope='col') Email
+                                th(scope='col') T&#x1ED5;ng
+                                th(scope='col') T&igrave;nh tr&#x1EA1;ng
+                                th(scope='col') Th&#x1EDD;i gian
+                                th(scope='col')
+                        tbody
+                            tr
+                                td 0901
+                                td
+                                    b Marvin McKinney
+                                td marvin@example.com
+                                td 1.230.000 VNĐ
+                                td
+                                    span.badge.rounded-pill.alert-warning &Dstrok;ang x&#x1EED; l&yacute;
+                                td 03.12.2021
+                                td.text-end
+                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
+                                    .dropdown
+                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
+                                            i.material-icons.md-more_horiz
+                                        .dropdown-menu
+                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
+                                            a.dropdown-item.text-danger(href='#') X&oacute;a
+                            tr
+                                td 2323
+                                td
+                                    b Leslie Alexander
+                                td leslie@example.com
+                                td 1.230.000 VNĐ
+                                td
+                                    span.badge.rounded-pill.alert-warning &Dstrok;ang x&#x1EED; l&yacute;
+                                td 21.02.2021
+                                td.text-end
+                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
+                                    .dropdown
+                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
+                                            i.material-icons.md-more_horiz
+                                        .dropdown-menu
+                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
+                                            a.dropdown-item.text-danger(href='#') X&oacute;a
+                            tr
+                                td 1233
+                                td
+                                    b Esther Howard
+                                td esther@example.com
+                                td 1.230.000 VNĐ
+                                td
+                                    span.badge.rounded-pill.alert-danger &Dstrok;&atilde; h&#x1EE7;y
+                                td 03.07.2021
+                                td.text-end
+                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
+                                    .dropdown
+                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
+                                            i.material-icons.md-more_horiz
+                                        .dropdown-menu
+                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
+                                            a.dropdown-item.text-danger(href='#') X&oacute;a
+                            tr
+                                td 1233
+                                td
+                                    b Esther Howard
+                                td esther@example.com
+                                td 1.230.000 VNĐ
+                                td
+                                    span.badge.rounded-pill.alert-danger &Dstrok;&atilde; h&#x1EE7;y
+                                td 03.07.2021
+                                td.text-end
+                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
+                                    .dropdown
+                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
+                                            i.material-icons.md-more_horiz
+                                        .dropdown-menu
+                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
+                                            a.dropdown-item.text-danger(href='#') X&oacute;a
+                            tr
+                                td 2323
+                                td
+                                    b Jenny Wilson
+                                td jenny@example.com
+                                td 1.230.000 VNĐ
+                                td
+                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
+                                td 22.05.2021
+                                td.text-end
+                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
+                                    .dropdown
+                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
+                                            i.material-icons.md-more_horiz
+                                        .dropdown-menu
+                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
+                                            a.dropdown-item.text-danger(href='#') X&oacute;a
+                            tr
+                                td 2112
+                                td
+                                    b Marvin McKinney
+                                td marvin@example.com
+                                td 1.230.000 VNĐ
+                                td
+                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
+                                td 23.04.2021
+                                td.text-end
+                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
+                                    .dropdown
+                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
+                                            i.material-icons.md-more_horiz
+                                        .dropdown-menu
+                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
+                                            a.dropdown-item.text-danger(href='#') X&oacute;a
+                            tr
+                                td 7897
+                                td
+                                    b Albert Flores
+                                td albert@example.com
+                                td 1.230.000 VNĐ
+                                td
+                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
+                                td 13.03.2021
+                                td.text-end
+                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
+                                    .dropdown
+                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
+                                            i.material-icons.md-more_horiz
+                                        .dropdown-menu
+                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
+                                            a.dropdown-item.text-danger(href='#') X&oacute;a
+                            tr
+                                td 2323
+                                td
+                                    b Wade Warren
+                                td wade@example.com
+                                td 1.230.000 VNĐ
+                                td
+                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
+                                td 23.09.2021
+                                td.text-end
+                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
+                                    .dropdown
+                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
+                                            i.material-icons.md-more_horiz
+                                        .dropdown-menu
+                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
+                                            a.dropdown-item.text-danger(href='#') X&oacute;a
+                            tr
+                                td 2324
+                                td
+                                    b Jane Cooper
+                                td jane@example.com
+                                td 1.230.000 VNĐ
+                                td
+                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
+                                td 28.04.2021
+                                td.text-end
+                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
+                                    .dropdown
+                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
+                                            i.material-icons.md-more_horiz
+                                        .dropdown-menu
+                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
+                                            a.dropdown-item.text-danger(href='#') X&oacute;a
+                            tr
+                                td 2325
+                                td
+                                    b Savannah Nguyen
+                                td savannah@example.com
+                                td 1.230.000 VNĐ
+                                td
+                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
+                                td 23.03.2021
+                                td.text-end
+                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
+                                    .dropdown
+                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
+                                            i.material-icons.md-more_horiz
+                                        .dropdown-menu
+                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
+                                            a.dropdown-item.text-danger(href='#') X&oacute;a
+                            tr
+                                td 2326
+                                td
+                                    b Guy Hawkins
+                                td guy@example.com
+                                td 1.230.000 VNĐ
+                                td
+                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
+                                td 28.04.2021
+                                td.text-end
+                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
+                                    .dropdown
+                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
+                                            i.material-icons.md-more_horiz
+                                        .dropdown-menu
+                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
+                                            a.dropdown-item.text-danger(href='#') X&oacute;a
+                            tr
+                                td 2327
+                                td
+                                    b Darrell Steward
+                                td darrel@example.com
+                                td 1.230.000 VNĐ
+                                td
+                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
+                                td 14.07.2021
+                                td.text-end
+                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
+                                    .dropdown
+                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
+                                            i.material-icons.md-more_horiz
+                                        .dropdown-menu
+                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
+                                            a.dropdown-item.text-danger(href='#') X&oacute;a
+                            tr
+                                td 2328
+                                td
+                                    b Jane Cooper
+                                td jane@example.com
+                                td 1.230.000 VNĐ
+                                td
+                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
+                                td 18.03.2021
+                                td.text-end
+                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
+                                    .dropdown
+                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
+                                            i.material-icons.md-more_horiz
+                                        .dropdown-menu
+                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
+                                            a.dropdown-item.text-danger(href='#') X&oacute;a
+                            tr
+                                td 2329
+                                td
+                                    b Darlene Robertson
+                                td deriene@example.com
+                                td 1.230.000 VNĐ
+                                td
+                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
+                                td 03.07.2021
+                                td.text-end
+                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
+                                    .dropdown
+                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
+                                            i.material-icons.md-more_horiz
+                                        .dropdown-menu
+                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
+                                            a.dropdown-item.text-danger(href='#') X&oacute;a

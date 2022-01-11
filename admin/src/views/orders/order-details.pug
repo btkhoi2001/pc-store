@@ -1,0 +1,87 @@
+extends ../layouts/default.pug
+
+block main_content
+    section.content-main
+        .content-header
+            h2.content-title Chi ti&#x1EBF;t &dstrok;&#x1A1;n h&agrave;ng
+        .card
+            header.card-header
+                .row.align-items-center
+                    .col-lg-6.col-md-6
+                        span
+                            i.material-icons.md-calendar_today
+                            b Thứ 2, Ngày 4 tháng 10 năm 2021
+                        br
+                        small.text-muted Order ID: 3453012
+                    .col-lg-6.col-md-6.ms-auto.text-md-end
+                        select.form-select.d-inline-block(style='max-width: 200px')
+                            option Thay đổi trạng thái
+                            option Đã giao
+                            option Đang xử lý
+                            option Đã hủy
+                        a.btn.btn-light(href='#') Lưu
+            .card-body
+                .row.mb-5.order-info-wrap
+                    .col-md-4
+                        article.icontext.align-items-start
+                            span.icon.icon-sm.rounded-circle.bg-primary-light
+                                i.text-primary.material-icons.md-person
+                            .text
+                                h6.mb-1 Kh&aacute;ch h&agrave;ng
+                                p.mb-1
+                                    | John Alexander 
+                                    br
+                                    | alex@example.com 
+                                    br
+                                    | +998 99 22123456
+                                a(href='#') Xem profile
+                    .col-md-4
+                        article.icontext.align-items-start
+                            span.icon.icon-sm.rounded-circle.bg-primary-light
+                                i.text-primary.material-icons.md-local_shipping
+                            .text
+                                h6.mb-1 Th&ocirc;ng tin &dstrok;&#x1A1;n h&agrave;ng
+                                p.mb-1
+                                    | B&ecirc;n v&#x1EAD;n chuy&#x1EC3;n: Fargo express 
+                                    br
+                                    | Ph&#x1B0;&#x1A1;ng th&#x1EE9;c thanh to&aacute;n: card 
+                                    br
+                    .col-md-4
+                        article.icontext.align-items-start
+                            span.icon.icon-sm.rounded-circle.bg-primary-light
+                                i.text-primary.material-icons.md-place
+                            .text
+                                h6.mb-1 &Dstrok;&#x1ECB;a ch&#x1EC9; giao
+                                p.mb-1
+                                    | City: HCM City
+                                    br
+                                    | Block A, House 123, Floor 2
+                                    br
+                                    | Po Box 10000
+                .row
+                    .col-lg-8
+                        .table-responsive
+                            table.table.border.table-hover.table-lg
+                                thead
+                                    tr
+                                        th(width='40%') S&#x1EA3;n ph&#x1EA9;m
+                                        th(width='20%') Gi&aacute;
+                                        th(width='20%') Số lượng
+                                        th.text-end(width='20%') &Dstrok;&#x1A1;n gi&aacute;
+                                tbody
+                                    tr
+                                        td
+                                            a.itemside(href='#')
+                                                .left
+                                                    img.img-xs(src='/images/items/1.jpg' width='40' height='40' alt='Item')
+                                                .info
+                                                    | Dell S2421HN Monitor - 23.8 Inch, FHD, IPS, 75Hz, 2x HDMI
+                                        td $4.450.000 VNĐ
+                                        td 1
+                                        td.text-end 4.450.000 VNĐ
+                    .col-lg-4
+                        .h-25.pt-4
+                            .mb-3
+                                label Notes
+                                textarea#notes.form-control(name='notes' placeholder='Type some note')
+                            button.btn.btn-primary Ghi ch&uacute;

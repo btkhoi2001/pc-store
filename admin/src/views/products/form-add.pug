@@ -1,0 +1,44 @@
+form(method='POST' action='/add-product' enctype='multipart/form-data')
+    .mb-4
+        label.form-label(for='product_name') Tên sản phẩm
+        input#product_name.form-control(type='text', name="productName")
+    .mb-4
+        label.form-label Mô tả
+        textarea.form-control(name="description" rows='4')
+    .row.gx-2 
+        label.form-label Hình ảnh
+        - for (let i = 1; i <= 4; i++) {
+            .col-sm-3 
+                .center 
+                    .form-input 
+                        .preview 
+                            img
+                        label(for=`file-ip${i}`) Upload 
+                        input(id=`file-ip${i}` type="file" name="images" accept="image/*" onchange="showPreview(event);")
+        - }
+    .row.gx-2
+        #category.col-sm-6.mb-3
+            label.form-label Loại hàng
+            select.form-select(name="category")
+                each categoryBrand in categoryBrands
+                    option(value=categoryBrand.categoryId)= categoryBrand.categoryContent
+        #brand.col-sm-6.mb-3
+            label.form-label Thương hiệu
+            select.form-select(name="brand")
+                each brand in categoryBrands[0].brands
+                    option(value=brand.brandId)= brand.brandContent
+    #specifications.mb-4
+        label.form-label Thông số kỹ thuật
+    .mb-4
+        span#add-button.btn.btn-light
+            i.material-icons.md-plus
+            | Thêm
+    .mb-4
+        label.form-label Giá
+        .row.gx-2
+            .col-4
+                input.form-control(name="price" placeholder='VNĐ' type='text')
+    label.form-check.mb-4
+        input.form-check-input(type='checkbox' value='true' name="published")
+        span.form-check-label Hiển thị lên website
+    button#add-product.btn.btn-primary(type="submit") Xác nhận
