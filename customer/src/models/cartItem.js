@@ -28,7 +28,13 @@ const CartItem = sequelize.define(
                 key: "id",
             },
         },
-        quantity: DataTypes.INTEGER,
+        quantity: {
+            type: DataTypes.INTEGER,
+            defaultValue: 1,
+            validate: {
+                min: 1,
+            },
+        },
     },
     {
         tableName: "cart_item",

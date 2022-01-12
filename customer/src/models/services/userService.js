@@ -1,6 +1,7 @@
 import pkg from "sequelize";
 import sequelize from "../../config/database/index.js";
 import User from "../user.js";
+import Cart from "../cart.js";
 
 const { QueryTypes } = pkg;
 
@@ -8,7 +9,7 @@ export const getUser = async (contextObject) => {
     const { email } = contextObject;
 
     const user = await sequelize.query(
-        `SELECT fullName, phoneNumber, address, email, password, avatarUrl, activated, blocked
+        `SELECT id, fullName, phoneNumber, address, email, password, avatarUrl, activated, blocked
         FROM user
         WHERE email = ?`,
         { replacements: [email], type: QueryTypes.SELECT }
@@ -24,6 +25,10 @@ export const registerUser = async (contextObject) => {
         fullName: name,
         email,
         password,
+    });
+
+    await Cart.create({
+        userId: newUser.id,
     });
 
     return { newUser };

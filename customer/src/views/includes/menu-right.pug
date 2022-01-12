@@ -7,35 +7,24 @@
         li.hm-minicart
             .hm-minicart-trigger
                 span.item-icon
-                span.item-text
-                    | 18.540.000 VNĐ;
-                    span.cart-item-count 2
+                span.item-text= `${cart.total} VNĐ`
+                    span.cart-item-count= cart.quantity
             span
             .minicart
                 ul.minicart-product-list
-                    li
-                        a.minicart-product-image(href='/products/1')
-                            img(src='/images/product/small-size/3.jpg' alt='cart products')
-                        .minicart-product-details
-                            h6
-                                a(href='/products/1') Dell E2016HV Monitor - 19.5 inch, 1600,900
-                            span 3.350.000 VNĐ; x 1
-                        button.close
-                            i.fa.fa-close
-                    li
-                        a.minicart-product-image(href='/products/1')
-                            img(src='/images/product/small-size/4.jpg' alt='cart products')
-                        .minicart-product-details
-                            h6
-                                a(href='/products/1') Dell Ultrasharp U2720Q Monitor - 27 inch, 4K UHD, IPS, 10-bit, USB-C
-                            span 15.190.000 VNĐ; x 1
-                        button.close
-                            i.fa.fa-close
+                    each item in cart.items 
+                        li 
+                            a.minicart-product-image(href=`/products/${item.slug}`)
+                                img(src=item.imageUrl alt=item.name)
+                            .minicart-product-details 
+                                h6 
+                                    a(href=`/products/${item.slug}`)= item.name 
+                                span= `${item.price} x ${item.quantity}`
                 p.minicart-total
-                    | T&#x1ED4;NG: 
-                    span 18.540.000 VNĐ;
+                    | TỔNG: 
+                    span= `${cart.total} VNĐ`
                 .minicart-button
                     a.li-button.li-button-dark.li-button-fullwidth.li-button-sm(href='/cart')
-                        span Xem gi&#x1ECF; hàng
+                        span Xem giỏ hàng
                     a.li-button.li-button-fullwidth.li-button-sm(href='/checkout')
                         span Thanh toán

@@ -4,10 +4,12 @@ import * as path from "path";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { passport } from "./middlewares/auth.js";
+import { sessionHandler } from "./middlewares/sessionHandler.js";
 import flash from "connect-flash";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import router from "./routes/routes.js";
+import api from "./api/api.js";
 
 dotenv.config();
 
@@ -31,6 +33,7 @@ app.use(
         secret: "secretString",
         resave: false,
         saveUninitialized: false,
+        cookie: { maxAge: 60000 },
     })
 );
 app.use(flash());
@@ -40,6 +43,8 @@ app.use((req, res, next) => {
     res.locals.user = req.user;
     next();
 });
+app.use(sessionHandler);
+app.use("/api", api);
 app.use(router);
 
 export default app;

@@ -1,6 +1,6 @@
 import pkg from "sequelize";
 import sequelize from "../config/database/index.js";
-import User from "./user.js";
+import Cart from "./Cart.js";
 
 const { DataTypes } = pkg;
 
@@ -8,8 +8,8 @@ const GuestCart = sequelize.define(
     "guest_cart",
     {
         id: {
-            type: DataTypes.STRING,
-            unique: true,   
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
         cartId: {
