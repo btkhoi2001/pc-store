@@ -25,15 +25,15 @@ block main
                                 tbody
                                     each item in wishlist
                                         tr(id=item.id) 
-                                            td.li-product-remove 
+                                            td.li-product-remove.wishlist 
                                                 a(href="javascript:;")
                                                     i.fa.fa-times 
-                                            td.li-product-thumbnail 
+                                            td.li-product-thumbnail.wishlist 
                                                 a(href=`/product/${item.slug}`)
                                                     img(src=item.imageUrl)
-                                            td.li-product-name 
+                                            td.li-product-name.wishlist
                                                 a(href=`/product/${item.slug}`)= item.name 
-                                            td.li-product-price 
+                                            td.li-product-price.wishlist
                                                 span.amount= `${item.price} VNĐ`
-                                            td.li-product-add-cart 
+                                            td.li-product-add-cart.wishlist
                                                 a(href="javascript:;" onclick=`addItemToCart(${item.id});`) Thêm vào giỏ hàng

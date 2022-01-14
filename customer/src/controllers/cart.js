@@ -1,5 +1,14 @@
-import { addItemToCart } from "../models/services/cartItemService.js";
+import {
+    addItemToCart,
+    deleteItemFromCart,
+} from "../models/services/cartItemService.js";
 import { getCart, getCartId } from "../models/services/cartService.js";
+
+export const show = async (req, res) => {
+    res.render("./cart/cart", {
+        title: "Giỏ hàng",
+    });
+};
 
 export const getCartAPI = async (req, res) => {
     let cartId;
@@ -33,6 +42,18 @@ export const addItemToCartAPI = async (req, res) => {
         else return res.status(404);
 
         await addItemToCart({ productId, quantity, cartId });
+
+        res.status(200).json({});
+    } catch (error) {
+        res.status(500).json({});
+    }
+};
+
+export const deleteItemFromCartAPI = async (req, res) => {
+    const { productId } = req.body;
+
+    try {
+        await deleteItemFromCart({ productId, cartId: res.locals.cart.id });
 
         res.status(200).json({});
     } catch (error) {

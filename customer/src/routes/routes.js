@@ -4,6 +4,7 @@ import productRouter from "./product.js";
 import authRouter from "./auth.js";
 import userRouter from "./user.js";
 import wishlistRouter from "./wishlist.js";
+import cartRouter from "./cart.js";
 import { show } from "../controllers/home.js";
 
 const router = express.Router();
@@ -14,10 +15,7 @@ router.use("/category", categoryRouter);
 router.use("/product", productRouter);
 router.use("/auth", authRouter);
 router.use("/user", userRouter);
-
-router.get("/cart", (req, res) => {
-    res.render("./cart/cart");
-});
+router.use("/cart", cartRouter);
 
 router.get("/checkout", (req, res) => {
     res.render("./checkout/checkout");

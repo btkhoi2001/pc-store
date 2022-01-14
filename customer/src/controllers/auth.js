@@ -3,6 +3,7 @@ import { getUser, registerUser } from "../models/services/userService.js";
 
 export const show = async (req, res) => {
     res.render("./authentication/auth", {
+        title: "Đăng nhập",
         loginError: req.flash("error"),
         registerError: req.flash("registerError"),
     });

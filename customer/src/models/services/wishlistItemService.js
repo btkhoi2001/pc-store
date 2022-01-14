@@ -41,7 +41,5 @@ export const deleteItemFromWishlist = async (contextObject) => {
         },
     });
 
-    console.log(productId, wishlist[0].id);
-
     return { deletedItem };
 };

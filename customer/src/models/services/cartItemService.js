@@ -25,3 +25,18 @@ export const addItemToCart = async (contextObject) => {
 
     return { newCartItem };
 };
+
+export const deleteItemFromCart = async (contextObject) => {
+    const { productId, cartId } = contextObject;
+
+    const deletedItem = await CartItem.destroy({
+        where: {
+            productId,
+            cartId,
+        },
+    });
+
+    console.log(productId, cartId);
+
+    return { deletedItem };
+};

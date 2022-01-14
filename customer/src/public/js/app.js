@@ -98,7 +98,9 @@ function updateCart() {
         dataType: "json",
         success: function (data) {
             const { cart } = data.cart;
+            console.log("cart " + cart.total);
 
+            $(".cart-page-total ul li span").text(`${cart.total} VNĐ`);
             $("span.item-text").text(`${cart.total} VNĐ`);
             $("span.item-text").append(
                 `<span class="cart-item-count">${cart.quantity}</span>`
@@ -191,6 +193,146 @@ function updateQuickView(productId) {
     });
 }
 
+function deleteItemFromCart(productId) {
+    $.ajax({
+        type: "DELETE",
+        contentType: "application/json",
+        url: "api/cart",
+        data: JSON.stringify({ productId }),
+        dataType: "json",
+        success: function () {
+            updateCart();
+        },
+    });
+}
+
+function updateCartPage() {
+    $.ajax({
+        type: "GET",
+        url: "/api/cart",
+        dataType: "json",
+        success: function (data) {
+            const { cart } = data.cart;
+
+            console.log("cartPage " + cart.total);
+            $(".cart-page-total ul li span").text(`${cart.total} VNĐ`);
+        },
+    });
+}
+
+$("td.li-product-remove.cart").click((event) => {
+    const productId = $(event.target).closest("tr").attr("id");
+
+    $(event.target).closest("tr").remove();
+
+    deleteItemFromCart(productId);
+});
+
+$(".inc.qtybutton").click((event) => {
+    const productId = $(event.target).closest("tr").attr("id");
+    const quantity = $(event.target)
+        .closest("tr")
+        .find("input.cart-plus-minus-box")
+        .val();
+
+    let price = $(event.target)
+        .closest("tr")
+        .find("td.li-product-price.cart span.amount")
+        .text();
+
+    price = price.substring(0, price.length - 4);
+    price = price.replaceAll(".", "");
+
+    let total = price * quantity;
+    total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    $(event.target)
+        .closest("tr")
+        .find("td.product-subtotal span.amount")
+        .text(`${total} VNĐ`);
+
+    addItemToCart(productId, 1);
+
+    $(event.target)
+        .closest("tr")
+        .find("input.cart-plus-minus-box")
+        .prop("defaultValue", quantity);
+});
+
+$(".dec.qtybutton").click((event) => {
+    const prev = $(event.target)
+        .closest("tr")
+        .find("input.cart-plus-minus-box")
+        .prop("defaultValue");
+
+    if (prev == 1) return;
+
+    const productId = $(event.target).closest("tr").attr("id");
+    const quantity = $(event.target)
+        .closest("tr")
+        .find("input.cart-plus-minus-box")
+        .val();
+
+    let price = $(event.target)
+        .closest("tr")
+        .find("td.li-product-price.cart span.amount")
+        .text();
+
+    price = price.substring(0, price.length - 4);
+    price = price.replaceAll(".", "");
+
+    let total = price * quantity;
+    total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    $(event.target)
+        .closest("tr")
+        .find("td.product-subtotal span.amount")
+        .text(`${total} VNĐ`);
+
+    addItemToCart(productId, -1);
+
+    $(event.target)
+        .closest("tr")
+        .find("input.cart-plus-minus-box")
+        .prop("defaultValue", quantity);
+});
+
+$("input.cart-plus-minus-box").change((event) => {
+    const prev = $(event.target)
+        .closest("tr")
+        .find("input.cart-plus-minus-box")
+        .prop("defaultValue");
+
+    const productId = $(event.target).closest("tr").attr("id");
+    const quantity = $(event.target)
+        .closest("tr")
+        .find("input.cart-plus-minus-box")
+        .val();
+
+    let price = $(event.target)
+        .closest("tr")
+        .find("td.li-product-price.cart span.amount")
+        .text();
+
+    price = price.substring(0, price.length - 4);
+    price = price.replaceAll(".", "");
+
+    let total = price * quantity;
+    total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    $(event.target)
+        .closest("tr")
+        .find("td.product-subtotal span.amount")
+        .text(`${total} VNĐ`);
+
+    addItemToCart(productId, quantity - prev);
+
+    $(event.target)
+        .closest("tr")
+        .find("input.cart-plus-minus-box")
+        .prop("defaultValue", quantity);
+});
+
 $("button.add-to-cart").click((event) => {
     event.preventDefault();
 
@@ -256,7 +398,7 @@ function deleteItemFromWishlist(productId) {
     });
 }
 
-$("td.li-product-remove").click((event) => {
+$("td.li-product-remove.wishlist").click((event) => {
     const productId = $(event.target).closest("tr").attr("id");
 
     $(event.target).closest("tr").remove();
