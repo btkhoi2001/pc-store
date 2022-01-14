@@ -100,7 +100,9 @@ function updateCart() {
             const { cart } = data.cart;
 
             $("span.item-text").text(`${cart.total} VNĐ`);
-            $("span.cart-item-count").text(cart.quantity);
+            $("span.item-text").append(
+                `<span class="cart-item-count">${cart.quantity}</span>`
+            );
             $(".minicart-total span").text(`${cart.total} VNĐ`);
             $("ul.minicart-product-list").empty();
 
@@ -240,3 +242,23 @@ function addItemToWishlist(productId) {
         },
     });
 }
+
+function deleteItemFromWishlist(productId) {
+    $.ajax({
+        type: "DELETE",
+        contentType: "application/json",
+        url: "api/wishlist",
+        data: JSON.stringify({ productId }),
+        dataType: "json",
+        success: function () {
+            updateWishlist();
+        },
+    });
+}
+
+$("td.li-product-remove").click((event) => {
+    const productId = $(event.target).closest("tr").attr("id");
+
+    $(event.target).closest("tr").remove();
+    deleteItemFromWishlist(productId);
+});

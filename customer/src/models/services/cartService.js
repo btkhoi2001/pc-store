@@ -8,7 +8,7 @@ export const getCart = async (contextObject) => {
     const cart = {};
 
     cart.items = await sequelize.query(
-        `SELECT product.slug, product.name, product.price, cart_item.id, cart_item.quantity, product_image.imageUrl
+        `SELECT product.slug, product.name, product.price, cart_item.id, cart_item.quantity, product_image.imageUrl, cart_item.quantity * product.price AS 'total'
         FROM cart JOIN cart_item ON cart.id = cart_item.cartId JOIN product ON cart_item.productId = product.id LEFT JOIN product_image ON product.id = product_image.productId
         WHERE (cart.id = ? OR cart.userId = ?) AND (product_image.numberOrder = 1 OR 1)`,
         { replacements: [cartId, userId], type: QueryTypes.SELECT }
@@ -18,12 +18,15 @@ export const getCart = async (contextObject) => {
     cart.quantity = 0;
 
     for (const item of cart.items) {
-        cart.total += item.price * item.quantity;
+        cart.total += item.total;
         cart.quantity += item.quantity;
     }
 
     cart.items.forEach((value, index, array) => {
         value.price = value.price
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        value.total = value.total
             .toString()
             .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     });

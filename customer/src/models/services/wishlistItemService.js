@@ -23,3 +23,25 @@ export const addItemToWishlist = async (contextObject) => {
 
     return { wishlistItem };
 };
+
+export const deleteItemFromWishlist = async (contextObject) => {
+    const { productId, userId } = contextObject;
+
+    const wishlist = await sequelize.query(
+        `SELECT *
+        FROM wishlist
+        WHERE userId = ?`,
+        { replacements: [userId], type: QueryTypes.SELECT }
+    );
+
+    const deletedItem = await WishlistItem.destroy({
+        where: {
+            productId,
+            wishlistId: wishlist[0].id,
+        },
+    });
+
+    console.log(productId, wishlist[0].id);
+
+    return { deletedItem };
+};

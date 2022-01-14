@@ -1,7 +1,18 @@
-import { addItemToWishlist } from "../models/services/wishlistItemService.js";
+import {
+    addItemToWishlist,
+    deleteItemFromWishlist,
+} from "../models/services/wishlistItemService.js";
 import { getWishlist } from "../models/services/wishlistService.js";
 
-export const show = async (req, res) => {};
+export const show = async (req, res) => {
+    try {
+        res.render("./wishlist/wishlist", {
+            title: "Danh sách yêu thích",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 export const getWishlistAPI = async (req, res) => {
     try {
@@ -22,5 +33,17 @@ export const addItemToWishlistAPI = async (req, res) => {
         res.status(201).json({});
     } catch (error) {
         res.status(500).json({ error });
+    }
+};
+
+export const deleteItemFromWishlistAPI = async (req, res) => {
+    const { productId } = req.body;
+
+    try {
+        await deleteItemFromWishlist({ productId, userId: req.user.id });
+
+        res.status(200).json({});
+    } catch (error) {
+        res.status(500).json({});
     }
 };
