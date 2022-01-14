@@ -3,15 +3,15 @@ import sequelize from "../../config/database/index.js";
 
 const { QueryTypes } = pkg;
 
-export const getProductImageFromProductSlug = async (contextObject) => {
-    const { productSlug } = contextObject;
+export const getProductImages = async (contextObject) => {
+    const { productSlug, productId } = contextObject;
 
     const productImages = await sequelize.query(
         `SELECT imageUrl
         FROM product_image JOIN product ON product_image.productId = product.id
-        WHERE product.slug = ?
+        WHERE product.slug = ? OR product.id = ?
         ORDER BY product_image.numberOrder ASC`,
-        { replacements: [productSlug], type: QueryTypes.SELECT }
+        { replacements: [productSlug, productId], type: QueryTypes.SELECT }
     );
 
     return { productImages };

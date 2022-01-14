@@ -28,11 +28,17 @@ const Review = sequelize.define(
                 key: "id",
             },
         },
-        rating: DataTypes.INTEGER,
+        rating: {
+            type: DataTypes.INTEGER,
+            validate: {
+                min: 1,
+                max: 5,
+            },
+        },
         content: DataTypes.TEXT,
-        published: {
+        archived: {
             type: DataTypes.BOOLEAN,
-            defaultValue: true,
+            defaultValue: false,
         },
     },
     {

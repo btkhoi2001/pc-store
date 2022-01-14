@@ -3,6 +3,7 @@ import {
     getGuestCart,
 } from "../models/services/guestCartService.js";
 import { getCart } from "../models/services/cartService.js";
+import { getWishlist } from "../models/services/wishlistService.js";
 
 export const sessionHandler = async (req, res, next) => {
     try {
@@ -14,7 +15,7 @@ export const sessionHandler = async (req, res, next) => {
 
                 if (guestCart) {
                     const { cart } = await getCart({
-                        userId: guestCart.cartId,
+                        cartId: guestCart.cartId,
                     });
 
                     res.locals.cart = cart;
@@ -24,7 +25,7 @@ export const sessionHandler = async (req, res, next) => {
             }
 
             const { newGuestCart } = await createGuestCart();
-            const { cart } = await getCart({ userId: newGuestCart.cartId });
+            const { cart } = await getCart({ cartId: newGuestCart.cartId });
 
             res.locals.cart = cart;
             req.session.guestCartId = newGuestCart.id;
@@ -33,8 +34,10 @@ export const sessionHandler = async (req, res, next) => {
         }
 
         const { cart } = await getCart({ userId: req.user.id });
-        console.log(cart);
+        const { wishlist } = await getWishlist({ userId: req.user.id });
+
         res.locals.cart = cart;
+        res.locals.wishlist = wishlist;
 
         next();
     } catch (error) {

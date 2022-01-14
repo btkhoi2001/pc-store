@@ -3,24 +3,16 @@ import categoryRouter from "./category.js";
 import productRouter from "./product.js";
 import authRouter from "./auth.js";
 import userRouter from "./user.js";
+import { show } from "../controllers/home.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.render("./home/index", { title: "Trang chủ" });
-});
+router.get("/", show);
 
 router.use("/category", categoryRouter);
 router.use("/product", productRouter);
 router.use("/auth", authRouter);
-router.use(
-    "/user",
-    (req, res, next) => {
-        if (req.isAuthenticated()) next();
-        else res.redirect("/auth");
-    },
-    userRouter
-);
+router.use("/user", userRouter);
 
 router.get("/cart", (req, res) => {
     res.render("./cart/cart");

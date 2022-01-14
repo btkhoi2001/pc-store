@@ -1227,11 +1227,17 @@ textarea:focus {
 .product-details-thumbs .sm-image img {
     width: 100%;
 }
-
+.product-details-thumbs .sm-image img {
+    width: 150px;
+    height: 150px;
+}
+.product-details-thumbs .lg-image img {
+    width: 300px;
+    height: 300px;
+}
 .product-details-thumbs .sm-image {
     cursor: pointer;
 }
-
 .product-details-view-content .product-info h2 {
     font-size: 18px;
     letter-spacing: -0.025em;
@@ -4560,20 +4566,20 @@ thead {
     width: 30px;
     border-radius: 10px;
 }
-.li-paginatoin-area {
+.li-pagination-area {
     border-top: 1px solid #e1e1e1;
 }
-.li-paginatoin-area .li-pagination-box li {
+.li-pagination-area .li-pagination-box li {
     display: inline-block;
 }
-.li-paginatoin-area .li-pagination-box li a {
+.li-pagination-area .li-pagination-box li a {
     color: #242424;
     padding: 10px;
 }
-.li-paginatoin-area .li-pagination-box li.active a {
+.li-pagination-area .li-pagination-box li.active a {
     color: #fed700;
 }
-.li-paginatoin-area .li-pagination-box li a:hover {
+.li-pagination-area .li-pagination-box li a:hover {
     color: #fed700;
 }
 /*BLog Details*/
@@ -5006,7 +5012,7 @@ span.required {
 /*----------------------------------------*/
 /* 6.11 Li's Shop Page
 /*----------------------------------------*/
-.sidebar-categores-box {
+.sidebar-categories-box {
     background: #f4f4f4;
     border: 1px solid #e1e1e1;
     border-radius: 3px;
@@ -5034,7 +5040,6 @@ span.required {
     color: #333333;
     cursor: pointer;
     font-size: 14px;
-    font-size: 0.875rem;
     line-height: 15px;
     padding: 5px;
     -webkit-transition: all 0.3s ease-in-out 0s;
@@ -5048,6 +5053,41 @@ span.required {
 }
 .btn-clear-all:hover {
     background: #242424 none repeat scroll 0 0;
+    color: #fff;
+}
+.price-range {
+    background-color: #fff;
+    outline: none;
+    margin-top: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.26);
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 14px;
+    text-transform: uppercase;
+    border-radius: 0.125rem;
+    padding: 10px 5px !important;
+    box-shadow: inset 0 1px 0 0 rgb(0 0 0 / 5%);
+}
+.price-range:focus {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.26);
+}
+.btn-submit-price {
+    margin-top: 20px !important;
+    border: none;
+    font-size: 14px;
+    color: #242424;
+    position: relative;
+    background: #fed700;
+    cursor: pointer;
+    font-weight: 500;
+    text-transform: capitalize;
+    padding: 13px 70px;
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+}
+.btn-submit-price:hover {
+    background: #000;
     color: #fff;
 }
 .category-sub-menu ul li ul {
@@ -5092,7 +5132,7 @@ span.required {
 .category-sub-menu li.has-sub.open > a::after {
     content: "\f068";
 }
-.sidebar-categores-box .filter-sub-area h5 {
+.sidebar-categories-box .filter-sub-area h5 {
     color: #2f333a;
     display: block;
     font-size: 14px;
@@ -5106,13 +5146,13 @@ span.required {
 .price-checkbox li,
 .size-checkbox li,
 .color-categoriy ul li,
-.categori-checkbox ul li {
+.category-checkbox ul li {
     margin: 8px 0;
 }
 .price-checkbox li a,
 .size-checkbox li a,
 .color-categoriy ul li a,
-.categori-checkbox ul li a {
+.category-checkbox ul li a {
     color: #363f4d;
     font-size: 16px;
     margin-left: 15px;
@@ -5120,7 +5160,7 @@ span.required {
 }
 .price-checkbox input,
 .size-checkbox input,
-.categori-checkbox input {
+.category-checkbox input {
     width: auto !important;
     height: auto !important;
 }
@@ -5267,8 +5307,8 @@ span.required {
 .category-tags > ul > li:hover a {
     color: #ffffff;
 }
-/*----- paginatoin-area  css -----*/
-.paginatoin-area {
+/*----- pagination-area  css -----*/
+.pagination-area {
     background: #ffffff none repeat scroll 0 0;
     border: 1px solid #ededed;
     border-radius: 3px;
@@ -5277,7 +5317,7 @@ span.required {
     margin: 40px 0 0;
     padding: 9px;
 }
-.paginatoin-area p {
+.pagination-area p {
     margin: 0;
 }
 .pagination-box {
@@ -5548,6 +5588,12 @@ span.required {
     margin-top: 25px;
     margin-bottom: 25px;
 }
+.product-desc {
+    white-space: pre-wrap;
+    color: #898989;
+    font-size: 14px;
+    line-height: 24px;
+}
 /*----------------------------------------*/
 /* 6.15 Single Product Group Page
 /*----------------------------------------*/
@@ -5713,6 +5759,9 @@ span.required {
 }
 .small-version {
     display: none;
+}
+.pointer:hover {
+    cursor: pointer;
 }
 /*----------------------------------------------------------------------------------------------------*/
 /*------------------------------------------> The End <-----------------------------------------------*/

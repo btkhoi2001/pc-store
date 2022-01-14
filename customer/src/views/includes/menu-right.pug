@@ -1,9 +1,10 @@
 .header-middle-right
     ul.hm-menu
-        li.hm-wishlist
-            a(href='/wishlist')
-                span.cart-item-count.wishlist-item-count 0
-                i.fa.fa-heart-o
+        if (user)
+            li.hm-wishlist
+                a(href='/wishlist')
+                    span.cart-item-count.wishlist-item-count= wishlist.length
+                    i.fa.fa-heart-o
         li.hm-minicart
             .hm-minicart-trigger
                 span.item-icon

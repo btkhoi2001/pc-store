@@ -1,5 +1,5 @@
 import express from "express";
-import { showDetail } from "../controllers/products.js";
+import { showDetail } from "../controllers/product.js";
 
 const router = express.Router({ mergeParams: true });
 

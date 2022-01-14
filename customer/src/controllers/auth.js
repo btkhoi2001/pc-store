@@ -8,6 +8,15 @@ export const show = async (req, res) => {
     });
 };
 
+export const login = async (req, res) => {
+    try {
+        req.session.guestCartId = "";
+        res.redirect("/");
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export const register = async (req, res) => {
     const { name, email, password, rePassword } = req.body;
 
@@ -53,4 +62,9 @@ export const register = async (req, res) => {
 export const logout = (req, res) => {
     req.logout();
     res.redirect("/");
+};
+
+export const loggedInAPI = (req, res) => {
+    if (req.user) res.status(200).json({});
+    else res.status(401).json({});
 };
