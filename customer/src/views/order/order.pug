@@ -23,18 +23,19 @@ block main
                                         th.li-product-quantity Số lượng
                                         th.li-product-subtotal Đơn giá
                                 tbody
-                                    tr
-                                        td.li-product-thumbnail
-                                            a(href='/products/1')
-                                                img(src='/images/wishlist-thumb/1.jpg' alt='')
-                                        td.li-product-name
-                                            a(href='/products/1') Dell S2421HN Monitor - 23.8 inch, FHD, IPS, 75Hz, 2x HDMI
-                                        td.li-product-price
-                                            span.amount 4.489.000 VNĐ
-                                        td.product-subtotal
-                                            span.amount 1
-                                        td.product-subtotal
-                                            span.amount 4.489.000 VNĐ
+                                    each item in order.items 
+                                        tr
+                                            td.li-product-thumbnail
+                                                a(href=`/product/${item.slug}`)
+                                                    img(src=item.imageUrl alt='')
+                                            td.li-product-name
+                                                a(href=`/product/${item.slug}`)= item.name
+                                            td.li-product-price
+                                                span.amount= `${item.price} VNĐ`
+                                            td.product-subtotal
+                                                span.amount= item.quantity
+                                            td.product-subtotal
+                                                span.amount= `${item.total} VNĐ`
                         .row
                             .col-md-5.ml-auto
                                 .cart-page-total
@@ -42,7 +43,7 @@ block main
                                     ul
                                         li
                                             | Tình trạng
-                                            span= `Hủy`                                    
+                                            span= order.status                       
                                         li
                                             | Thành tiền
-                                            span= `${cart.total} VNĐ`
+                                            span= `${order.total} VNĐ`
