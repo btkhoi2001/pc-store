@@ -38,3 +38,34 @@ export const registerUser = async (contextObject) => {
 
     return { newUser };
 };
+
+export const updateAccount = async (contextObject) => {
+    const {
+        userId,
+        fullName,
+        phoneNumber,
+        address,
+        avatarUrl,
+        password,
+        activated,
+    } = contextObject;
+
+    const updatedAccount = await User.update(
+        {
+            fullName,
+            phoneNumber,
+            address,
+            avatarUrl,
+            password,
+            activated,
+        },
+        {
+            where: {
+                id: userId,
+            },
+            omitNull: true,
+        }
+    );
+
+    return { updatedAccount };
+};

@@ -6,108 +6,68 @@ block main
             .breadcrumb-content
                 ul
                     li
-                        a(href='/index.html') Trang ch&#x1EE7;
-                    li.active Thanh to&aacute;n
-    // Li's Breadcrumb Area End Here
-    // Checkout Area Strat
+                        a(href='/') Trang chủ
+                    li.active Thanh toán
     .checkout-area.pt-60.pb-30
         .container
-            .row
-                .col-12
-                    .coupon-accordion
-                        // Accordion Start
-                        h3
-                            | Qu&ecirc;n &dstrok;&abreve;ng nh&#x1EAD;p? 
-                            span#showlogin B&#x1EA5;m v&agrave;o &dstrok;&acirc;y
-                        #checkout-login.coupon-content
-                            .coupon-info
-                                form(action='#')
-                                    p.form-row-first
-                                        label
-                                            | Email 
-                                            span.required *
-                                        input(type='text')
-                                    p.form-row-last
-                                        label
-                                            | M&#x1EAD;t kh&#x1EA9;u  
-                                            span.required *
-                                        input(type='text')
-                                    p.form-row
-                                        input(value='Login' type='submit')
-                                        label
-                                            input(type='checkbox')
-                                            |  Ghi nh&#x1EDB; &dstrok;&abreve;ng nh&#x1EAD;p
-                                    p.lost-password
-                                        a(href='#') Qu&ecirc;n m&#x1EAD;t kh&#x1EA9;u
-                        // Accordion End
             .row
                 .col-lg-6.col-12
                     form(action='#')
                         .checkbox-form
-                            h3 H&oacute;a &dstrok;&#x1A1;n
+                            h3 Hóa đơn
                             .row
-                                .col-md-6
-                                    .checkout-form-list
-                                        label
-                                            | H&#x1ECD; 
-                                            span.required *
-                                        input(placeholder='' type='text')
-                                .col-md-6
-                                    .checkout-form-list
-                                        label
-                                            | T&ecirc;n 
-                                            span.required *
-                                        input(placeholder='' type='text')
                                 .col-md-12
                                     .checkout-form-list
                                         label
-                                            | &Dstrok;&#x1ECB;a ch&#x1EC9; 
+                                            | Họ và tên
                                             span.required *
-                                        input(type='text')
+                                        input#fullname-checkout(type='text' value=user.fullName)
+                                .col-md-12
+                                    .checkout-form-list
+                                        label
+                                            | Địa chỉ
+                                            span.required *
+                                        input#address-checkout(type='text' value=user.address)
                                 .col-md-6
                                     .checkout-form-list
                                         label
                                             | Email 
                                             span.required *
-                                        input(placeholder='' type='email')
+                                        input#email-checkout(type='email' value=user.email)
                                 .col-md-6
                                     .checkout-form-list
                                         label
-                                            | &Dstrok;i&#x1EC7;n tho&#x1EA1;i 
+                                            | Điện thoại
                                             span.required *
-                                        input(type='text')
+                                        input#phonenumber-checkout(type='text' value=user.phoneNumber)
                             .order-notes
                                 .checkout-form-list
-                                    label Ghi ch&uacute;
+                                    label Ghi chú
                                     textarea#checkout-mess(cols='30' rows='10')
+                                .checkout-form-list
+                                    span#message-checkout                          
                 .col-lg-6.col-12
                     .your-order
-                        h3 Chi ti&#x1EBF;t &dstrok;&#x1A1;n h&agrave;ng
+                        h3 Chi tiết đơn hàng
                         .your-order-table.table-responsive
                             table.table
                                 thead
                                     tr
-                                        th.cart-product-name S&#x1EA3;n ph&#x1EA9;m
-                                        th.cart-product-total T&#x1ED5;ng
+                                        th.cart-product-name Sản phẩm
+                                        th.cart-product-total Tổng
                                 tbody
-                                    tr.cart_item
-                                        td.cart-product-name
-                                            | Dell UltraSharp U3421WE Curved Monitor - 34 Inch, WQHD, IPS, USB-C Hub
-                                            strong.product-quantity  &times; 1
-                                        td.cart-product-total
-                                            span.amount 22.960.00 VNĐ
-                                    tr.cart_item
-                                        td.cart-product-name
-                                            | BenQ ZOWIE XL2746S eSports Gaming Monitor - 27 inch, FHD, 240Hz, DyAc+
-                                            strong.product-quantity  &times; 1
-                                        td.cart-product-total
-                                            span.amount 17.890.000 VNĐ
+                                    each item in cart.items 
+                                        tr.cart-item 
+                                            td.cart-product-name= item.name 
+                                                strong.product-quantity= ` x ${item.quantity}`
+                                            td.cart-product-total 
+                                                span.amount= `${item.total} VNĐ`
                                 tfoot
                                     tr.order-total
-                                        th Th&agrave;nh ti&#x1EC1;n
+                                        th Thành tiền
                                         td
                                             strong
-                                                span.amount 40.850.000 VNĐ
+                                                span.amount= `${cart.total} VNĐ`
                         .payment-method
                             .payment-accordion
                                 #accordion
@@ -115,17 +75,17 @@ block main
                                         .card-header(id='#payment-1')
                                             h5.panel-title
                                                 a(data-toggle='collapse' data-target='#collapseOne' aria-expanded='true' aria-controls='collapseOne')
-                                                    | Thanh to&aacute;n tr&#x1EF1;c tuy&#x1EBF;n
+                                                    | Thanh toán trực tuyến
                                         #collapseOne.collapse.show(data-parent='#accordion')
                                             .card-body
-                                                p &Dstrok;ang c&#x1EAD;p nh&#x1EAD;t
+                                                p Đang cập nhật
                                     .card
                                         .card-header(id='#payment-2')
                                             h5.panel-title
                                                 a.collapsed(data-toggle='collapse' data-target='#collapseTwo' aria-expanded='false' aria-controls='collapseTwo')
-                                                    | Thanh to&aacute;n khi nh&#x1EAD;n h&agrave;ng
+                                                    | Thanh toán khi nhận hàng
                                         #collapseTwo.collapse(data-parent='#accordion')
                                             .card-body
-                                                p &Dstrok;ang c&#x1EAD;p nh&#x1EAD;t
+                                                p Đang cập nhật
                                 .order-button-payment
                                     input(value='Xác nhận' type='submit')

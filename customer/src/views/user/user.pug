@@ -31,7 +31,7 @@ block main
                                                     .single-input-item
                                                         label(for='avatar') Ảnh đại diện
                                                         .avatar-wrapper
-                                                            img.profile-pic(src='')
+                                                            img.profile-pic(src=user.avatarUrl)
                                                             .upload-button
                                                                 i.fa.fa-arrow-circle-up(aria-hidden='true')
                                                             input.file-upload(type='file' accept='image/*')
@@ -40,15 +40,26 @@ block main
                                                         p= user.email
                                                     .single-input-item
                                                         label(for='full-name') Họ Và Tên
-                                                        input#display-name(type='text' placeholder='Họ Và Tên' name="name" value=user.fullName)
+                                                        if (user.fullName !== undefined)
+                                                            input#display-name(type='text' name="name" value=user.fullName)
+                                                        else 
+                                                            input#display-name(type='text' name="name")
                                                     .single-input-item
                                                         label(for='address') Địa Chỉ
-                                                        input#display-name(type='text' placeholder='Địa Chỉ' name="address" value=user.address)
+                                                        if user.address !== undefined
+                                                            input#display-address(type='text' name="address" value=user.address)
+                                                        else 
+                                                            input#display-address(type='text' name="address")
                                                     .single-input-item
                                                         label(for='phone-number') Số Điện Thoại
-                                                        input#display-name(type='text' placeholder='Số Điện Thoại' name="phoneNumber" value=user.phoneNumber)
+                                                        if (user.phoneNumber !== undefined)
+                                                            input#display-phonenumber(type='text' name="phoneNumber" value=user.phoneNumber)
+                                                        else 
+                                                            input#display-phonenumber(type='text' name="phoneNumber")  
                                                     .single-input-item
-                                                        button.btn Lưu
+                                                        button#update-account-btn.btn Lưu
+                                                    .single-input-item 
+                                                        span#message-account
                                     #change-password.tab-pane.fade(role='tabpanel')
                                         .myaccount-content
                                             h3 Đổi Mật Khẩu
@@ -56,18 +67,20 @@ block main
                                                 form(action='#')
                                                     .single-input-item
                                                         label.required(for='current-pwd') Mật Khẩu Hiện Tại
-                                                        input#current-pwd(type='password' placeholder='Mật Khẩu Hiện Tại' name='currentPassword')
+                                                        input#current-pwd(type='password' name='currentPassword')
                                                     .row
                                                         .col-lg-6
                                                             .single-input-item
                                                                 label.required(for='new-pwd') Mật Khẩu Mới
-                                                                input#new-pwd(type='password' placeholder='Mật Khẩu Mới' name="newPassword")
+                                                                input#new-pwd(type='password' name="newPassword")
                                                         .col-lg-6
                                                             .single-input-item
                                                                 label.required(for='confirm-pwd') Xác Nhận Mật Khẩu
-                                                                input#confirm-pwd(type='password' placeholder='Xác Nhận Mật Khẩu' name="confirmPassword")
+                                                                input#confirm-pwd(type='password' name="confirmPassword")
                                                     .single-input-item
-                                                        button.btn Xác nhận
+                                                        button#change-password-btn.btn Xác nhận
+                                                    .single-input-item
+                                                        span#message-password                                                
                                     #orders.tab-pane.fade(role='tabpanel')
                                         .myaccount-content
                                             h3 Đơn mua

@@ -404,3 +404,98 @@ $("td.li-product-remove.wishlist").click((event) => {
     $(event.target).closest("tr").remove();
     deleteItemFromWishlist(productId);
 });
+
+$("#update-account-btn").click((event) => {
+    event.preventDefault();
+
+    const data = new FormData();
+
+    data.append("avatar", $("input.file-upload[type='file']").prop("files")[0]);
+    data.append("fullName", $("input#display-name").val());
+    data.append("address", $("input#display-address").val());
+    data.append("phoneNumber", $("input#display-phonenumber").val());
+
+    $.ajax({
+        type: "PUT",
+        url: "/api/user/account",
+        data,
+        dataType: "text",
+        contentType: false,
+        processData: false,
+        success: function () {
+            $("#message-account").text("Lưu thành công");
+            $("#message-account").attr("class", "success");
+
+            setTimeout(() => {
+                $("#message-account").text("");
+            }, 5000);
+        },
+    });
+});
+
+$("#change-password-btn").click((event) => {
+    event.preventDefault();
+
+    const currentPassword = $("input#current-pwd").val();
+    const newPassword = $("input#new-pwd").val();
+    const confirmPassword = $("input#confirm-pwd").val();
+
+    $.ajax({
+        type: "PUT",
+        url: "/api/user/change-password",
+        contentType: "application/json",
+        data: JSON.stringify({ currentPassword, newPassword, confirmPassword }),
+        dataType: "json",
+        success: function () {
+            $("#message-password").text("Thay đổi mật khẩu thành công");
+            $("#message-password").attr("class", "success");
+
+            setTimeout(() => {
+                $("#message-password").text("");
+            }, 5000);
+        },
+        error: function (data) {
+            const { message } = data.responseJSON;
+
+            $("#message-password").text(message);
+            $("#message-password").attr("class", "error");
+
+            setTimeout(() => {
+                $("#message-password").text("");
+            }, 5000);
+        },
+    });
+});
+
+$(".order-button-payment").click((event) => {
+    event.preventDefault();
+
+    const fullName = $("input#fullname-checkout").val();
+    const address = $("input#address-checkout").val();
+    const email = $("input#email-checkout").val();
+    const phoneNumber = $("input#phonenumber-checkout").val();
+    const note = $("textarea#checkout-mess").val();
+
+    $.ajax({
+        type: "POST",
+        url: "/api/checkout",
+        contentType: "application/json",
+        data: JSON.stringify({ fullName, address, email, phoneNumber, note }),
+        dataType: "json",
+        success: function (data) {
+            const { newOrder } = data;
+
+            window.location.replace(`/order/${newOrder.id}`);
+        },
+        error: function (data) {
+            const { message } = data.responseJSON;
+
+            $("#message-checkout").text(message);
+            $("#message-checkout").attr("class", "error");
+
+            setTimeout(() => {
+                $("#message-checkout").text("");
+            }, 5000);
+        },
+    });
+});

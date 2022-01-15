@@ -1,0 +1,48 @@
+extends ../layouts/default.pug
+
+block main
+    .breadcrumb-area
+        .container
+            .breadcrumb-content
+                ul
+                    li
+                        a(href='/') Trang chủ
+                    li.active Hóa đơn
+    .wishlist-area.pt-60.pb-60
+        .container
+            .row
+                .col-12
+                    form(action='#')
+                        .table-content.table-responsive
+                            table.table
+                                thead
+                                    tr
+                                        th.li-product-thumbnail Hình ảnh
+                                        th.cart-product-name Sản phẩm
+                                        th.li-product-price Giá
+                                        th.li-product-quantity Số lượng
+                                        th.li-product-subtotal Đơn giá
+                                tbody
+                                    tr
+                                        td.li-product-thumbnail
+                                            a(href='/products/1')
+                                                img(src='/images/wishlist-thumb/1.jpg' alt='')
+                                        td.li-product-name
+                                            a(href='/products/1') Dell S2421HN Monitor - 23.8 inch, FHD, IPS, 75Hz, 2x HDMI
+                                        td.li-product-price
+                                            span.amount 4.489.000 VNĐ
+                                        td.product-subtotal
+                                            span.amount 1
+                                        td.product-subtotal
+                                            span.amount 4.489.000 VNĐ
+                        .row
+                            .col-md-5.ml-auto
+                                .cart-page-total
+                                    h2 Thanh toán
+                                    ul
+                                        li
+                                            | Tình trạng
+                                            span= `Hủy`                                    
+                                        li
+                                            | Thành tiền
+                                            span= `${cart.total} VNĐ`

@@ -3,6 +3,8 @@ import cartAPI from "./cart.js";
 import productAPI from "./product.js";
 import authAPI from "./auth.js";
 import wishlistAPI from "./wishlist.js";
+import userAPI from "./user.js";
+import checkoutAPI from "./checkout.js";
 
 const api = express.Router();
 
@@ -10,5 +12,7 @@ api.use("/auth", authAPI);
 api.use("/cart", cartAPI);
 api.use("/product", productAPI);
 api.use("/wishlist", wishlistAPI);
+api.use("/user", userAPI);
+api.use("/checkout", checkoutAPI);
 
 export default api;

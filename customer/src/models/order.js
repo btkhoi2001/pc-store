@@ -20,12 +20,19 @@ const Order = sequelize.define(
                 key: "id",
             },
         },
-        status: DataTypes.ENUM(
-            "processing",
-            "delivering",
-            "cancelled",
-            "delivered"
-        ),
+        fullName: DataTypes.STRING(150),
+        phoneNumber: DataTypes.STRING(12),
+        address: DataTypes.STRING(150),
+        email: DataTypes.STRING(100),
+        status: {
+            type: DataTypes.ENUM(
+                "Đang xử lý",
+                "Đang giao hàng",
+                "Đã thanh toán",
+                "Đã hủy"
+            ),
+            defaultValue: "Đang xử lý",
+        },
         note: DataTypes.TEXT,
     },
     {

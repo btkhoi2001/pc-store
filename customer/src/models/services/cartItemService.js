@@ -23,6 +23,8 @@ export const addItemToCart = async (contextObject) => {
         );
     else newCartItem = await CartItem.create({ productId, quantity, cartId });
 
+    console.log(newCartItem);
+
     return { newCartItem };
 };
 
@@ -36,7 +38,17 @@ export const deleteItemFromCart = async (contextObject) => {
         },
     });
 
-    console.log(productId, cartId);
+    return { deletedItem };
+};
+
+export const emptyCart = async (contextObject) => {
+    const { cartId } = contextObject;
+
+    const deletedItem = await CartItem.destroy({
+        where: {
+            cartId,
+        },
+    });
 
     return { deletedItem };
 };
