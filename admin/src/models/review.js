@@ -1,7 +1,7 @@
 import pkg from "sequelize";
 import sequelize from "../config/database/index.js";
-import User from "./User.js";
-import Product from "./product.js";
+import User from "./user.js";
+import Product from "./Product.js";
 
 const { DataTypes } = pkg;
 
@@ -28,11 +28,17 @@ const Review = sequelize.define(
                 key: "id",
             },
         },
-        rating: DataTypes.INTEGER,
+        rating: {
+            type: DataTypes.INTEGER,
+            validate: {
+                min: 1,
+                max: 5,
+            },
+        },
         content: DataTypes.TEXT,
-        published: {
+        archived: {
             type: DataTypes.BOOLEAN,
-            defaultValue: true,
+            defaultValue: false,
         },
     },
     {

@@ -1,6 +1,6 @@
 import pkg from "sequelize";
 import sequelize from "../config/database/index.js";
-import Product from "./product.js";
+import Product from "./Product.js";
 const { DataTypes } = pkg;
 
 const ProductImage = sequelize.define(

@@ -5,13 +5,21 @@ import User from "../user.js";
 const { QueryTypes } = pkg;
 
 export const getUser = async (contextObject) => {
-    const { email } = contextObject;
+    const { email, userId } = contextObject;
 
     const user = await sequelize.query(
         `SELECT fullName, phoneNumber, address, email, password, avatarUrl, activated, blocked, admin
         FROM user
-        WHERE email = ?`,
-        { replacements: [email], type: QueryTypes.SELECT }
+        WHERE (? OR email = ?) AND (? OR id = ?)`,
+        {
+            replacements: [
+                email === undefined,
+                email,
+                userId === undefined,
+                userId,
+            ],
+            type: QueryTypes.SELECT,
+        }
     );
 
     return { user: user[0] };

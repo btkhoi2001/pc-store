@@ -1,268 +1,124 @@
 extends ../layouts/default.pug
 
 block main_content
+    - currentPage = parseInt(currentPage)
+    - totalPages = parseInt(totalPages)
     section.content-main
         .content-header
-            h2.content-title &Dstrok;&#x1A1;n h&agrave;ng
+            h2.content-title Đơn hàng
         .card.mb-4
             header.card-header
                 .row.gx-3
                     .col-lg-4.col-md-6.me-auto
-                        input.form-control(type='text' placeholder='Tìm kiếm...')
+                        if search !== undefined 
+                            input.form-control.query(value=search type='text' placeholder='Tìm kiếm...')
+                        else
+                            input.form-control.query(type='text' placeholder='Tìm kiếm...')
                     .col-lg-2.col-6.col-md-3
-                        select.form-select
-                            option T&igrave;nh tr&#x1EA1;ng
-                            option &Dstrok;&atilde; giao
-                            option &Dstrok;ang x&#x1EED; l&yacute;
-                            option &Dstrok;&atilde; h&#x1EE7;y
+                        select.form-select.query
+                            if status === undefined || status == "Tình trạng"
+                                option(selected) Tình trạng
+                            else
+                                option Tình trạng
+
+                            if status == "Đang giao hàng"
+                                option(selected) Đang giao hàng
+                            else
+                                option Đang giao hàng
+
+                            if status == "Đang xử lý"
+                                option(selected) Đang xử lý
+                            else
+                                option Đang xử lý
+
+                            if status == "Đã giao hàng"
+                                option(selected) Đã giao hàng
+                            else
+                                option Đã giao hàng
+
+                            if status == "Đã hủy"
+                                option(selected) Đã hủy
+                            else
+                                option Đã hủy
             .card-body
                 .table-responsive
                     table.table.table-hover
                         thead
                             tr
                                 th #ID
-                                th(scope='col') T&ecirc;n
+                                th(scope='col') Tên
                                 th(scope='col') Email
-                                th(scope='col') T&#x1ED5;ng
-                                th(scope='col') T&igrave;nh tr&#x1EA1;ng
-                                th(scope='col') Th&#x1EDD;i gian
+                                th(scope='col') Tổng
+                                th(scope='col') Tình trạng
+                                th(scope='col') Ngày đặt
                                 th(scope='col')
                         tbody
-                            tr
-                                td 0901
-                                td
-                                    b Marvin McKinney
-                                td marvin@example.com
-                                td 1.230.000 VNĐ
-                                td
-                                    span.badge.rounded-pill.alert-warning &Dstrok;ang x&#x1EED; l&yacute;
-                                td 03.12.2021
-                                td.text-end
-                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
-                                    .dropdown
-                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
-                                            i.material-icons.md-more_horiz
-                                        .dropdown-menu
-                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
-                                            a.dropdown-item.text-danger(href='#') X&oacute;a
-                            tr
-                                td 2323
-                                td
-                                    b Leslie Alexander
-                                td leslie@example.com
-                                td 1.230.000 VNĐ
-                                td
-                                    span.badge.rounded-pill.alert-warning &Dstrok;ang x&#x1EED; l&yacute;
-                                td 21.02.2021
-                                td.text-end
-                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
-                                    .dropdown
-                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
-                                            i.material-icons.md-more_horiz
-                                        .dropdown-menu
-                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
-                                            a.dropdown-item.text-danger(href='#') X&oacute;a
-                            tr
-                                td 1233
-                                td
-                                    b Esther Howard
-                                td esther@example.com
-                                td 1.230.000 VNĐ
-                                td
-                                    span.badge.rounded-pill.alert-danger &Dstrok;&atilde; h&#x1EE7;y
-                                td 03.07.2021
-                                td.text-end
-                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
-                                    .dropdown
-                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
-                                            i.material-icons.md-more_horiz
-                                        .dropdown-menu
-                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
-                                            a.dropdown-item.text-danger(href='#') X&oacute;a
-                            tr
-                                td 1233
-                                td
-                                    b Esther Howard
-                                td esther@example.com
-                                td 1.230.000 VNĐ
-                                td
-                                    span.badge.rounded-pill.alert-danger &Dstrok;&atilde; h&#x1EE7;y
-                                td 03.07.2021
-                                td.text-end
-                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
-                                    .dropdown
-                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
-                                            i.material-icons.md-more_horiz
-                                        .dropdown-menu
-                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
-                                            a.dropdown-item.text-danger(href='#') X&oacute;a
-                            tr
-                                td 2323
-                                td
-                                    b Jenny Wilson
-                                td jenny@example.com
-                                td 1.230.000 VNĐ
-                                td
-                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
-                                td 22.05.2021
-                                td.text-end
-                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
-                                    .dropdown
-                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
-                                            i.material-icons.md-more_horiz
-                                        .dropdown-menu
-                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
-                                            a.dropdown-item.text-danger(href='#') X&oacute;a
-                            tr
-                                td 2112
-                                td
-                                    b Marvin McKinney
-                                td marvin@example.com
-                                td 1.230.000 VNĐ
-                                td
-                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
-                                td 23.04.2021
-                                td.text-end
-                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
-                                    .dropdown
-                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
-                                            i.material-icons.md-more_horiz
-                                        .dropdown-menu
-                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
-                                            a.dropdown-item.text-danger(href='#') X&oacute;a
-                            tr
-                                td 7897
-                                td
-                                    b Albert Flores
-                                td albert@example.com
-                                td 1.230.000 VNĐ
-                                td
-                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
-                                td 13.03.2021
-                                td.text-end
-                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
-                                    .dropdown
-                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
-                                            i.material-icons.md-more_horiz
-                                        .dropdown-menu
-                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
-                                            a.dropdown-item.text-danger(href='#') X&oacute;a
-                            tr
-                                td 2323
-                                td
-                                    b Wade Warren
-                                td wade@example.com
-                                td 1.230.000 VNĐ
-                                td
-                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
-                                td 23.09.2021
-                                td.text-end
-                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
-                                    .dropdown
-                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
-                                            i.material-icons.md-more_horiz
-                                        .dropdown-menu
-                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
-                                            a.dropdown-item.text-danger(href='#') X&oacute;a
-                            tr
-                                td 2324
-                                td
-                                    b Jane Cooper
-                                td jane@example.com
-                                td 1.230.000 VNĐ
-                                td
-                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
-                                td 28.04.2021
-                                td.text-end
-                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
-                                    .dropdown
-                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
-                                            i.material-icons.md-more_horiz
-                                        .dropdown-menu
-                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
-                                            a.dropdown-item.text-danger(href='#') X&oacute;a
-                            tr
-                                td 2325
-                                td
-                                    b Savannah Nguyen
-                                td savannah@example.com
-                                td 1.230.000 VNĐ
-                                td
-                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
-                                td 23.03.2021
-                                td.text-end
-                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
-                                    .dropdown
-                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
-                                            i.material-icons.md-more_horiz
-                                        .dropdown-menu
-                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
-                                            a.dropdown-item.text-danger(href='#') X&oacute;a
-                            tr
-                                td 2326
-                                td
-                                    b Guy Hawkins
-                                td guy@example.com
-                                td 1.230.000 VNĐ
-                                td
-                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
-                                td 28.04.2021
-                                td.text-end
-                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
-                                    .dropdown
-                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
-                                            i.material-icons.md-more_horiz
-                                        .dropdown-menu
-                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
-                                            a.dropdown-item.text-danger(href='#') X&oacute;a
-                            tr
-                                td 2327
-                                td
-                                    b Darrell Steward
-                                td darrel@example.com
-                                td 1.230.000 VNĐ
-                                td
-                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
-                                td 14.07.2021
-                                td.text-end
-                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
-                                    .dropdown
-                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
-                                            i.material-icons.md-more_horiz
-                                        .dropdown-menu
-                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
-                                            a.dropdown-item.text-danger(href='#') X&oacute;a
-                            tr
-                                td 2328
-                                td
-                                    b Jane Cooper
-                                td jane@example.com
-                                td 1.230.000 VNĐ
-                                td
-                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
-                                td 18.03.2021
-                                td.text-end
-                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
-                                    .dropdown
-                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
-                                            i.material-icons.md-more_horiz
-                                        .dropdown-menu
-                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
-                                            a.dropdown-item.text-danger(href='#') X&oacute;a
-                            tr
-                                td 2329
-                                td
-                                    b Darlene Robertson
-                                td deriene@example.com
-                                td 1.230.000 VNĐ
-                                td
-                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; giao
-                                td 03.07.2021
-                                td.text-end
-                                    a.btn.btn-light(href='orders/1') Chi ti&#x1EBF;t
-                                    .dropdown
-                                        a.btn.btn-light(href='#' data-bs-toggle='dropdown')
-                                            i.material-icons.md-more_horiz
-                                        .dropdown-menu
-                                            a.dropdown-item(href='orders/1') Xem chi ti&#x1EBF;t
-                                            a.dropdown-item.text-danger(href='#') X&oacute;a
+                            each order in orders
+                                tr
+                                    td= order.id
+                                    td
+                                        b= order.fullName
+                                    td= order.email
+                                    td= `${order.total} VNĐ`
+                                    td
+                                        if (order.status == "Đang xử lý" || order.status == "Đang giao hàng")
+                                            span.badge.rounded-pill.alert-warning= order.status 
+                                        else if order.status == "Đã hủy"
+                                            span.badge.rounded-pill.alert-danger= order.status 
+                                        else 
+                                            span.badge.rounded-pill.alert-success= order.status 
+                                    td= order.createdAt
+                                    td.text-end
+                                        a.btn.btn-light(href=`/orders/${order.id}`) Chi tiết
+        nav.float-end.mt-4(aria-label='Page navigation')
+            ul.pagination
+                if currentPage > 1
+                    li.page-item
+                        a.page-link(href=`?page=${currentPage - 1}`) Trước
+                else 
+                    li.page-item.disabled
+                        a.page-link(href="#") Trước
+
+                if totalPages == 1
+                    li.page-item.active 
+                        a.page-link(href="#") 1
+                else if totalPages == 2
+                    if currentPage == 1
+                        li.page-item.active 
+                            a.page-link(href="#") 1
+                        li.page-item
+                            a.page-link(href=`?page=2`) 2
+                    else
+                        li.page-item
+                            a.page-link(href=`?page=1`) 1
+                        li.page-item.active 
+                            a.page-link(href="#") 2
+                else
+                    if currentPage <= 1
+                        li.page-item.active 
+                            a.page-link(href="#") 1
+                        li.page-item
+                            a.page-link(href=`?page=2`) 2
+                        li.page-item
+                            a.page-link(href=`?page=3`) 3
+                    else if currentPage >= totalPages 
+                        li.page-item
+                            a.page-link(href=`?page=${totalPages - 2}`)= totalPages - 2
+                        li.page-item
+                            a.page-link(href=`?page=${totalPages - 1}`)= totalPages - 1
+                        li.page-item.active 
+                            a.page-link(href="#")= totalPages 
+                    else
+                        li.page-item
+                            a.page-link(href=`?page=${currentPage - 1}`)= currentPage - 1
+                        li.page-item.active
+                            a.page-link(href="#")= currentPage
+                        li.page-item 
+                            a.page-link(href=`?page=${currentPage + 1}`)= currentPage + 1
+
+                if currentPage >= totalPages
+                    li.page-item.disabled
+                        a.page-link(href="#") Sau
+                else
+                    li.page-item
+                        a.page-link(href=`?page=${currentPage + 1}`) Sau                                            

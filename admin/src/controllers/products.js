@@ -143,7 +143,7 @@ export const editProduct = async (req, res) => {
         req.flash("success", "Sửa sản phẩm thành công");
         res.redirect(`/products/${productId}/edit`);
     } catch (error) {
-        req.flash("error", "Có lỗi xảy ra, vui lòng nhập lại");
+        req.flash("error", "Có lỗi xảy ra, vui lòng thử lại");
         res.redirect(`/products/${productId}/edit`);
     }
 };

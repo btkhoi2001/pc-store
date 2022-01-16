@@ -63,3 +63,27 @@ function showPreview(event) {
         preview.style.display = "block";
     }
 }
+
+$("select.form-select.query").change((event) => {
+    const status = $(event.target).val();
+    const urlParams = new URLSearchParams(window.location.search);
+
+    urlParams.set("status", status);
+    window.location.search = urlParams;
+});
+
+$("input.form-control.query").keypress((event) => {
+    if (event.which == 13) {
+        const search = $(event.target).val();
+        const urlParams = new URLSearchParams(window.location.search);
+
+        urlParams.set("search", search);
+        window.location.search = urlParams;
+    }
+});
+
+$("form.orders").submit((event) => {
+    const status = $("select.form-select.d-inline-block.orders").val();
+
+    if (status == "Thay đổi trạng thái") event.preventDefault();
+});

@@ -38,3 +38,6 @@ body.dark .form-input {
     border-radius: 5px;
     cursor: pointer;
 }
+.break-line {
+    white-space: pre-line;
+}

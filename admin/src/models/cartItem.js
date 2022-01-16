@@ -1,6 +1,6 @@
 import pkg from "sequelize";
 import sequelize from "../config/database/index.js";
-import Product from "./Product.js";
+import Product from "./product.js";
 import Cart from "./Cart.js";
 
 const { DataTypes } = pkg;
@@ -28,7 +28,13 @@ const CartItem = sequelize.define(
                 key: "id",
             },
         },
-        quantity: DataTypes.INTEGER,
+        quantity: {
+            type: DataTypes.INTEGER,
+            defaultValue: 1,
+            validate: {
+                min: 1,
+            },
+        },
     },
     {
         tableName: "cart_item",

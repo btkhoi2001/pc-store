@@ -1,5 +1,4 @@
 import pkg from "sequelize";
-import SequelizeSlugify from "sequelize-slugify";
 import sequelize from "../config/database/index.js";
 import CategoryBrand from "./categoryBrand.js";
 
@@ -15,10 +14,6 @@ const Product = sequelize.define(
             autoIncrement: true,
         },
         name: DataTypes.STRING(150),
-        slug: {
-            type: DataTypes.STRING,
-            unique: true,
-        },
         description: DataTypes.TEXT,
         categoryBrandId: {
             type: DataTypes.INTEGER,
@@ -43,9 +38,5 @@ const Product = sequelize.define(
 );
 
 Product.sync({ logging: false });
-
-SequelizeSlugify.slugifyModel(Product, {
-    source: ["name"],
-});
 
 export default Product;

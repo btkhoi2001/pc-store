@@ -47,7 +47,7 @@ aside#offcanvas_aside.navbar-aside
     nav
         ul.menu-aside
             each item in menu 
-                if (title == item.text)
+                if (currentMenu == item.href)
                     li.menu-item.active 
                         a.menu-link(href=item.href)
                             i(class=item.icon)
@@ -59,7 +59,7 @@ aside#offcanvas_aside.navbar-aside
                             span.text= item.text
         hr
         ul.menu-aside
-            if (title == menu[menu.length - 1].text)
+            if (currentMenu == "/settings")
                 li.menu-item.active
                     a.menu-link(href='/settings')
                         i.icon.material-icons.md-settings

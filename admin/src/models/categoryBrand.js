@@ -1,6 +1,6 @@
 import pkg from "sequelize";
 import sequelize from "../config/database/index.js";
-import Brand from "./brand.js";
+import Brand from "./Brand.js";
 import Category from "./category.js";
 
 const { DataTypes } = pkg;
