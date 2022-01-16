@@ -9,7 +9,8 @@ block main
                 ul
                     li
                         a(href='/') Trang chủ
-                    li.active= category.content
+                    if category !== undefined
+                        li.active= category.content
     .content-wrapper.pt-60.pb-60.pt-sm-30
         .container
             .row
@@ -200,18 +201,32 @@ block main
                         .sidebar-title
                             h2 Bộ lọc tìm kiếm
                         button.btn-clear-all.mb-sm-30.mb-xs-30 Xóa tất cả
-                        .filter-sub-area.pt-sm-10.pt-xs-10                     
-                            h5.filter-sub-title Thương hiệu
-                            .category-checkbox
-                                form(action='')
-                                    ul
-                                        each brand in filterBrands
-                                            li
-                                                if (typeof brand.checked != "undefined" && brand.checked)
-                                                    input(type='checkbox' name='brands[]' value=brand.content checked)
-                                                else 
-                                                    input(type='checkbox' name='brands[]' value=brand.content)
-                                                a= brand.content
+                        if filterCategories !== undefined
+                            .filter-sub-area.pt-sm-10.pt-xs-10                     
+                                h5.filter-sub-title Mặt hàng
+                                .category-checkbox
+                                    form(action='')
+                                        ul
+                                            each category in filterCategories
+                                                li
+                                                    if (typeof category.checked != "undefined" && category.checked)
+                                                        input(type='checkbox' name='categories[]' value=category.content checked)
+                                                    else 
+                                                        input(type='checkbox' name='categories[]' value=category.content)
+                                                    a= category.content                        
+                        if filterBrands !== undefined
+                            .filter-sub-area.pt-sm-10.pt-xs-10                     
+                                h5.filter-sub-title Thương hiệu
+                                .category-checkbox
+                                    form(action='')
+                                        ul
+                                            each brand in filterBrands
+                                                li
+                                                    if (typeof brand.checked != "undefined" && brand.checked)
+                                                        input(type='checkbox' name='brands[]' value=brand.content checked)
+                                                    else 
+                                                        input(type='checkbox' name='brands[]' value=brand.content)
+                                                    a= brand.content
                         .filter-sub-area.pt-sm-10.pt-xs-10                     
                             h5.filter-sub-title Khoảng giá
                             .category-checkbox

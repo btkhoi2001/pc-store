@@ -6,31 +6,26 @@ export const show = async (req, res) => {
     const { categorySlug } = req.params;
     const currentPage = req.query.page || 1;
     const limit = req.query.limit || 12;
-    const filterBrands = req.query.brands;
-    const { minPrice, maxPrice, sortBy } = req.query;
+    const { minPrice, maxPrice, sortBy, brands } = req.query;
 
     try {
         const { category } = await getCategoryFromCategorySlug({
             categorySlug,
         });
 
-        const { totalPages, products } = await getProducts({
+        const { totalPages, products, filterBrands } = await getProducts({
             categorySlug,
             page: currentPage,
             limit,
             minPrice,
             maxPrice,
-            brands: filterBrands,
+            brands,
             sortBy,
         });
 
-        const { brands } = await getBrandsByCategorySlug({
-            categorySlug,
-        });
-
-        if (typeof filterBrands != "undefined")
-            brands.forEach((value, index, array) => {
-                if (filterBrands.includes(value.content)) value.checked = true;
+        if (brands !== undefined)
+            filterBrands.forEach((value, index, array) => {
+                if (brands.includes(value.content)) value.checked = true;
             });
 
         res.render("./products/products-list", {
@@ -39,7 +34,7 @@ export const show = async (req, res) => {
             currentPage,
             totalPages,
             products,
-            filterBrands: brands,
+            filterBrands,
             minPrice,
             maxPrice,
             sortBy,

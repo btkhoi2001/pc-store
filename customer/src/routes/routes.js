@@ -14,13 +14,13 @@ const router = express.Router();
 router.get("/", show);
 
 router.use("/category", categoryRouter);
-router.use("/product", productRouter);
 router.use("/auth", authRouter);
 router.use("/user", userRouter);
 router.use("/cart", cartRouter);
 router.use("/checkout", checkoutRouter);
 router.use("/wishlist", wishlistRouter);
 router.use("/order", orderRouter);
+router.use("/", productRouter);
 
 router.use((req, res) => {
     res.status(404).render("404");

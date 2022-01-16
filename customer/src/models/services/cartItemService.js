@@ -23,8 +23,6 @@ export const addItemToCart = async (contextObject) => {
         );
     else newCartItem = await CartItem.create({ productId, quantity, cartId });
 
-    console.log(newCartItem);
-
     return { newCartItem };
 };
 
