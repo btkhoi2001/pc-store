@@ -94,24 +94,14 @@ block main
                                                             th Total
                                                             th Action
                                                     tbody
-                                                        tr
-                                                            td 1
-                                                            td Aug 22, 2018
-                                                            td Pending
-                                                            td $3000
-                                                            td
-                                                                a.btn(href='cart.html') View
-                                                        tr
-                                                            td 2
-                                                            td July 22, 2018
-                                                            td Approved
-                                                            td $200
-                                                            td
-                                                                a.btn(href='cart.html') View
-                                                        tr
-                                                            td 3
-                                                            td June 12, 2017
-                                                            td On Hold
-                                                            td $990
-                                                            td
-                                                                a.btn(href='cart.html') View
+                                                        - let i = 1
+                                                        each order in orders 
+                                                            tr 
+                                                                td= i 
+                                                                td= order.createdAt
+                                                                td= order.status
+                                                                td= `${order.total} VNĐ`
+                                                                td 
+                                                                    a.btn(target="_blank" href=`/order/${order.id}`) Xem    
+                                                            - i++
+                                                        

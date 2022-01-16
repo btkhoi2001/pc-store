@@ -21,6 +21,8 @@ export const addItemToWishlist = async (contextObject) => {
         },
     });
 
+    console.log(wishlistItem);
+
     return { wishlistItem };
 };
 

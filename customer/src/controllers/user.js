@@ -2,11 +2,21 @@ import argon2 from "argon2";
 import { updateAccount } from "../models/services/userService.js";
 import { v4 as uuidv4 } from "uuid";
 import { uploadFile } from "../config/aws/aws.js";
+import { getOrders } from "../models/services/orderService.js";
 
 export const show = async (req, res) => {
-    res.render("./user/user", {
-        title: "Tài khoản",
-    });
+    const userId = req.user.id;
+
+    try {
+        const { orders } = await getOrders({ userId });
+
+        res.render("./user/user", {
+            title: "Tài khoản",
+            orders,
+        });
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 export const updateAccountAPI = async (req, res) => {

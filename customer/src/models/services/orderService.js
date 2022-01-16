@@ -5,6 +5,27 @@ import { createOrderItem } from "./orderItemService.js";
 
 const { QueryTypes } = pkg;
 
+export const getOrders = async (contextObject) => {
+    const { userId } = contextObject;
+
+    const orders = await sequelize.query(
+        `SELECT \`order\`.id, \`order\`.status, \`order\`.createdAt, SUM(order_item.quantity * product.price) AS total
+        FROM \`order\` JOIN order_item ON \`order\`.id = order_item.id JOIN product ON order_item.productId = product.id
+        WHERE \`order\`.userId = ?
+        GROUP BY \`order\`.id, \`order\`.status, \`order\`.createdAt`,
+        { replacements: [userId], type: QueryTypes.SELECT }
+    );
+
+    orders.forEach((value, index, array) => {
+        value.total = value.total
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        value.createdAt = value.createdAt.toLocaleDateString("vi-VN");
+    });
+
+    return { orders };
+};
+
 export const getOrder = async (contextObject) => {
     const { userId, orderId } = contextObject;
     const order = {};
@@ -16,14 +37,17 @@ export const getOrder = async (contextObject) => {
         { replacements: [orderId, userId], type: QueryTypes.SELECT }
     );
 
-    order.status = (
-        await sequelize.query(
-            `SELECT *
+    Object.assign(
+        order,
+        (
+            await sequelize.query(
+                `SELECT *
             FROM \`order\`
             WHERE \`order\`.id = ? AND \`order\`.userId = ?`,
-            { replacements: [orderId, userId], type: QueryTypes.SELECT }
-        )
-    )[0].status;
+                { replacements: [orderId, userId], type: QueryTypes.SELECT }
+            )
+        )[0]
+    );
 
     order.total = 0;
 

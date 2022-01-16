@@ -3,6 +3,7 @@ import { getCategoryFromProductSlug } from "../models/services/categoryService.j
 import { getProductImages } from "../models/services/productImageService.js";
 import { getProductSpecificationFromProductSlug } from "../models/services/productSpecificationService.js";
 import { getRelativeProducts } from "../models/services/productService.js";
+import { getReviews } from "../models/services/reviewService.js";
 
 export const showDetail = async (req, res) => {
     const { productSlug } = req.params;
@@ -19,6 +20,11 @@ export const showDetail = async (req, res) => {
             categorySlug: category.slug,
             limit: 5,
         });
+        const { totalPages, reviews } = await getReviews({
+            productId: product.id,
+            limit: 10,
+            page: 1,
+        });
 
         res.render("./products/product-details", {
             title: product.name,
@@ -27,6 +33,9 @@ export const showDetail = async (req, res) => {
             productImages,
             productSpecifications,
             relativeProducts,
+            currentPage: 1,
+            totalPages,
+            reviews,
         });
     } catch (error) {
         console.log(error);

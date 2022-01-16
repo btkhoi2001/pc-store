@@ -89,9 +89,10 @@ export const getRelativeProducts = async (contextObject) => {
     const { categorySlug, limit } = contextObject;
 
     const relativeProducts = await sequelize.query(
-        `SELECT product.name, product.price, product.slug, product_image.imageUrl
-        FROM product JOIN product_image ON product.id = product_image.productId JOIN category_brand ON product.categoryBrandId = category_brand.id JOIN category ON category_brand.categoryId = category.id
+        `SELECT product.id, product.name, product.price, product.slug, product_image.imageUrl, IFNULL(AVG(review.rating), 0) AS 'averageRating'
+        FROM product JOIN product_image ON product.id = product_image.productId JOIN category_brand ON product.categoryBrandId = category_brand.id JOIN category ON category_brand.categoryId = category.id LEFT JOIN review ON product.id = review.productId
         WHERE category.slug = ? AND product_image.numberOrder = 1
+        GROUP BY product.id, product.name, product.price, product.slug, product_image.imageUrl
         ORDER BY RAND()
         LIMIT ?`,
         { replacements: [categorySlug, limit], type: QueryTypes.SELECT }

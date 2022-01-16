@@ -1,4 +1,4 @@
-$("ul.pagination-box.pt-xs-20.pb-xs-15 li a").click((event) => {
+$("#pagination-products li a").click((event) => {
     event.preventDefault();
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -163,6 +163,7 @@ function updateQuickView(productId) {
                     </div>`
                 );
 
+            $(".product-info a").attr("href", `/product/${product.slug}`);
             $(".product-info h2").text(product.name);
             $("ul.rating.rating-with-review-item").empty();
 
@@ -187,7 +188,12 @@ function updateQuickView(productId) {
             );
 
             $("span.new-price.new-price-2").text(`${product.price} VNĐ`);
-            $(".product-desc").text(product.description);
+            $(".product-desc").empty();
+
+            for (const line of product.description.split("\n")) {
+                $(".product-desc").append(`<p>${line.trim()}</p>`);
+            }
+
             $("form.cart-quantity").attr("action", product.id);
         },
     });
@@ -375,6 +381,7 @@ function addItemToWishlist(productId) {
                 data: JSON.stringify({ productId }),
                 dataType: "json",
                 success: function (data) {
+                    console.log("test");
                     updateWishlist();
                 },
             });
@@ -496,6 +503,230 @@ $(".order-button-payment").click((event) => {
             setTimeout(() => {
                 $("#message-checkout").text("");
             }, 5000);
+        },
+    });
+});
+
+$("a.review-links").click((event) => {
+    event.preventDefault();
+
+    $.ajax({
+        type: "POST",
+        url: "/api/auth/logged-in",
+        dataType: "json",
+        error: function () {
+            window.location.replace("/auth");
+        },
+    });
+});
+
+$("a#submit-review").click((event) => {
+    const rating = $("select.star-rating").val();
+    const content = $("textarea#feedback").val();
+    const productId = $("form.cart-quantity").attr("action");
+
+    $.ajax({
+        type: "POST",
+        url: "/api/review",
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify({ productId, rating, content }),
+        success: function (data) {
+            const { newReview } = data;
+
+            $("select.star-rating").val(1);
+            $("textarea#feedback").val("");
+            $("sub#feedback-message").text("");
+
+            $(".product-details-comment-block").prepend(
+                `<div class="comment-author-infos pt-25">
+                    <span>${newReview.fullName}</span>
+                    <ul class="rating"></ul>
+                    <em>${newReview.createdAt}</em>
+                    <p>${newReview.content}
+                </div>`
+            );
+
+            for (let i = 0; i < newReview.rating; i++)
+                $(
+                    ".product-details-comment-block .comment-author-infos.pt-25:first-child ul"
+                ).append(
+                    `<li>
+                        <i class="fa fa-star-o"></i>
+                    </li>`
+                );
+
+            for (let i = newReview.rating; i < 5; i++)
+                $(
+                    ".product-details-comment-block .comment-author-infos.pt-25:first-child ul"
+                ).append(
+                    `<li class="no-star">
+                        <i class="fa fa-star-o"></i>
+                    </li>`
+                );
+
+            $("a.close").trigger("click");
+        },
+        error: function (data) {
+            const { message } = data.responseJSON;
+
+            $("sub#feedback-message").text(message);
+        },
+    });
+    $("a.close").trigger("click");
+    $(".modal-backdrop.fade.show").remove();
+});
+
+$("#pagination-review li a").click((event) => {
+    event.preventDefault();
+
+    let page;
+    const productId = $("form.cart-quantity").attr("action");
+
+    if (event.target.nodeName == "A") page = $(event.target).attr("href");
+    else page = $(event.target).closest("a").attr("href");
+
+    if (page === undefined || page == "#") return;
+    page = parseInt(page);
+
+    $.ajax({
+        type: "GET",
+        url: "/api/review",
+        contentType: "application/json",
+        data: { productId, page, limit: 10 },
+        success: function (data) {
+            const { totalPages, reviews } = data;
+
+            $(".comment-author-infos.pt-25").remove();
+
+            for (let i = reviews.length - 1; i >= 0; i--) {
+                $(".product-details-comment-block").prepend(
+                    `<div class="comment-author-infos pt-25">
+                        <span>${reviews[i].fullName}</span>
+                        <ul class="rating"></ul>
+                        <em>${reviews[i].createdAt}</em>
+                        <p>${reviews[i].content}
+                    </div>`
+                );
+
+                for (let j = 0; j < reviews[i].rating; j++)
+                    $(
+                        ".product-details-comment-block .comment-author-infos.pt-25:first-child ul"
+                    ).append(
+                        `<li>
+                            <i class="fa fa-star-o"></i>
+                        </li>`
+                    );
+
+                for (let j = reviews[i].rating; j < 5; j++)
+                    $(
+                        ".product-details-comment-block .comment-author-infos.pt-25:first-child ul"
+                    ).append(
+                        `<li class="no-star">
+                            <i class="fa fa-star-o"></i>
+                        </li>`
+                    );
+            }
+
+            if (page > 1) {
+                $("a.Previous").attr("href", page - 1);
+                $("#previous-arrow").removeClass("disabled");
+            } else {
+                $("a.Previous").attr("href", "#");
+                $("#previous-arrow").addClass("disabled");
+            }
+
+            if (page >= totalPages) {
+                $("a.Next").attr("href", "#");
+                $("#next-arrow").addClass("disabled");
+            } else {
+                $("a.Next").attr("href", page + 1);
+                $("#next-arrow").removeClass("disabled");
+            }
+
+            if (totalPages == 1) {
+                $("#previous-page").attr("style", "display: none;");
+
+                $("#current-page").attr("style", "");
+                $("#current-page").attr("class", "active");
+                $("#current-page a").attr("href", "#");
+                $("#current-page a").text("1");
+
+                $("#next-page").attr("style", "display: none;");
+            } else if (totalPages == 2) {
+                if (page == 1) {
+                    $("#previous-page").attr("style", "");
+                    $("#previous-page").attr("class", "active");
+                    $("#previous-page a").attr("href", "#");
+                    $("#previous-page a").text("1");
+
+                    $("#current-page").attr("style", "");
+                    $("#current-page").attr("class", "");
+                    $("#current-page a").attr("href", "2");
+                    $("#current-page a").text("2");
+
+                    $("#next-page").attr("style", "display: none;");
+                } else {
+                    $("#previous-page").attr("style", "display: none;");
+
+                    $("#current-page").attr("style", "");
+                    $("#current-page").attr("class", "");
+                    $("#current-page a").attr("href", "1");
+                    $("#current-page a").text("1");
+
+                    $("#next-page").attr("style", "");
+                    $("#next-page").attr("class", "active");
+                    $("#next-page a").attr("href", "#");
+                    $("#next-page a").text("2");
+                }
+            } else {
+                if (page <= 1) {
+                    $("#previous-page").attr("style", "");
+                    $("#previous-page").attr("class", "active");
+                    $("#previous-page a").attr("href", "#");
+                    $("#previous-page a").text("1");
+
+                    $("#current-page").attr("style", "");
+                    $("#current-page").attr("class", "");
+                    $("#current-page a").attr("href", "2");
+                    $("#current-page a").text("2");
+
+                    $("#next-page").attr("style", "");
+                    $("#next-page").attr("class", "");
+                    $("#next-page a").attr("href", "3");
+                    $("#next-page a").text("3");
+                } else if (page >= totalPages) {
+                    $("#previous-page").attr("style", "");
+                    $("#previous-page").attr("class", "");
+                    $("#previous-page a").attr("href", totalPages - 2);
+                    $("#previous-page a").text(totalPages - 2);
+
+                    $("#current-page").attr("style", "");
+                    $("#current-page").attr("class", "");
+                    $("#current-page a").attr("href", totalPages - 1);
+                    $("#current-page a").text(totalPages - 1);
+
+                    $("#next-page").attr("style", "");
+                    $("#next-page").attr("class", "active");
+                    $("#next-page a").attr("href", totalPages);
+                    $("#next-page a").text(totalPages);
+                } else {
+                    $("#previous-page").attr("style", "");
+                    $("#previous-page").attr("class", "");
+                    $("#previous-page a").attr("href", page - 1);
+                    $("#previous-page a").text(page - 1);
+
+                    $("#current-page").attr("style", "");
+                    $("#current-page").attr("class", "active");
+                    $("#current-page a").attr("href", "#");
+                    $("#current-page a").text(page);
+
+                    $("#next-page").attr("style", "");
+                    $("#next-page").attr("class", "");
+                    $("#next-page a").attr("href", page + 1);
+                    $("#next-page a").text(page + 1);
+                }
+            }
         },
     });
 });

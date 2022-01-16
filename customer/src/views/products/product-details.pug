@@ -1,6 +1,8 @@
 extends ../layouts/default.pug
 
 block main
+    - currentPage = parseInt(currentPage)
+    - totalPages = parseInt(totalPages)
     .breadcrumb-area
         .container
             .breadcrumb-content
@@ -10,7 +12,7 @@ block main
                     li
                         a(href=`/category/${category.slug}`)= category.content
                     li.active= product.name
-    .content-wrapper
+    .content-wraper
         .container
             .row.single-product-area
                 .col-lg-5.col-md-6
@@ -29,22 +31,20 @@ block main
                             h2= product.name
                             .rating-box.pt-20
                                 ul.rating.rating-with-review-item
-                                    li
-                                        i.fa.fa-star-o
-                                    li
-                                        i.fa.fa-star-o
-                                    li
-                                        i.fa.fa-star-o
-                                    li.no-star
-                                        i.fa.fa-star-o
-                                    li.no-star
-                                        i.fa.fa-star-o
+                                    - for (let i = 0; i < Math.ceil(product.averageRating); i++) {
+                                            li
+                                                i.fa.fa-star-o
+                                    - }
+                                    - for (let i = Math.ceil(product.averageRating); i < 5; i++) {
+                                            li.no-star
+                                                i.fa.fa-star-o
+                                    - }
                                     li.review-item
-                                        a(href='#') Nhận xét
+                                        a(href='#reviews') Nhận xét
                             .price-box.pt-20
                                 span.new-price.new-price-2= product.price + " VNĐ"
                             .single-add-to-cart
-                                form.cart-quantity(action='#')
+                                form.cart-quantity(action=product.id)
                                     .quantity
                                         label Số lượng
                                         .cart-plus-minus
@@ -56,7 +56,7 @@ block main
                                     button.add-to-cart(type='submit') Thêm vào giỏ hàng
                             .product-additional-info
                                 .product-additional-info.pt-25
-                                    a.wishlist-btn(href='wishlist.html')
+                                    a.wishlist-btn(href='javascript:;' onclick=`addItemToWishlist(${product.id});`)
                                         i.fa.fa-heart-o
                                         | Thích
     .product-area.pt-40
@@ -91,70 +91,122 @@ block main
                 #reviews.tab-pane(role='tabpanel')
                     .product-reviews
                         .product-details-comment-block
-                            .comment-author-infos.pt-25
-                                span L&ecirc; B&aacute; S&#x1A1;n
-                                ul.rating
-                                    li
-                                        i.fa.fa-star-o
-                                    li
-                                        i.fa.fa-star-o
-                                    li
-                                        i.fa.fa-star-o
-                                    li.no-star
-                                        i.fa.fa-star-o
-                                    li.no-star
-                                        i.fa.fa-star-o
-                                em 01-10-2021
-                                p
-                                    | s&#x1EA3;n ph&#x1EA9;m &dstrok;&#x1EB9;p, &dstrok;&oacute;ng g&oacute;i s&#x1EA3;n ph&#x1EA9;m t&#x1ED1;t, &dstrok;ang t&igrave;m c&aacute;ch k&iacute;ch ho&#x1EA1;t b&#x1EA3;o h&agrave;nh shop, shop ph&#x1EA3;n h&#x1ED3;i tin nh&#x1EAF;n gi&uacute;p m&igrave;nh nh&eacute;
+                            each review in reviews 
+                                .comment-author-infos.pt-25
+                                    span= review.fullName
+                                    ul.rating
+                                        - for (let i = 0; i < review.rating; i++) {
+                                                li
+                                                    i.fa.fa-star-o
+                                        - }
+                                        - for (let i = review.rating; i < 5; i++) {
+                                                li.no-star
+                                                    i.fa.fa-star-o
+                                        - }
+                                    em= review.createdAt
+                                    p= review.content                                        
                             .review-btn
-                                a.review-links(href='#' data-toggle='modal' data-target='#mymodal') Vi&#x1EBF;t Nhận xét
+                                a.review-links(href='javascript:;' data-toggle='modal' data-target='#mymodal') Viết nhận xét
                             #mymodal.modal.fade.modal-wrapper
                                 .modal-dialog.modal-dialog-centered(role='document')
                                     .modal-content
                                         .modal-body
-                                            h3.review-page-title Vi&#x1EBF;t Nhận xét
+                                            h3.review-page-title Viết nhận xét
                                             .modal-inner-area.row
                                                 .col-lg-6
                                                     .li-review-product
-                                                        img(src='/images/product/large-size/1.jpg' alt="Li's Product")
+                                                        if productImages[0] !== undefined
+                                                            img(src=productImages[0])
                                                         .li-review-product-desc
-                                                            h2 Dell S2421HN Monitor - 23.8 inch, FHD, IPS, 75Hz, 2x HDMI
+                                                            h2= product.name
                                                 .col-lg-6
                                                     .li-review-content
-                                                        // Begin Feedback Area
                                                         .feedback-area
                                                             .feedback
                                                                 form(action='#')
                                                                     p.your-opinion
-                                                                        label &Dstrok;&aacute;nh gi&aacute;
+                                                                        label Đánh giá
                                                                         span
                                                                             select.star-rating
                                                                                 option(value='1') 1
                                                                                 option(value='2') 2
-                                                                                option(value='3') 3
+                                                                                option(value='3') 3 
                                                                                 option(value='4') 4
                                                                                 option(value='5') 5
                                                                     p.feedback-form
                                                                         label(for='feedback') Nhận xét
                                                                         textarea#feedback(name='comment' cols='45' rows='8' aria-required='true')
-                                                                    .feedback-input
-                                                                        p.feedback-form-author
-                                                                            label(for='author')
-                                                                                | T&ecirc;n
-                                                                                span.required *
-                                                                            input#author(name='author' value='' size='30' aria-required='true' type='text')
-                                                                        p.feedback-form-author.feedback-form-email
-                                                                            label(for='email')
-                                                                                | Email
-                                                                                span.required *
-                                                                            input#email(name='email' value='' size='30' aria-required='true' type='text')
-                                                                            span.required
-                                                                                sub *
-                                                                                | B&#x1EAF;t bu&#x1ED9;c
+                                                                        span.required
+                                                                            sub#feedback-message
                                                                         .feedback-btn.pb-15
-                                                                            a.close(href='#' data-dismiss='modal' aria-label='Close') &Dstrok;&oacute;ng
-                                                                            a(href='#') G&#x1EED;i
+                                                                            a.close(href='#' data-dismiss='modal' aria-label='Close') Đóng
+                                                                            a#submit-review(href='javascript:;') Gửi
+                            .pagination-area
+                                .row 
+                                    .col-lg-6.col-md-6.pt-xs-15 
+                                    .col-lg-6.col-md-6 
+                                        ul#pagination-review.pagination-box.pt-xs-20.pb-xs-15 
+                                            if currentPage > 1
+                                                li#previous-arrow
+                                                    a.Previous(href=`${currentPage - 1}`)
+                                                        i.fa.fa-chevron-left
+                                            else 
+                                                li#previous-arrow.disabled
+                                                    a.Previous(href='#')
+                                                        i.fa.fa-chevron-left 
+                                                                                       
+                                            if totalPages == 1
+                                                li#previous-page(style="display: none;")
+                                                    a
+                                                li#current-page.active
+                                                    a(href='#') 1
+                                                li#next-page(style="display: none;")
+                                                    a
+                                            else if totalPages == 2
+                                                if currentPage == 1
+                                                    li#previous-page.active
+                                                        a(href='#') 1
+                                                    li#current-page
+                                                        a(href=`2`) 2
+                                                    li#next-page(style="display: none;")
+                                                        a
+                                                else
+                                                    li#previous-page(style="display: none;")
+                                                        a
+                                                    li#current-page
+                                                        a(href=`1`) 1
+                                                    li#next-page.active 
+                                                        a(href='#') 2
+                                            else
+                                                if currentPage <= 1
+                                                    li#previous-page.active 
+                                                        a(href='#') 1
+                                                    li#current-page
+                                                        a(href=`2`) 2
+                                                    li#next-page
+                                                        a(href=`3`) 3
+                                                else if currentPage >= totalPages 
+                                                    li#previous-page
+                                                        a(href=`${totalPages - 2}`)= totalPages - 2
+                                                    li#current-page
+                                                        a(href=`${totalPages - 1}`)= totalPages - 1
+                                                    li#next-page.active 
+                                                        a(href='#')= totalPages 
+                                                else
+                                                    li#previous-page
+                                                        a(href=`${currentPage - 1}`)= currentPage - 1
+                                                    li#current-page.active
+                                                        a(href='#')= currentPage
+                                                    li#next-page
+                                                        a(href=`${currentPage + 1}`)= currentPage + 1
+                                            if currentPage >= totalPages
+                                                li#next-arrow.disabled
+                                                    a.Next(href='#')
+                                                        i.fa.fa-chevron-right
+                                            else
+                                                li#next-arrow
+                                                    a.Next(href=`${currentPage + 1}`)
+                                                        i.fa.fa-chevron-right
     section.product-area.li-laptop-product.pt-30.pb-50
         .container
             .row
@@ -170,36 +222,33 @@ block main
                                         .product-image
                                             a(href=`/product/${relativeProduct.slug}`)
                                                 img(src=relativeProduct.imageUrl alt=relativeProduct.name)
-                                            span.sticker Mới
                                         .product_desc
                                             .product_desc_info
                                                 .product-review
                                                     .rating-box
                                                         ul.rating
-                                                            li
-                                                                i.fa.fa-star-o
-                                                            li
-                                                                i.fa.fa-star-o
-                                                            li
-                                                                i.fa.fa-star-o
-                                                            li.no-star
-                                                                i.fa.fa-star-o
-                                                            li.no-star
-                                                                i.fa.fa-star-o
+                                                            - for (let i = 0; i < Math.ceil(relativeProduct.rating); i++) {
+                                                                    li
+                                                                        i.fa.fa-star-o
+                                                            - }
+                                                            - for (let i = Math.ceil(relativeProduct.rating); i < 5; i++) {
+                                                                    li.no-star
+                                                                        i.fa.fa-star-o
+                                                            - }
                                                 h4
                                                     a.product_name(href=`/product/${relativeProduct.slug}`)= relativeProduct.name
                                                 .price-box
-                                                    span.new-price= relativeProduct.price + " VNĐ"
+                                                    span.new-price= `${relativeProduct.price} VNĐ`
                                             .add-actions
                                                 ul.add-actions-link
                                                     li.add-cart
-                                                        a(href='#')
+                                                        a.pointer(onclick=`addItemToCart(${relativeProduct.id});`)
                                                             i.fa.fa-cart-plus
                                                     li
-                                                        a.quick-view-btn(href='#' title='quick view' data-toggle='modal' data-target='#exampleModalCenter')
+                                                        a.pointer(href="#" onclick=`updateQuickView(${relativeProduct.id});` title='quick view' data-toggle='modal' data-target='#exampleModalCenter')
                                                             i.fa.fa-eye
                                                     li
-                                                        a.links-details(href='wishlist.html')
+                                                        a.pointer.links-details(href='javascript:;' onclick=`addItemToWishlist(${relativeProduct.id});`)
                                                             i.fa.fa-heart-o                            
     #exampleModalCenter.modal.fade.modal-wrapper
         .modal-dialog.modal-dialog-centered(role='document')
@@ -211,57 +260,17 @@ block main
                         .col-lg-5.col-md-6.col-sm-6
                             .product-details-left
                                 .product-details-images.slider-navigation-1
-                                    .lg-image
-                                        img(src='/images/product/large-size/1.jpg' alt='product image')
-                                    .lg-image
-                                        img(src='/images/product/large-size/2.jpg' alt='product image')
-                                    .lg-image
-                                        img(src='/images/product/large-size/3.jpg' alt='product image')
-                                    .lg-image
-                                        img(src='/images/product/large-size/4.jpg' alt='product image')
-                                    .lg-image
-                                        img(src='/images/product/large-size/5.jpg' alt='product image')
-                                    .lg-image
-                                        img(src='/images/product/large-size/6.jpg' alt='product image')
                                 .product-details-thumbs.slider-thumbs-1
-                                    .sm-image
-                                        img(src='/images/product/small-size/1.jpg' alt='product image thumb')
-                                    .sm-image
-                                        img(src='/images/product/small-size/2.jpg' alt='product image thumb')
-                                    .sm-image
-                                        img(src='/images/product/small-size/3.jpg' alt='product image thumb')
-                                    .sm-image
-                                        img(src='/images/product/small-size/4.jpg' alt='product image thumb')
-                                    .sm-image
-                                        img(src='/images/product/small-size/5.jpg' alt='product image thumb')
-                                    .sm-image
-                                        img(src='/images/product/small-size/6.jpg' alt='product image thumb')
-                            // // Product Details Left
                         .col-lg-7.col-md-6.col-sm-6
                             .product-details-view-content.pt-60
                                 .product-info
-                                    h2 Dell S2421HN Monitor - 23.8 inch, FHD, IPS, 75Hz, 2x HDMI
+                                    a
+                                        h2
                                     .rating-box.pt-20
                                         ul.rating.rating-with-review-item
-                                            li
-                                                i.fa.fa-star-o
-                                            li
-                                                i.fa.fa-star-o
-                                            li
-                                                i.fa.fa-star-o
-                                            li.no-star
-                                                i.fa.fa-star-o
-                                            li.no-star
-                                                i.fa.fa-star-o
-                                            li.review-item
-                                                a(href='/products/1') Nhận xét
                                     .price-box.pt-20
-                                        span.new-price.new-price-2 4.489.000 VNĐ
+                                        span.new-price.new-price-2
                                     .product-desc
-                                        p Màn hình l&agrave;m vi&#x1EC7;c Dell S2421HN ch&acirc;n m&agrave;u b&#x1EA1;c sang tr&#x1ECD;ng
-                                        p T&#x1EA5;m n&#x1EC1;n IPS cho g&oacute;c nh&igrave;n l&ecirc;n &dstrok;&#x1EBF;n 178&prime;
-                                        p Vi&#x1EC1;n m&#x1ECF;ng, h&#x1EC7; m&agrave;u NTSC &dstrok;&#x1EA1;t 72% (CIE 1931)
-                                        p H&#x1ED7; tr&#x1EE3; c&#x1ED5;ng HDMI th&ocirc;ng d&#x1EE5;ng v&#x1EDB;i m&#x1ECD;i PC
                                     .single-add-to-cart
                                         form.cart-quantity(action='#')
                                             .quantity
@@ -274,6 +283,6 @@ block main
                                                         i.fa.fa-angle-up
                                             button.add-to-cart(type='submit') THÊM VÀO GIỎ HÀNG
                                     .product-additional-info.pt-25
-                                        a.wishlist-btn(href='wishlist.html')
+                                        a.wishlist-btn(href='#')
                                             i.fa.fa-heart-o
                                             | Thích

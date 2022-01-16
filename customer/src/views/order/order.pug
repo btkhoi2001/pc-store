@@ -37,6 +37,25 @@ block main
                                             td.product-subtotal
                                                 span.amount= `${item.total} VNĐ`
                         .row
+                            .col-md-5
+                                .cart-page-total
+                                    h2 Hóa đơn
+                                    ul
+                                        li
+                                            | Họ và tên:
+                                            p= order.fullName
+                                        li
+                                            | Địa chỉ
+                                            p= order.address
+                                        li
+                                            | Email:
+                                            p= order.email
+                                        li
+                                            | Điện thoại
+                                            p= order.phoneNumber
+                                        li
+                                            | Ghi chú:
+                                            p= order.note                                                                            
                             .col-md-5.ml-auto
                                 .cart-page-total
                                     h2 Thanh toán

@@ -5,6 +5,7 @@ import authAPI from "./auth.js";
 import wishlistAPI from "./wishlist.js";
 import userAPI from "./user.js";
 import checkoutAPI from "./checkout.js";
+import reviewAPI from "./review.js";
 
 const api = express.Router();
 
@@ -14,5 +15,6 @@ api.use("/product", productAPI);
 api.use("/wishlist", wishlistAPI);
 api.use("/user", userAPI);
 api.use("/checkout", checkoutAPI);
+api.use("/review", reviewAPI);
 
 export default api;
