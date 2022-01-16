@@ -11,22 +11,28 @@ export const getOrders = async (contextObject) => {
 
     switch (sortBy) {
         case "name-asc":
-            sortQuery = "ORDER BY product.name ASC";
+            sortQuery = "ORDER BY `order`.fullName ASC";
             break;
         case "name-desc":
-            sortQuery = "ORDER BY product.name DESC";
+            sortQuery = "ORDER BY `order`.fullName DESC";
             break;
-        case "price-asc":
-            sortQuery = "ORDER BY product.price ASC";
+        case "email-asc":
+            sortQuery = "ORDER BY `order`.email ASC";
             break;
-        case "price-desc":
-            sortQuery = "ORDER BY product.price DESC";
+        case "email-desc":
+            sortQuery = "ORDER BY `order`.email DESC";
+            break;
+        case "total-asc":
+            sortQuery = "ORDER BY `order`.total ASC";
+            break;
+        case "total-desc":
+            sortQuery = "ORDER BY `order`.total DESC";
             break;
         case "new":
-            sortQuery = "ORDER BY product.createdAt DESC";
+            sortQuery = "ORDER BY `order`.createdAt DESC";
             break;
         case "old":
-            sortQuery = "ORDER BY product.createdAt ASC";
+            sortQuery = "ORDER BY `order`.createdAt ASC";
             break;
         default:
             sortQuery = "ORDER BY `order`.id DESC";
@@ -135,4 +141,22 @@ export const updateOrder = async (contextObject) => {
             },
         }
     );
+};
+
+export const getReport = async () => {
+    const report = {};
+
+    Object.assign(
+        report,
+        (
+            await sequelize.query(
+                `SELECT SUM(order_item.quantity * product.price) AS 'totalProfit', COUNT(DISTINCT \`order\`.id) AS 'totalOrders', SUM(order_item.quantity) AS 'totalProducts'
+                FROM \`order\` JOIN order_item ON \`order\`.id = order_item.orderId JOIN product ON order_item.productId = product.id
+                WHERE \`order\`.status = 'Đã giao hàng'`,
+                { type: QueryTypes.SELECT }
+            )
+        )[0]
+    );
+
+    return { report };
 };
