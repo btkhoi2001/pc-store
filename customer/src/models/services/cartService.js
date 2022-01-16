@@ -1,5 +1,6 @@
 import pkg from "sequelize";
 import sequelize from "../../config/database/index.js";
+import { addItemToCart } from "./cartItemService.js";
 
 const { QueryTypes } = pkg;
 
@@ -66,4 +67,29 @@ export const getCartId = async (contextObject) => {
     }
 
     return { cartId: cart[0].id };
+};
+
+export const mergeCart = async (contextObject) => {
+    const { guestId, userId } = contextObject;
+
+    const guestCart = await sequelize.query(
+        `SELECT cart_item.productId, cart_item.quantity
+        FROM cart_item JOIN guest_cart ON cart_item.cartId = guest_cart.cartId
+        WHERE guest_cart.id = ?`,
+        { replacements: [guestId], type: QueryTypes.SELECT }
+    );
+
+    const cart = await sequelize.query(
+        `SELECT id
+        FROM cart
+        WHERE cart.userId = ?`,
+        { replacements: [userId], type: QueryTypes.SELECT }
+    );
+
+    for (const item of guestCart)
+        await addItemToCart({
+            cartId: cart[0].id,
+            productId: item.productId,
+            quantity: item.quantity,
+        });
 };

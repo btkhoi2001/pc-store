@@ -1,5 +1,6 @@
 import argon2 from "argon2";
 import { getUser, registerUser } from "../models/services/userService.js";
+import { mergeCart } from "../models/services/cartService.js";
 
 export const show = async (req, res) => {
     res.render("./authentication/auth", {
@@ -11,7 +12,13 @@ export const show = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
+        const guestId = req.session.guestCartId;
+        const userId = req.user.id;
+
+        await mergeCart({ guestId, userId });
+
         req.session.guestCartId = "";
+        // req.session.save();
         res.redirect("/");
     } catch (error) {
         console.log(error);
