@@ -34,8 +34,6 @@ export const show = async (req, res) => {
                 if (categories.includes(value.content)) value.checked = true;
             });
 
-        console.log(filterBrands, filterCategories);
-
         res.render("./products/products-list", {
             title: "Tìm kiếm",
             currentPage,

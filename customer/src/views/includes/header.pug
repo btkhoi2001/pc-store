@@ -7,8 +7,8 @@ header
                         a(href='/')
                             img(src='/images/menu/logo/1.jpg' alt='')
                 .col-lg-9.pl-0.ml-sm-15.ml-xs-15
-                    form.hm-searchbox(action='#')
-                        input(type='text' placeholder='Nhập từ khóa cần tìm')
+                    form.hm-searchbox(action='/product')
+                        input(type='text' name="search" placeholder='Nhập từ khóa cần tìm')
                         button.li-btn(type='submit')
                             i.fa.fa-search
                     include ./menu-right

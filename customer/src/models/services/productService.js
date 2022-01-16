@@ -54,30 +54,7 @@ export const getProducts = async (contextObject) => {
                 categorySlug,
                 brands === undefined,
                 brands,
-                categories == undefined,
-                categories,
-                minPrice,
-                minPrice,
-                maxPrice,
-                maxPrice,
-            ],
-            type: QueryTypes.SELECT,
-        }
-    );
-
-    const filterBrands = await sequelize.query(
-        `SELECT DISTINCT brand.content
-            FROM product JOIN category_brand ON product.categoryBrandId = category_brand.id JOIN category ON category_brand.categoryId = category.id JOIN brand ON brand.id = category_brand.brandId
-            WHERE (? OR product.name LIKE ?) AND (? OR category.slug = ?) AND product.archive = 0 AND (? OR brand.content IN (?)) AND (? OR category.content IN (?)) AND (? IS NULL OR product.price >= ?)  AND (? IS NULL OR product.price <= ?)`,
-        {
-            replacements: [
-                search === undefined,
-                `%${search}%`,
-                categorySlug === undefined,
-                categorySlug,
-                brands === undefined,
-                brands,
-                categories == undefined,
+                categories === undefined,
                 categories,
                 minPrice,
                 minPrice,
@@ -91,21 +68,23 @@ export const getProducts = async (contextObject) => {
     const filterCategories = await sequelize.query(
         `SELECT DISTINCT category.content
         FROM product JOIN category_brand ON product.categoryBrandId = category_brand.id JOIN category ON category_brand.categoryId = category.id JOIN brand ON brand.id = category_brand.brandId
-        WHERE (? OR product.name LIKE ?) AND (? OR category.slug = ?) AND product.archive = 0 AND (? OR brand.content IN (?)) AND (? OR category.content IN (?)) AND (? IS NULL OR product.price >= ?)  AND (? IS NULL OR product.price <= ?)`,
+        WHERE (? OR product.name LIKE ?)`,
+        {
+            replacements: [search === undefined, `%${search}%`],
+            type: QueryTypes.SELECT,
+        }
+    );
+
+    const filterBrands = await sequelize.query(
+        `SELECT DISTINCT brand.content
+            FROM product JOIN category_brand ON product.categoryBrandId = category_brand.id JOIN category ON category_brand.categoryId = category.id JOIN brand ON brand.id = category_brand.brandId
+            WHERE (? OR category.slug = ?) AND (? OR category.content IN (?))`,
         {
             replacements: [
-                search === undefined,
-                `%${search}%`,
                 categorySlug === undefined,
                 categorySlug,
-                brands === undefined,
-                brands,
-                categories == undefined,
-                categories,
-                minPrice,
-                minPrice,
-                maxPrice,
-                maxPrice,
+                filterCategories.length == 0,
+                filterCategories.map((a) => a.content),
             ],
             type: QueryTypes.SELECT,
         }
@@ -128,7 +107,7 @@ export const getProducts = async (contextObject) => {
                 categorySlug,
                 brands === undefined,
                 brands,
-                categories == undefined,
+                categories === undefined,
                 categories,
                 minPrice,
                 minPrice,

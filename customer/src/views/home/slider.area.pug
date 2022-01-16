@@ -1,38 +1,15 @@
 .slider-area.pt-sm-30.pt-xs-30
     .slider-active.owl-carousel
-        .single-slide.align-center-left.animation-style-02.bg-4
-            .slider-progress
-            .slider-content
-                h5
-                    | Giảm giá 
-                    span 20%
-                    |  trong tuần
-                h2 Dell P2722H Monitor - 27 inch, FHD, IPS Panel
-                h3
-                    span 6.000.000 VNĐ;
-                .default-btn.slide-btn
-                    a.links(href='/category/1') Mua ngay
-        .single-slide.align-center-left.animation-style-02.bg-4
-            .slider-progress
-            .slider-content
-                h5
-                    | Giảm giá 
-                    span 20%
-                    |  trong tuần
-                h2 Dell P2722H Monitor - 27 inch, FHD, IPS Panel
-                h3
-                    span 6.000.000 VNĐ;
-                .default-btn.slide-btn
-                    a.links(href='/category/1') Mua ngay
-        .single-slide.align-center-left.animation-style-02.bg-4
-            .slider-progress
-            .slider-content
-                h5
-                    | Giảm giá 
-                    span 20%
-                    |  trong tuần
-                h2 Dell P2722H Monitor - 27 inch, FHD, IPS Panel
-                h3
-                    span 6.000.000 VNĐ;
-                .default-btn.slide-btn
-                    a.links(href='/category/1') Mua ngay
+        each product in sliderProducts
+            .single-slide.align-center-left.animation-style-02.bg-4
+                .slider-progress
+                .slider-content
+                    h5
+                        | Giảm giá 
+                        span 20%
+                        |  trong tuần
+                    h2= product.name
+                    h3
+                        span= `${product.price} VNĐ`
+                    .default-btn.slide-btn
+                        a.links(href=`/product/${product.slug}`) Mua ngay

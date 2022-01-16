@@ -45,12 +45,19 @@ export const show = async (req, res) => {
             })
         ).relativeProducts;
 
+        const sliderProducts = (
+            await getRelativeProducts({
+                limit: 3,
+            })
+        ).relativeProducts;
+
         res.render("./home/index", {
             title: "Trang chủ",
             newProducts,
             componentProducts,
             monitorProducts,
             keyboardProducts,
+            sliderProducts,
         });
     } catch (error) {
         console.log(error);

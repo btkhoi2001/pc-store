@@ -80,8 +80,9 @@ const insertData = async (req, res) => {
     await CategoryBrand.create({ categoryId: 6, brandId: 8 });
     await CategoryBrand.create({ categoryId: 6, brandId: 12 });
     await CategoryBrand.create({ categoryId: 6, brandId: 14 });
-    await CategoryBrand.create({ categoryId: 7, brandId: 33 });
-    await CategoryBrand.create({ categoryId: 7, brandId: 33 });
+    await CategoryBrand.create({ categoryId: 7, brandId: 12 });
+    await CategoryBrand.create({ categoryId: 7, brandId: 19 });
+    await CategoryBrand.create({ categoryId: 7, brandId: 28 });
     await CategoryBrand.create({ categoryId: 8, brandId: 19 });
     await CategoryBrand.create({ categoryId: 8, brandId: 28 });
     await CategoryBrand.create({ categoryId: 8, brandId: 12 });
