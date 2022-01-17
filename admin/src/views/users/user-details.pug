@@ -1,6 +1,8 @@
 extends ../layouts/default.pug
 
 block main_content
+    - currentPage = parseInt(currentPage)
+    - totalPages = parseInt(totalPages)
     section.content-main
         .content-header
             a.btn.btn-light(href='javascript:history.back()')
@@ -12,35 +14,117 @@ block main_content
                 .row
                     .col-xl.col-lg.flex-grow-0(style='flex-basis: 230px')
                         .img-thumbnail.shadow.w-100.bg-white.position-relative.text-center(style='height: 190px; width: 200px; margin-top: -120px;')
-                            img.center-xy.img-fluid(src='/images/people/avatar1.jpg' alt='Avatar')
+                            if user.avatarUrl === null
+                                img.center-xy.img-fluid(src='/images/people/avatar-default.jpg' alt='Avatar')
+                            else
+                                img.center-xy.img-fluid(src=user.avatarUrl alt='Avatar')
                     .col-xl.col-lg
-                        h3 Eleanor Pena
+                        h3= user.fullName
+                        br
+                        if user.blocked == 0
+                            span.badge.rounded-pill.alert-success Đang hoạt động                        
+                        else 
+                            span.badge.rounded-pill.alert-danger Bị khóa
                     .col-xl-4.text-md-end
-                        select.form-select.w-auto.d-inline-block
-                            option Thao t&aacute;c
-                            option Kh&oacute;a
-                            option M&#x1EDF; kh&oacute;a
-                        a.btn.btn-outline-primary(href='#')
-                            | L&#x1B0;u
-                            i.material-icons.md-launch
+                        form.users(method='POST' action=`/users/${user.id}`)
+                            select.form-select.w-auto.d-inline-block(name="blocked")
+                                option Thao tác
+                                option(value='1') Khóa
+                                option(value='0') Mở khóa
+                            button.btn.btn-light(type="submit") Lưu
+
                 hr.my-4
                 .row.g-4
-                    .col-md-12.col-lg-4.col-xl-2
+                    .col-md-12.col-lg-4.col-xl-3
                         article.box
-                            p.mb-0.text-muted T&#x1ED5;ng s&#x1EA3;n ph&#x1EA9;m
-                            h5.text-success 3
-                            p.mb-0.text-muted T&#x1ED5;ng thanh to&aacute;n
-                            h5.text-success.mb-0 2.380.000 VNĐ
+                            p.mb-0.text-muted Tổng thanh toán
+                            h5.text-success.mb-0= `${orders.total} VNĐ`
                     .col-sm-6.col-lg-4.col-xl-3
-                        h6 Li&ecirc;n h&#x1EC7;
-                        p
-                            | info@example.com 
-                            br
-                            | (229) 555-0109, (808) 555-0111
+                        h6 Liên hệ
+                        p.break-line= `${user.email}\n${user.phoneNumber}`
                     .col-sm-6.col-lg-4.col-xl-3
-                        h6 &Dstrok;&#x1ECB;a ch&#x1EC9;
-                        p
-                            | Th&agrave;nh ph&#x1ED1;: H&#x1ED3; Ch&iacute; Minh 
-                            br
-                            | S&#x1ED1; nh&agrave;: 1 B&ugrave;i Th&#x1ECB; Xu&acirc;n
-                            br
+                        h6 Địa chỉ
+                        p= user.address
+        .card.mb-4
+            .card-body
+                .table-responsive
+                    table.table.table-hover
+                        thead
+                            tr
+                                th #ID
+                                th(scope='col') Tên
+                                th(scope='col') Email
+                                th(scope='col') Tổng
+                                th(scope='col') Tình trạng
+                                th(scope='col') Ngày đặt
+                                th(scope='col')
+                        tbody
+                            each order in orders
+                                tr
+                                    td= order.id
+                                    td
+                                        b= order.fullName
+                                    td= order.email
+                                    td= `${order.total} VNĐ`
+                                    td
+                                        if (order.status == "Đang xử lý" || order.status == "Đang giao hàng")
+                                            span.badge.rounded-pill.alert-warning= order.status 
+                                        else if order.status == "Đã hủy"
+                                            span.badge.rounded-pill.alert-danger= order.status 
+                                        else 
+                                            span.badge.rounded-pill.alert-success= order.status 
+                                    td= order.createdAt
+                                    td.text-end
+                                        a.btn.btn-light(href=`/orders/${order.id}`) Chi tiết
+        nav.float-end.mt-4(aria-label='Page navigation')
+            ul.pagination
+                if currentPage > 1
+                    li.page-item
+                        a.page-link(href=`?page=${currentPage - 1}`) Trước
+                else 
+                    li.page-item.disabled
+                        a.page-link(href="#") Trước
+
+                if totalPages == 1
+                    li.page-item.active 
+                        a.page-link(href="#") 1
+                else if totalPages == 2
+                    if currentPage == 1
+                        li.page-item.active 
+                            a.page-link(href="#") 1
+                        li.page-item
+                            a.page-link(href=`?page=2`) 2
+                    else
+                        li.page-item
+                            a.page-link(href=`?page=1`) 1
+                        li.page-item.active 
+                            a.page-link(href="#") 2
+                else
+                    if currentPage <= 1
+                        li.page-item.active 
+                            a.page-link(href="#") 1
+                        li.page-item
+                            a.page-link(href=`?page=2`) 2
+                        li.page-item
+                            a.page-link(href=`?page=3`) 3
+                    else if currentPage >= totalPages 
+                        li.page-item
+                            a.page-link(href=`?page=${totalPages - 2}`)= totalPages - 2
+                        li.page-item
+                            a.page-link(href=`?page=${totalPages - 1}`)= totalPages - 1
+                        li.page-item.active 
+                            a.page-link(href="#")= totalPages 
+                    else
+                        li.page-item
+                            a.page-link(href=`?page=${currentPage - 1}`)= currentPage - 1
+                        li.page-item.active
+                            a.page-link(href="#")= currentPage
+                        li.page-item 
+                            a.page-link(href=`?page=${currentPage + 1}`)= currentPage + 1
+
+                if currentPage >= totalPages
+                    li.page-item.disabled
+                        a.page-link(href="#") Sau
+                else
+                    li.page-item
+                        a.page-link(href=`?page=${currentPage + 1}`) Sau                                                                    

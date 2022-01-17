@@ -5,7 +5,7 @@ import Order from "../order.js";
 const { QueryTypes } = pkg;
 
 export const getOrders = async (contextObject) => {
-    const { search, page, limit, sortBy, status } = contextObject;
+    const { search, page, limit, sortBy, status, userId } = contextObject;
 
     let sortQuery;
 
@@ -42,7 +42,7 @@ export const getOrders = async (contextObject) => {
     const totalRows = await sequelize.query(
         `SELECT COUNT(*)
         FROM \`order\`
-        WHERE (? OR \`order\`.fullName LIKE ? OR \`order\`.email LIKE ?) AND (? OR \`order\`.status = ?)`,
+        WHERE (? OR \`order\`.fullName LIKE ? OR \`order\`.email LIKE ?) AND (? OR \`order\`.status = ?) AND (? OR \`order\`.userId = ?)`,
         {
             replacements: [
                 search === undefined,
@@ -50,6 +50,8 @@ export const getOrders = async (contextObject) => {
                 `%${search}%`,
                 status === undefined || status == "Tình trạng",
                 status,
+                userId === undefined,
+                userId,
             ],
             type: QueryTypes.SELECT,
         }
@@ -60,7 +62,7 @@ export const getOrders = async (contextObject) => {
     const orders = await sequelize.query(
         `SELECT \`order\`.id, \`order\`.fullName, \`order\`.email, \`order\`.status, \`order\`.createdAt, SUM(order_item.quantity * product.price) AS total
         FROM \`order\` JOIN order_item ON \`order\`.id = order_item.orderId JOIN product ON order_item.productId = product.id
-        WHERE (? OR \`order\`.fullName LIKE ? OR \`order\`.email LIKE ?) AND (? OR \`order\`.status = ?)
+        WHERE (? OR \`order\`.fullName LIKE ? OR \`order\`.email LIKE ?) AND (? OR \`order\`.status = ?) AND (? OR \`order\`.userId = ?)
         GROUP BY \`order\`.id, \`order\`.fullName, \`order\`.email, \`order\`.status, \`order\`.createdAt
         ${sortQuery}
         LIMIT ? OFFSET ?`,
@@ -71,6 +73,8 @@ export const getOrders = async (contextObject) => {
                 `%${search}%`,
                 status === undefined || status == "Tình trạng",
                 status,
+                userId === undefined,
+                userId,
                 limit,
                 (page - 1) * limit,
             ],
@@ -84,6 +88,31 @@ export const getOrders = async (contextObject) => {
             .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         value.createdAt = value.createdAt.toLocaleDateString("vi-VN");
     });
+
+    orders.total =
+        (
+            await sequelize.query(
+                `SELECT SUM(order_item.quantity * product.price) AS 'total'
+        FROM \`order\` JOIN order_item ON \`order\`.id = order_item.orderId JOIN product ON order_item.productId = product.id
+        WHERE (? OR \`order\`.fullName LIKE ? OR \`order\`.email LIKE ?) AND (? OR \`order\`.status = ?) AND (? OR \`order\`.userId = ?)`,
+                {
+                    replacements: [
+                        search === undefined,
+                        `%${search}%`,
+                        `%${search}%`,
+                        status === undefined || status == "Tình trạng",
+                        status,
+                        userId === undefined,
+                        userId,
+                    ],
+                    type: QueryTypes.SELECT,
+                }
+            )
+        )[0].total || 0;
+
+    orders.total = orders.total
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
     return { totalPages, orders };
 };

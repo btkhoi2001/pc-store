@@ -5,6 +5,8 @@ import authRouter from "./auth.js";
 import adminRouter from "./admin.js";
 import dashboardRouter from "./dashboard.js";
 import orderRouter from "./order.js";
+import userRouter from "./user.js";
+
 const router = express.Router();
 
 router.use("/auth", authRouter);
@@ -19,14 +21,7 @@ router.use("/add-product", addProductRouter);
 router.use("/admins", adminRouter);
 router.use("/dashboard", dashboardRouter);
 router.use("/orders", orderRouter);
-
-router.get("/users", (req, res) => {
-    res.render("./users/users", { path: req.path });
-});
-
-router.get("/users/:userId", (req, res) => {
-    res.render("./users/user-details", { path: req.path });
-});
+router.use("/users", userRouter);
 
 router.get("/reviews", (req, res) => {
     res.render("./reviews/reviews", { path: req.path });

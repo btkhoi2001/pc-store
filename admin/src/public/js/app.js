@@ -64,7 +64,7 @@ function showPreview(event) {
     }
 }
 
-$("select.form-select.query").change((event) => {
+$("select.form-select.orders").change((event) => {
     const status = $(event.target).val();
     const urlParams = new URLSearchParams(window.location.search);
 
@@ -72,7 +72,7 @@ $("select.form-select.query").change((event) => {
     window.location.search = urlParams;
 });
 
-$("input.form-control.query").keypress((event) => {
+$("input.form-control").keypress((event) => {
     if (event.which == 13) {
         const search = $(event.target).val();
         const urlParams = new URLSearchParams(window.location.search);
@@ -86,4 +86,18 @@ $("form.orders").submit((event) => {
     const status = $("select.form-select.d-inline-block.orders").val();
 
     if (status == "Thay đổi trạng thái") event.preventDefault();
+});
+
+$("select.form-select.users").change((event) => {
+    const blocked = $(event.target).val();
+    const urlParams = new URLSearchParams(window.location.search);
+
+    urlParams.set("blocked", blocked);
+    window.location.search = urlParams;
+});
+
+$("form.users").submit((event) => {
+    const status = $("select.form-select.d-inline-block.orders").val();
+
+    if (status == "Thao tác") event.preventDefault();
 });

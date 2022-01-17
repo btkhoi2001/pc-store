@@ -37,7 +37,7 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use((req, res, next) => {
-    res.locals.admin = req.user;
+    res.locals.account = req.user;
     next();
 });
 app.use(router);
