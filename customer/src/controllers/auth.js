@@ -1,12 +1,15 @@
 import argon2 from "argon2";
 import { getUser, registerUser } from "../models/services/userService.js";
 import { mergeCart } from "../models/services/cartService.js";
+import { createVerificationToken } from "../models/services/verificationTokenService.js";
+import { sendEmail } from "../config/email/email.js";
 
 export const show = async (req, res) => {
     res.render("./authentication/auth", {
         title: "Đăng nhập",
         loginError: req.flash("error"),
         registerError: req.flash("registerError"),
+        registerSuccess: req.flash("registerSuccess"),
     });
 };
 
@@ -18,7 +21,6 @@ export const login = async (req, res) => {
         await mergeCart({ guestId, userId });
 
         req.session.guestCartId = "";
-        // req.session.save();
         res.redirect("/");
     } catch (error) {
         console.log(error);
@@ -54,16 +56,24 @@ export const register = async (req, res) => {
             password: hashedPassword,
         });
 
-        req.login(newUser, (err) => {
-            if (err) {
-                console.log(err);
-                return next(err);
-            }
+        const userId = newUser.dataValues.id;
 
-            res.redirect("/");
-        });
+        const { newToken } = await createVerificationToken({ userId });
+        const tokenId = newToken.dataValues.id;
+        const link = `${process.env.BASE_URL}/token/verification/${tokenId}`;
+
+        if (!(await sendEmail(email, "Xác thực tài khoản", link)))
+            throw "Error";
+
+        req.flash(
+            "registerSuccess",
+            "Vùi lòng xác nhận tài khoản qua đường link gửi tới email trong 24 giờ"
+        );
+        res.redirect("/auth");
     } catch (error) {
         console.log(error);
+        req.flash("registerError", "Có lỗi xảy ra. Vui lòng thử lại"),
+            res.redirect("/auth");
     }
 };
 

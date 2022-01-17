@@ -3,8 +3,10 @@ form(action='/auth/register' method="POST")
         h4.login-title Đăng ký
         .row
             .col-12 
-                if (typeof registerError != 'undefined')
-                    p.text-danger=registerError        
+                if typeof registerError !== undefined
+                    p.text-danger=registerError   
+                if typeof registerSuccess !== undefined
+                    p.text-success=registerSuccess                           
             .col-md-12.mb-20
                 label Họ và tên
                 input.mb-0(type='text' name="name")

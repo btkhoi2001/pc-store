@@ -1,8 +1,17 @@
 import pkg from "sequelize";
 import sequelize from "../../config/database/index.js";
 import { addItemToCart } from "./cartItemService.js";
+import Cart from "../cart.js";
 
 const { QueryTypes } = pkg;
+
+export const createCart = async (contextObject) => {
+    const { userId } = contextObject;
+
+    await Cart.create({
+        userId,
+    });
+};
 
 export const getCart = async (contextObject) => {
     const { userId, cartId } = contextObject;

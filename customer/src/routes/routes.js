@@ -7,6 +7,7 @@ import wishlistRouter from "./wishlist.js";
 import cartRouter from "./cart.js";
 import checkoutRouter from "./checkout.js";
 import orderRouter from "./order.js";
+import tokenRouter from "./token.js";
 import { show } from "../controllers/home.js";
 
 const router = express.Router();
@@ -20,10 +21,11 @@ router.use("/cart", cartRouter);
 router.use("/checkout", checkoutRouter);
 router.use("/wishlist", wishlistRouter);
 router.use("/order", orderRouter);
+router.use("/token", tokenRouter);
 router.use("/", productRouter);
 
 router.use((req, res) => {
-    res.status(404).render("404");
+    res.status(404).render("404", { title: "404" });
 });
 
 export default router;

@@ -4,6 +4,14 @@ import Wishlist from "../wishlist.js";
 
 const { QueryTypes } = pkg;
 
+export const createWishlist = async (contextObject) => {
+    const { userId } = contextObject;
+
+    await Wishlist.create({
+        userId,
+    });
+};
+
 export const getWishlist = async (contextObject) => {
     const { userId } = contextObject;
 

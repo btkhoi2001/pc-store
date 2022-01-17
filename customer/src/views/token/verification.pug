@@ -1,0 +1,17 @@
+extends ../layouts/default.pug
+
+block main
+    .breadcrumb-area
+        .container
+            .breadcrumb-content
+                ul
+                    li
+                        a(href='/') Trang chủ
+    .error404-area.pt-30.pb-60
+        .container
+            .row
+                .col-lg-12
+                    .error-wrapper.text-center.ptb-50.pt-xs-20
+                        h2 Tài khoản xác thực thành công
+                        .error-button
+                            a(href='/') Trở về trang chủ

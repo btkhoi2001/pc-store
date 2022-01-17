@@ -1,8 +1,6 @@
 import pkg from "sequelize";
 import sequelize from "../../config/database/index.js";
 import User from "../user.js";
-import Cart from "../cart.js";
-import Wishlist from "../wishlist.js";
 
 const { QueryTypes } = pkg;
 
@@ -26,14 +24,6 @@ export const registerUser = async (contextObject) => {
         fullName: name,
         email,
         password,
-    });
-
-    await Cart.create({
-        userId: newUser.id,
-    });
-
-    await Wishlist.create({
-        userId: newUser.id,
     });
 
     return { newUser };
