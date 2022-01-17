@@ -1,4 +1,8 @@
-import { getUsers } from "../models/services/userService.js";
+import {
+    getUsers,
+    getUser,
+    updateAdmin,
+} from "../models/services/userService.js";
 
 export const show = async (req, res) => {
     const { search } = req.query;
@@ -10,7 +14,8 @@ export const show = async (req, res) => {
             page: currentPage,
             limit,
             search,
-            admin: 1,
+            role: ["Admin", "SubAdmin"],
+            sortBy: "id-desc",
         });
 
         res.render("./users/admins", {
@@ -23,5 +28,40 @@ export const show = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
+    }
+};
+
+export const showDetail = async (req, res) => {
+    const { adminId } = req.params;
+
+    try {
+        const admin = (await getUser({ userId: adminId })).user;
+
+        res.render("./users/admin-details", {
+            currentMenu: "/admins",
+            title: "Quản trị viên",
+            admin,
+            error: req.flash("error"),
+            success: req.flash("success"),
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const editAdmin = async (req, res) => {
+    const { adminId } = req.params;
+    const { activated } = req.body;
+
+    try {
+        if (req.user.role != "Admin") throw "";
+
+        await updateAdmin({ adminId, activated });
+
+        req.flash("success", "Cập nhật trạng thái thành công");
+        res.redirect(`/admins/${adminId}`);
+    } catch (error) {
+        req.flash("error", "Có lỗi xảy ra, vui lòng thử lại");
+        res.redirect(`/admins/${adminId}`);
     }
 };

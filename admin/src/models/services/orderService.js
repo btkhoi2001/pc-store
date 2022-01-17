@@ -187,5 +187,9 @@ export const getReport = async () => {
         )[0]
     );
 
+    report.totalProfit = report.totalProfit
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
     return { report };
 };

@@ -6,7 +6,7 @@ import adminRouter from "./admin.js";
 import dashboardRouter from "./dashboard.js";
 import orderRouter from "./order.js";
 import userRouter from "./user.js";
-
+import settingRouter from "./setting.js";
 const router = express.Router();
 
 router.use("/auth", authRouter);
@@ -22,18 +22,14 @@ router.use("/admins", adminRouter);
 router.use("/dashboard", dashboardRouter);
 router.use("/orders", orderRouter);
 router.use("/users", userRouter);
-
-router.get("/settings", (req, res) => {
-    res.render("./settings/settings", { path: req.path });
+router.use("/settings", settingRouter);
+router.get("/", (req, res) => {
+    res.redirect("/dashboard");
 });
 
-// router.get("/", (req, res) => {
-//     res.redirect("/dashboard");
+// router.use((req, res) => {
+//     if (req.isAuthenticated()) res.status(404).render("404");
+//     else res.redirect("/");
 // });
-
-router.use((req, res) => {
-    if (req.isAuthenticated()) res.status(404).render("404");
-    else res.redirect("/");
-});
 
 export default router;

@@ -1,0 +1,43 @@
+extends ../layouts/default.pug
+
+block main_content
+    - currentPage = parseInt(currentPage)
+    - totalPages = parseInt(totalPages)
+    section.content-main
+        .content-header
+            a.btn.btn-light(href='javascript:history.back()')
+                i.material-icons.md-arrow_back
+                |  Quay lại
+        .card.mb-4
+            .card-header.bg-warning(style='height: 150px')
+            .card-body
+                .row
+                    .col-xl.col-lg.flex-grow-0(style='flex-basis: 230px')
+                        .img-thumbnail.shadow.w-100.bg-white.position-relative.text-center(style='height: 190px; width: 200px; margin-top: -120px;')
+                            if admin.avatarUrl === null
+                                img.center-xy.img-fluid(src='/images/people/avatar-default.jpg' alt='Avatar')
+                            else
+                                img.center-xy.img-fluid(src=admin.avatarUrl alt='Avatar')
+                    .col-xl.col-lg
+                        h3= admin.fullName
+                        br
+                        if admin.activated == 1
+                            span.badge.rounded-pill.alert-success Đã kích hoạt                       
+                        else 
+                            span.badge.rounded-pill.alert-danger Chưa kích hoạt
+                    if admin.role != "Admin" && account.role == "Admin"
+                        .col-xl-4.text-md-end
+                            form.admins(method='POST' action=`/admins/${admin.id}`)
+                                select.form-select.w-auto.d-inline-block(name="activated")
+                                    option Thao tác
+                                    option(value='1') Kích hoạt
+                                    option(value='0') Ngưng kích hoạt
+                                button.btn.btn-light(type="submit") Lưu
+                hr.my-4
+                .row.g-4
+                    .col-sm-6.col-lg-4.col-xl-3
+                        h6 Liên hệ
+                        p.break-line= `${admin.email}\n${admin.phoneNumber}`
+                    .col-sm-6.col-lg-4.col-xl-3
+                        h6 Địa chỉ
+                        p= admin.address

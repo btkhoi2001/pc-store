@@ -1,3 +1,25 @@
+$(document).ready(function () {
+    var readURL = function (input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $(".profile-pic").attr("src", e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    };
+
+    $(".file-upload").on("change", function () {
+        readURL(this);
+    });
+
+    $(".upload-button").on("click", function () {
+        $(".file-upload").click();
+    });
+});
+
 $("#add-button").click(() => {
     const numberOrder =
         ($("#specifications div:last-child div:first-child").text() | 0) + 1;
@@ -96,7 +118,7 @@ $("select.form-select.users").change((event) => {
     window.location.search = urlParams;
 });
 
-$("form.users").submit((event) => {
+$("form.users, form.admins").submit((event) => {
     const status = $("select.form-select.d-inline-block.orders").val();
 
     if (status == "Thao tác") event.preventDefault();

@@ -10,7 +10,7 @@ export const getUser = async (contextObject) => {
     const { email } = contextObject;
 
     const user = await sequelize.query(
-        `SELECT id, fullName, phoneNumber, address, email, password, avatarUrl, activated, blocked
+        `SELECT id, fullName, phoneNumber, address, email, password, avatarUrl, activated, blocked, role
         FROM user
         WHERE email = ?`,
         { replacements: [email], type: QueryTypes.SELECT }

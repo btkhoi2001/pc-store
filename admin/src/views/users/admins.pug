@@ -16,13 +16,13 @@ block main_content
                             tr
                                 th Tên
                                 th Email
-                                th Ngày tham gia
-                                th Số điện thoại
-                                th Địa chỉ
+                                th Quyền
+                                th Tình trạng
+                                th.text-end
                         tbody
                             each user in users
                                 tr
-                                    td(width='25%')
+                                    td(width='40%')
                                         a.itemside(href='#')
                                             .left
                                                 if user.avatarUrl === null
@@ -32,10 +32,18 @@ block main_content
                                             .info.pl-3
                                                 h6.mb-0.title= user.fullName
                                                 small.text-muted= `ID: #${user.id}`
-                                    td(width='25%')= user.email
-                                    td= user.createdAt
-                                    td= user.phoneNumber
-                                    td(width='30%')= user.address
+                                    td= user.email
+                                    if user.role == "Admin"
+                                        td Quản trị viên
+                                    else 
+                                        td Quản trị viên phụ
+                                    td
+                                        if user.activated == 1
+                                            span.badge.rounded-pill.alert-success Đã kích hoạt
+                                        else
+                                            span.badge.rounded-pill.alert-danger Chưa kích hoạt                                  
+                                    td.text-end
+                                        a.btn.btn-light(href=`/admins/${user.id}`) Xem
         nav.float-end.mt-4(aria-label='Page navigation')
             ul.pagination
                 if currentPage > 1

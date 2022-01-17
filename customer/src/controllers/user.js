@@ -54,12 +54,6 @@ export const updateAccountAPI = async (req, res) => {
             avatarUrl,
         });
 
-        if (fullName) req.session.passport.user.fullName = fullName;
-        if (phoneNumber) req.session.passport.user.phoneNumber = phoneNumber;
-        if (address) req.session.passport.user.address = address;
-        if (avatarUrl) req.session.passport.user.avatarUrl = avatarUrl;
-
-        req.session.save();
         res.status(200).json({});
     } catch (error) {
         res.status(500).json({});
@@ -90,9 +84,6 @@ export const changePasswordAPI = async (req, res) => {
         const hashedPassword = await argon2.hash(newPassword);
 
         await updateAccount({ userId, password: hashedPassword });
-
-        req.session.passport.user.password = hashedPassword;
-        req.session.save();
 
         res.status(200).json({});
     } catch (error) {

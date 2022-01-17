@@ -16,7 +16,7 @@ export const show = async (req, res) => {
             limit,
             search,
             blocked,
-            admin: 0,
+            role: ["User"],
         });
 
         res.render("./users/users", {

@@ -13,18 +13,28 @@ export const passport = passportPkg.use(
             try {
                 const { user } = await getUser({ email });
 
-                if (!user || !user.admin) return done(null, false);
+                if (!user || (user.role != "Admin" && user.role != "SubAdmin"))
+                    return done(null, false, {
+                        message: "Thông tin đăng nhập không chính xác",
+                    });
+
+                if (!user.activated)
+                    return done(null, false, {
+                        message: "Tài khoản chưa được kích hoạt",
+                    });
 
                 const passwordValid = await argon2.verify(
                     user.password,
                     password
                 );
 
-                if (!passwordValid) return done(null, false);
+                if (!passwordValid)
+                    return done(null, false, {
+                        message: "Thông tin đăng nhập không chính xác",
+                    });
 
                 return done(null, user);
             } catch (error) {
-                console.log(error);
                 return done(error);
             }
         }
@@ -35,6 +45,16 @@ passport.serializeUser((user, done) => {
     done(null, user);
 });
 
-passport.deserializeUser((user, done) => {
-    done(null, user);
+passport.deserializeUser(async (user, done) => {
+    try {
+        const userInDB = (await getUser({ email: user.email })).user;
+
+        if (!userInDB.activated) return done(null, false);
+
+        if (userInDB.password != user.password) return done(null, false);
+
+        return done(null, userInDB);
+    } catch (error) {
+        return done(null, false);
+    }
 });

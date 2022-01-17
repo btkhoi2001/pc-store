@@ -10,7 +10,7 @@ router.post(
     "/login",
     passport.authenticate("local", {
         failureRedirect: "/auth",
-        failureFlash: "Thông tin đăng nhập không chính xác",
+        failureFlash: true,
     }),
     login
 );

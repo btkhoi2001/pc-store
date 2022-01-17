@@ -5,11 +5,17 @@ import User from "../user.js";
 const { QueryTypes } = pkg;
 
 export const getUsers = async (contextObject) => {
-    const { search, page, limit, sortBy, blocked, admin } = contextObject;
+    const { search, page, limit, sortBy, blocked, role } = contextObject;
 
     let sortQuery;
 
     switch (sortBy) {
+        case "id-asc":
+            sortQuery = "ORDER BY user.id ASC";
+            break;
+        case "id-desc":
+            sortQuery = "ORDER BY user.id DESC";
+            break;
         case "name-asc":
             sortQuery = "ORDER BY user.fullName ASC";
             break;
@@ -36,7 +42,7 @@ export const getUsers = async (contextObject) => {
     const totalRows = await sequelize.query(
         `SELECT COUNT(*)
         FROM user
-        WHERE (? OR user.id = ? OR user.fullName LIKE ? OR user.email LIKE ?) AND (? OR blocked = ?) AND admin = ? AND user.activated = 1`,
+        WHERE (? OR user.id = ? OR user.fullName LIKE ? OR user.email LIKE ?) AND (? OR user.blocked = ?) AND user.role IN (?)`,
         {
             replacements: [
                 search === undefined,
@@ -45,7 +51,7 @@ export const getUsers = async (contextObject) => {
                 `%${search}%`,
                 blocked === undefined || blocked == "Tình trạng",
                 blocked,
-                admin,
+                role,
             ],
             type: QueryTypes.SELECT,
         }
@@ -54,9 +60,9 @@ export const getUsers = async (contextObject) => {
     const totalPages = Math.ceil(totalRows[0].rows / limit) || 1;
 
     const users = await sequelize.query(
-        `SELECT user.id, user.fullName, user.email, user.createdAt, user.blocked, user.avatarUrl, user.address, user.phoneNumber
+        `SELECT user.id, user.fullName, user.email, user.createdAt, user.blocked, user.avatarUrl, user.address, user.phoneNumber, user.role, user.activated
         FROM user
-        WHERE (? OR user.id = ? OR user.fullName LIKE ? OR user.email LIKE ?) AND (? OR blocked = ?) AND admin = ? AND user.activated = 1
+        WHERE (? OR user.id = ? OR user.fullName LIKE ? OR user.email LIKE ?) AND (? OR user.blocked = ?) AND user.role IN (?)
         ${sortQuery}
         LIMIT ? OFFSET ?`,
         {
@@ -67,7 +73,7 @@ export const getUsers = async (contextObject) => {
                 `%${search}%`,
                 blocked === undefined || blocked == "Tình trạng",
                 blocked,
-                admin,
+                role,
                 limit,
                 (page - 1) * limit,
             ],
@@ -86,7 +92,7 @@ export const getUser = async (contextObject) => {
     const { email, userId } = contextObject;
 
     const user = await sequelize.query(
-        `SELECT id, fullName, phoneNumber, address, email, password, avatarUrl, activated, blocked, admin
+        `SELECT id, fullName, phoneNumber, address, email, password, avatarUrl, activated, blocked, role
         FROM user
         WHERE (? OR email = ?) AND (? OR id = ?)`,
         {
@@ -104,13 +110,36 @@ export const getUser = async (contextObject) => {
 };
 
 export const updateUser = async (contextObject) => {
-    const { userId, blocked } = contextObject;
+    const {
+        userId,
+        blocked,
+        fullName,
+        address,
+        phoneNumber,
+        avatarUrl,
+        password,
+    } = contextObject;
 
     await User.update(
-        { blocked },
+        { blocked, fullName, address, phoneNumber, avatarUrl, password },
         {
             where: {
                 id: userId,
+            },
+            omitNull: true,
+        }
+    );
+};
+
+export const updateAdmin = async (contextObject) => {
+    const { adminId, activated } = contextObject;
+    console.log(activated, adminId);
+    await User.update(
+        { activated },
+        {
+            where: {
+                id: adminId,
+                role: "SubAdmin",
             },
         }
     );
@@ -123,7 +152,7 @@ export const registerUser = async (contextObject) => {
         fullName: name,
         email,
         password,
-        admin: true,
+        role: "SubAdmin",
     });
 
     return { newUser };

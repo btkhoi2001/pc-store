@@ -17,8 +17,8 @@ router.post(
     "/login",
     passport.authenticate("local", {
         successRedirect: "/",
-        failureRedirect: "/auth/login",
-        failureFlash: "Thông tin đăng nhập không chính xác",
+        failureRedirect: "/auth",
+        failureFlash: true,
     })
 );
 router.get("/register", showRegister);

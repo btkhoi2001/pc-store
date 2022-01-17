@@ -18,9 +18,9 @@ const User = sequelize.define(
         email: DataTypes.STRING(100),
         avatarUrl: DataTypes.STRING(200),
         password: DataTypes.STRING(256),
-        admin: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
+        role: {
+            type: DataTypes.ENUM("User", "Admin", "SubAdmin"),
+            default: "User",
         },
         activated: {
             type: DataTypes.BOOLEAN,

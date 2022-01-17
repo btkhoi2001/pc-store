@@ -9,43 +9,58 @@ block main_content
                 .row.gx-5
                     .col
                         section.content-body.p-xl-4
-                            form
+                            form(method='POST' action=`/settings` enctype='multipart/form-data')
                                 .row
                                     .col-lg-8
                                         .row.gx-3
                                             .col-lg-12.mb-3
                                                 label.form-label Họ và tên
-                                                input.form-control(type='text' value=user.fullName)
+                                                input.form-control(type='text' value=account.fullName name="fullName")
                                             .col-lg-12.mb-3
                                                 label.form-label Email
-                                                p= user.email
-                                            .col-lg-6.mb-3
+                                                p= account.email
+                                            .col-lg-12.mb-3
                                                 label.form-label Điện thoại
-                                                input.form-control(type='tel' value=user.phoneNumber)
-                                            .col-lg-6.mb-3
-                                                label.form-label Ngày sinh
-                                                input.form-control(type='date')                                                
+                                                input.form-control(type='tel' value=account.phoneNumber name="phoneNumber")                                                
                                             .col-lg-12.mb-3
                                                 label.form-label Địa chỉ
-                                                input.form-control(type='text' value=user.address)
+                                                input.form-control(type='text' value=account.address name="address")
                                     aside.col-lg-4
                                         figure.text-lg-center
-                                            img.img-lg.mb-3.img-avatar(src='/images/people/avatar4.jpg' alt='User Photo')
-                                            figcaption
-                                                a.btn.btn-outline-primary(href='#')
-                                                    i.icons.material-icons.md-backup
-                                                    | T&#x1EA3;i l&ecirc;n
+                                            .avatar-wrapper
+                                                if account.avatarUrl == null
+                                                    img.profile-pic(src="/images/people/avatar-default.jpg")
+                                                else 
+                                                    img.profile-pic(src=account.avatarUrl)
+                                                .upload-button
+                                                    i.fa.fa-arrow-circle-up(aria-hidden='true')
+                                                input.file-upload(type='file' accept='image/*', name="avatar")
                                     .col-lg-4
-                                        button.btn.btn-primary(type='submit') L&#x1B0;u thay &dstrok;&#x1ED5;i
+                                        button.btn.btn-primary(type='submit') Lưu thay đổi
                             hr.my-5
                             .row(style='max-width: 920px')
                             .col-md
                                 article.box.mb-3.bg-light
-                                    a.btn.float-end.btn-light.btn-sm(href='#') Thay &dstrok;&#x1ED5;i
-                                    h6 M&#x1EAD;t kh&#x1EA9;u
-                                    small.text-muted.d-block(style='width: 70%') B&#x1EA1;n c&oacute; th&#x1EC3; thay &dstrok;&#x1ED5;i m&#x1EAD;t kh&#x1EA9;u b&#x1EB1;ng c&aacute;ch b&#x1EA5;m v&agrave;o &dstrok;&acirc;y
-                            .col-md
-                                article.box.mb-3.bg-light
-                                    a.btn.float-end.btn-outline-danger.btn-sm(href='#') X&oacute;a
-                                    h6 X&oacute;a t&agrave;i kho&#x1EA3;n
-                                    small.text-muted.d-block(style='width: 70%') M&#x1ED9;t khi &dstrok;&atilde; x&oacute;a t&agrave;i kho&#x1EA3;n s&#x1EBD; kh&ocirc;ng th&#x1EC3; quay l&#x1EA1;i
+                                    a.btn.float-end.btn-light.btn-sm(href="#" data-target="#pwdModal" data-toggle="modal") Thay đổi
+                                    h6 Mật khẩu
+                                    small.text-muted.d-block(style='width: 70%') Bạn có thể thay đổi mật khẩu bằng cách bấm vào đây
+        #pwdModal.modal.fade(tabindex='-1' role='dialog' aria-hidden='true')
+            .modal-dialog
+                .modal-content
+                    .modal-header
+                        h3.text-center Thay đổi mật khẩu
+                    .modal-body
+                        .col-md-12
+                            .panel.panel-default
+                                .panel-body
+                                    .text-center
+                                        .panel-body
+                                            fieldset
+                                                form.form-group(method='POST' action=`/settings/change-password`)
+                                                    input.form-control.input-lg(placeholder='Mật khẩu hiện tại' name='currentPassword' type='password')
+                                                    input.form-control.input-lg(placeholder='Mật khẩu mới' name='newPassword' type='password')
+                                                    input.form-control.input-lg(placeholder='Xác nhận mật khẩu' name='confirmPassword' type='password')
+                                                    button.btn.btn-lg.btn-primary.btn-block.mt-5(type='submit') Gửi
+                    .modal-footer
+                        .col-md-3.ml-auto
+                            button.btn(data-dismiss='modal' aria-hidden='true') Đóng                                    
