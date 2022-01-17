@@ -23,10 +23,6 @@ router.use("/dashboard", dashboardRouter);
 router.use("/orders", orderRouter);
 router.use("/users", userRouter);
 
-router.get("/reviews", (req, res) => {
-    res.render("./reviews/reviews", { path: req.path });
-});
-
 router.get("/settings", (req, res) => {
     res.render("./settings/settings", { path: req.path });
 });

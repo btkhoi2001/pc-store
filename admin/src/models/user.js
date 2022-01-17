@@ -12,10 +12,22 @@ const User = sequelize.define(
             primaryKey: true,
             autoIncrement: true,
         },
-        fullName: DataTypes.STRING(150),
-        phoneNumber: DataTypes.STRING(12),
-        address: DataTypes.STRING(150),
-        email: DataTypes.STRING(100),
+        fullName: {
+            type: DataTypes.STRING(150),
+            default: "",
+        },
+        phoneNumber: {
+            type: DataTypes.STRING(12),
+            default: "",
+        },
+        address: {
+            type: DataTypes.STRING(150),
+            default: "",
+        },
+        email: {
+            type: DataTypes.STRING(100),
+            default: "",
+        },
         avatarUrl: DataTypes.STRING(200),
         password: DataTypes.STRING(256),
         admin: {

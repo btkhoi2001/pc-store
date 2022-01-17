@@ -8,12 +8,7 @@ block main_content
             header.card-header
                 .row.gx-3
                     .col-lg-4.col-md-6.me-auto
-                        input.form-control(type='text' placeholder='Tìm kiếm...')
-                    .col-lg-2.col-6.col-md-3
-                        select.form-select
-                            option Tình trạng
-                            option Đã kích hoạt
-                            option Chưa kích hoạt
+                        input.form-control(value=search type='text' placeholder='Tìm kiếm...')
             .card-body
                 .table-responsive
                     table.table.table-hover
@@ -21,67 +16,75 @@ block main_content
                             tr
                                 th Tên
                                 th Email
-                                th Tình trạng
-                                th Thời gian
-                                th.text-end
+                                th Ngày tham gia
+                                th Số điện thoại
+                                th Địa chỉ
                         tbody
-                            each admin in admins 
+                            each user in users
                                 tr
-                                    td(width='40%')
+                                    td(width='25%')
                                         a.itemside(href='#')
                                             .left
-                                                img.img-sm.img-avatar(src='/images/people/avatar3.jpg' alt='Userpic')
+                                                if user.avatarUrl === null
+                                                    img.img-sm.img-avatar(src='/images/people/avatar-default.jpg' alt='Userpic')
+                                                else                                    
+                                                    img.img-sm.img-avatar(src=user.avatarUrl alt='Userpic')
                                             .info.pl-3
-                                                h6.mb-0.title= admin.fullName
-                                                small.text-muted= `ID: #${admin.id}`
-                                    td= admin.email
-                                    td
-                                        if admin.activated
-                                            span.badge.rounded-pill.alert-success Đã kích hoạt
-                                        else 
-                                            span.badge.rounded-pill.alert-danger Chưa kích hoạt
-                                    td 08.07.2020
-                                    td.text-end
-                                        a.btn.btn-light(href='users/1') Xem
-                            tr
-                                td(width='40%')
-                                    a.itemside(href='#')
-                                        .left
-                                            img.img-sm.img-avatar(src='/images/people/avatar1.jpg' alt='Userpic')
-                                        .info.pl-3
-                                            h6.mb-0.title Eleanor Pena
-                                            small.text-muted ID: #439
-                                td eleanor2020@example.com
-                                td
-                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; k&iacute;ch ho&#x1EA1;t
-                                td 08.07.2020
-                                td.text-end
-                                    a.btn.btn-light(href='users/1') Xem
-                            tr
-                                td(width='40%')
-                                    a.itemside(href='#')
-                                        .left
-                                            img.img-sm.img-avatar(src='/images/people/avatar3.jpg' alt='Userpic')
-                                        .info.pl-3
-                                            h6.mb-0.title Jonatan Ive
-                                            small.text-muted ID: #400
-                                td mrjohn@example.com
-                                td
-                                    span.badge.rounded-pill.alert-success &Dstrok;&atilde; k&iacute;ch ho&#x1EA1;t
-                                td 08.07.2020
-                                td.text-end
-                                    a.btn.btn-light(href='users/1') Xem
-                            tr
-                                td(width='40%')
-                                    a.itemside(href='#')
-                                        .left
-                                            img.img-sm.img-avatar(src='/images/people/avatar4.jpg' alt='Userpic')
-                                        .info.pl-3
-                                            h6.mb-0.title Eleanor Pena
-                                            small.text-muted ID: #439
-                                td eleanor2020@example.com
-                                td
-                                    span.badge.rounded-pill.alert-danger Ch&#x1B0;a k&iacute;ch ho&#x1EA1;t
-                                td 08.07.2020
-                                td.text-end
-                                    a.btn.btn-light(href='users/1') Xem
+                                                h6.mb-0.title= user.fullName
+                                                small.text-muted= `ID: #${user.id}`
+                                    td(width='25%')= user.email
+                                    td= user.createdAt
+                                    td= user.phoneNumber
+                                    td(width='30%')= user.address
+        nav.float-end.mt-4(aria-label='Page navigation')
+            ul.pagination
+                if currentPage > 1
+                    li.page-item
+                        a.page-link(href=`?page=${currentPage - 1}`) Trước
+                else 
+                    li.page-item.disabled
+                        a.page-link(href="#") Trước
+
+                if totalPages == 1
+                    li.page-item.active 
+                        a.page-link(href="#") 1
+                else if totalPages == 2
+                    if currentPage == 1
+                        li.page-item.active 
+                            a.page-link(href="#") 1
+                        li.page-item
+                            a.page-link(href=`?page=2`) 2
+                    else
+                        li.page-item
+                            a.page-link(href=`?page=1`) 1
+                        li.page-item.active 
+                            a.page-link(href="#") 2
+                else
+                    if currentPage <= 1
+                        li.page-item.active 
+                            a.page-link(href="#") 1
+                        li.page-item
+                            a.page-link(href=`?page=2`) 2
+                        li.page-item
+                            a.page-link(href=`?page=3`) 3
+                    else if currentPage >= totalPages 
+                        li.page-item
+                            a.page-link(href=`?page=${totalPages - 2}`)= totalPages - 2
+                        li.page-item
+                            a.page-link(href=`?page=${totalPages - 1}`)= totalPages - 1
+                        li.page-item.active 
+                            a.page-link(href="#")= totalPages 
+                    else
+                        li.page-item
+                            a.page-link(href=`?page=${currentPage - 1}`)= currentPage - 1
+                        li.page-item.active
+                            a.page-link(href="#")= currentPage
+                        li.page-item 
+                            a.page-link(href=`?page=${currentPage + 1}`)= currentPage + 1
+
+                if currentPage >= totalPages
+                    li.page-item.disabled
+                        a.page-link(href="#") Sau
+                else
+                    li.page-item
+                        a.page-link(href=`?page=${currentPage + 1}`) Sau                                                                                    

@@ -11,28 +11,22 @@ export const getUsers = async (contextObject) => {
 
     switch (sortBy) {
         case "name-asc":
-            sortQuery = "ORDER BY `order`.fullName ASC";
+            sortQuery = "ORDER BY user.fullName ASC";
             break;
         case "name-desc":
-            sortQuery = "ORDER BY `order`.fullName DESC";
+            sortQuery = "ORDER BY user.fullName DESC";
             break;
         case "email-asc":
-            sortQuery = "ORDER BY `order`.email ASC";
+            sortQuery = "ORDER BY user.email ASC";
             break;
         case "email-desc":
-            sortQuery = "ORDER BY `order`.email DESC";
-            break;
-        case "total-asc":
-            sortQuery = "ORDER BY `order`.total ASC";
-            break;
-        case "total-desc":
-            sortQuery = "ORDER BY `order`.total DESC";
+            sortQuery = "ORDER BY user.email DESC";
             break;
         case "new":
-            sortQuery = "ORDER BY `order`.createdAt DESC";
+            sortQuery = "ORDER BY user.createdAt DESC";
             break;
         case "old":
-            sortQuery = "ORDER BY `order`.createdAt ASC";
+            sortQuery = "ORDER BY user.createdAt ASC";
             break;
         default:
             sortQuery = "ORDER BY user.id ASC";
@@ -42,7 +36,7 @@ export const getUsers = async (contextObject) => {
     const totalRows = await sequelize.query(
         `SELECT COUNT(*)
         FROM user
-        WHERE (? OR user.id = ? OR user.fullName LIKE ? OR user.email LIKE ?) AND (? OR blocked = ?) AND admin = ? AND user.activated = 1 AND admin = 0`,
+        WHERE (? OR user.id = ? OR user.fullName LIKE ? OR user.email LIKE ?) AND (? OR blocked = ?) AND admin = ? AND user.activated = 1`,
         {
             replacements: [
                 search === undefined,
@@ -60,9 +54,9 @@ export const getUsers = async (contextObject) => {
     const totalPages = Math.ceil(totalRows[0].rows / limit) || 1;
 
     const users = await sequelize.query(
-        `SELECT user.id, user.fullName, user.email, user.createdAt, user.blocked, user.avatarUrl
+        `SELECT user.id, user.fullName, user.email, user.createdAt, user.blocked, user.avatarUrl, user.address, user.phoneNumber
         FROM user
-        WHERE (? OR user.id = ? OR user.fullName LIKE ? OR user.email LIKE ?) AND (? OR blocked = ?) AND admin = ? AND user.activated = 1 AND admin = 0
+        WHERE (? OR user.id = ? OR user.fullName LIKE ? OR user.email LIKE ?) AND (? OR blocked = ?) AND admin = ? AND user.activated = 1
         ${sortQuery}
         LIMIT ? OFFSET ?`,
         {
@@ -112,8 +106,6 @@ export const getUser = async (contextObject) => {
 export const updateUser = async (contextObject) => {
     const { userId, blocked } = contextObject;
 
-    console.log(userId, blocked);
-
     await User.update(
         { blocked },
         {
@@ -135,15 +127,4 @@ export const registerUser = async (contextObject) => {
     });
 
     return { newUser };
-};
-
-export const getUserAdminList = async (contextObject) => {
-    const admins = await sequelize.query(
-        `SELECT id, fullName, email, avatarUrl, activated, createdAt
-        FROM user
-        WHERE admin = 1`,
-        { type: QueryTypes.SELECT }
-    );
-
-    return { admins };
 };

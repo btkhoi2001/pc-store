@@ -11,6 +11,8 @@ export const show = async (req, res) => {
         const { categoryBrands } = await getCategoryBrand();
 
         res.render("./products/add-product.pug", {
+            title: "Thêm sản phẩm",
+            currentMenu: "/add-product",
             categoryBrands,
             error: req.flash("error"),
             success: req.flash("success"),

@@ -29,6 +29,8 @@ export const show = async (req, res) => {
         });
 
         res.render("./products/products.pug", {
+            title: "Sản phẩm",
+            currentMenu: "/products",
             pattern,
             currentPage,
             totalPages,
