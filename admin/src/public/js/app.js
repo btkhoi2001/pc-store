@@ -56,13 +56,17 @@ $("li.page-item a.page-link").click((event) => {
 });
 
 $(".info-wrap .btn.btn-sm.btn-outline-danger").click((event) => {
-    const id = $(event.target).attr("data-id");
+    let id;
+
+    if (event.target.nodeName == "DIV") id = $(event.target).attr("data-id");
+    else page = $(event.target).closest("div").attr("href");
 
     $.ajax({
-        url: `/products/${id}`,
         type: "DELETE",
-    }).done(() => {
-        window.location.reload();
+        url: `/products/${id}`,
+        success: function () {
+            window.location.reload();
+        },
     });
 });
 
@@ -122,4 +126,20 @@ $("form.users, form.admins").submit((event) => {
     const status = $("select.form-select.d-inline-block.orders").val();
 
     if (status == "Thao tác") event.preventDefault();
+});
+
+$("select.form-select.products").change((event) => {
+    const category = $(event.target).val();
+    const urlParams = new URLSearchParams(window.location.search);
+
+    urlParams.set("category", category);
+    window.location.search = urlParams;
+});
+
+$("select.form-select.products-sort").change((event) => {
+    const sortBy = $(event.target).val();
+    const urlParams = new URLSearchParams(window.location.search);
+
+    urlParams.set("sortBy", sortBy);
+    window.location.search = urlParams;
 });

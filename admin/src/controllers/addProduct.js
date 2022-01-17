@@ -1,5 +1,5 @@
 import {
-    getCategoryBrand,
+    getCategoryBrands,
     getCategoryBrandById,
 } from "../models/services/categoryBrandService.js";
 import { createNewProduct } from "../models/services/productService.js";
@@ -8,7 +8,7 @@ import { createNewProductImage } from "../models/services/productImageService.js
 
 export const show = async (req, res) => {
     try {
-        const { categoryBrands } = await getCategoryBrand();
+        const { categoryBrands } = await getCategoryBrands();
 
         res.render("./products/add-product.pug", {
             title: "Thêm sản phẩm",
@@ -58,19 +58,18 @@ export const createProduct = async (req, res) => {
 
         if (specificationContent) {
             for (let i = 0; i < specificationContent.length; i++) {
-                const { newProductSpecification } =
-                    await createNewProductSpecification({
-                        productId: newProduct.id,
-                        numberOrder: i + 1,
-                        content: specificationContent[i],
-                        value: specificationValue[i],
-                    });
+                await createNewProductSpecification({
+                    productId: newProduct.id,
+                    numberOrder: i + 1,
+                    content: specificationContent[i],
+                    value: specificationValue[i],
+                });
             }
         }
 
         if (files) {
             for (let i = 0; i < files.length; i++) {
-                const { newProductImage } = await createNewProductImage({
+                await createNewProductImage({
                     file: files[i],
                     productId: newProduct.id,
                     numberOrder: i + 1,

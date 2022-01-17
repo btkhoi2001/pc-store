@@ -1,4 +1,4 @@
-form(method='POST' action='/add-product' enctype='multipart/form-data')
+form(method='POST' action=`/products/${product.id}/edit` enctype='multipart/form-data')
     .mb-4
         label.form-label(for='product_name') Tên sản phẩm
         input#product_name.form-control(type='text', name="productName", value=product.name)
@@ -12,10 +12,7 @@ form(method='POST' action='/add-product' enctype='multipart/form-data')
                 .center 
                     .form-input 
                         .preview 
-                            if productImages[i - 1]
-                                img(src=productImages[i - 1].imageUrl style="display: block;")
-                            else 
-                                img
+                            img
                         label(for=`file-ip${i}`) Upload 
                         input(id=`file-ip${i}` type="file" name="images" accept="image/*" onchange="showPreview(event);")
         - }
@@ -24,12 +21,20 @@ form(method='POST' action='/add-product' enctype='multipart/form-data')
             label.form-label Loại hàng
             select.form-select(name="category")
                 each categoryBrand in categoryBrands
-                    option(value=categoryBrand.categoryId)= categoryBrand.categoryContent
+                    if categoryBrand.checked
+                        option(value=categoryBrand.categoryId selected)= categoryBrand.categoryContent
+                    else
+                        option(value=categoryBrand.categoryId)= categoryBrand.categoryContent
         #brand.col-sm-6.mb-3
             label.form-label Thương hiệu
             select.form-select(name="brand")
-                each brand in categoryBrands[0].brands
-                    option(value=brand.brandId)= brand.brandContent
+                each categoryBrand in categoryBrands
+                    if categoryBrand.checked            
+                        each brand in categoryBrand.brands
+                            if brand.checked
+                                option(value=brand.brandId selected)= brand.brandContent
+                            else
+                                option(value=brand.brandId)= brand.brandContent
     #specifications.mb-4
         label.form-label Thông số kỹ thuật
         each specification in productSpecifications

@@ -10,7 +10,10 @@ header.main-header.navbar
             if account
                 li.dropdown.nav-item
                     a.dropdown-toggle(data-bs-toggle='dropdown' href='#')
-                        img.img-xs.rounded-circle(src='/images/people/avatar4.jpg' alt='User')
+                        if account.avatarUrl == null
+                            img.img-xs.rounded-circle(src='/images/people/avatar-default.jpg' alt='User')
+                        else 
+                            img.img-xs.rounded-circle(src=account.avatarUrl alt='User')
                     .dropdown-menu.dropdown-menu-end
                         a.dropdown-item(href='/settings') Cài đặt
                         a.dropdown-item.text-danger(href='/auth/logout') Đăng xuất

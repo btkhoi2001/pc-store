@@ -1,40 +1,49 @@
 import {
-    getProductQuantity,
-    getProductList,
+    getProducts,
     deleteProductByProductId,
-    getProductByProductId,
+    getProduct,
+    updateProduct,
 } from "../models/services/productService.js";
-import { getCategoryBrand } from "../models/services/categoryBrandService.js";
-import { getProductSpecificationByProductId } from "../models/services/productSpecificationService.js";
-import { getProductImageByProductId } from "../models/services/productImageService.js";
+import { getCategories } from "../models/services/categoryService.js";
+import {
+    getCategoryBrandById,
+    getCategoryBrands,
+} from "../models/services/categoryBrandService.js";
+import {
+    deleteProductSpecification,
+    getProductSpecificationByProductId,
+} from "../models/services/productSpecificationService.js";
+import {
+    createNewProductImage,
+    deleteProductImage,
+} from "../models/services/productImageService.js";
 
 export const show = async (req, res) => {
     const currentPage = req.query.page || 1;
     const limit = req.query.limit || 10;
-    const pattern = req.query.search || "";
+    const { search, sortBy, category } = req.query;
 
     try {
-        const { productQuantity } = await getProductQuantity({ pattern });
-        const totalPages = Math.ceil(productQuantity / limit) || 1;
-
-        if (currentPage < 1)
-            res.redirect(`./products?page=1&search=${pattern}`);
-        else if (currentPage > totalPages)
-            res.redirect(`./products?page=${totalPages}&search=${pattern}`);
-
-        const { products } = await getProductList({
-            offset: (currentPage - 1) * limit,
+        const { totalPages, products } = await getProducts({
+            page: currentPage,
             limit,
-            pattern,
+            search,
+            sortBy,
+            category,
         });
+
+        const { categories } = await getCategories();
 
         res.render("./products/products.pug", {
             title: "Sản phẩm",
             currentMenu: "/products",
-            pattern,
+            search,
             currentPage,
             totalPages,
+            categories,
+            category,
             products,
+            sortBy,
         });
     } catch (error) {
         console.log(error);
@@ -45,52 +54,47 @@ export const deleteProduct = async (req, res) => {
     const { productId } = req.params;
 
     try {
-        const { deletedProduct } = await deleteProductByProductId({
+        await deleteProductByProductId({
             id: parseInt(productId),
         });
-    } catch (error) {
-        console.log(error);
-    }
 
-    res.status(200).json({});
+        res.status(200).json({});
+    } catch (error) {
+        res.status(500).json({});
+    }
 };
 
 export const showEditProduct = async (req, res) => {
     const { productId } = req.params;
 
     try {
-        const { product } = await getProductByProductId({ id: productId });
+        const { product } = await getProduct({ productId });
         const { productSpecifications } =
             await getProductSpecificationByProductId({ productId });
-        const { productImages } = await getProductImageByProductId({
-            productId,
-        });
-        const { categoryBrands } = await getCategoryBrand();
+        const { categoryBrands } = await getCategoryBrands();
 
         for (const categoryBrand of categoryBrands) {
             let flag = false;
-
-            for (const brand of categoryBrand.brands)
+            for (const brand of categoryBrand.brands) {
                 if (brand.categoryBrandId == product.categoryBrandId) {
                     categoryBrand.checked = true;
                     brand.checked = true;
-
                     flag = true;
                     break;
                 }
-
+            }
             if (flag) break;
         }
 
-        for (let i = 1; i < 4; i++)
-            if (!productImages[i] || productImages[i].numberOrder != i)
-                productImages.splice(i, 0, null);
-
         res.render("./products/edit-product", {
+            title: "Cập nhật sản phẩm",
+            currentMenu: "/products",
             product,
             productSpecifications,
-            productImages,
             categoryBrands,
+            data: categoryBrands,
+            success: req.flash("success"),
+            error: req.flash("error"),
         });
     } catch (error) {
         console.log(error);
@@ -104,11 +108,13 @@ export const editProduct = async (req, res) => {
         description,
         category,
         brand,
-        spec,
-        specValue,
+        specificationContent,
+        specificationValue,
         price,
         published,
     } = req.body;
+
+    const { files } = req;
 
     if (!productName || !description || !price) {
         req.flash("error", "Mục còn trống");
@@ -116,28 +122,40 @@ export const editProduct = async (req, res) => {
     }
 
     try {
-        const categoryBrand = await sequelize.query(
-            `SELECT id
-            FROM category_brand
-            WHERE categoryId = ${category} AND brandId = ${brand}`,
-            { type: QueryTypes.SELECT }
-        );
+        const { categoryBrand } = await getCategoryBrandById({
+            categoryId: category,
+            brandId: brand,
+        });
 
-        const newProduct = await Product.create({
-            name: productName,
+        await updateProduct({
+            productId,
             description,
-            categoryBrandId: categoryBrand[0].id,
+            categoryBrandId: categoryBrand.id,
             price,
             published,
         });
 
-        if (typeof spec != "undefined") {
-            for (let i = 0; i < spec.length; i++) {
-                const newSpec = await ProductSpecification.create({
-                    productId: newProduct.dataValues.id,
+        await deleteProductSpecification({ productId });
+
+        if (specificationContent) {
+            for (let i = 0; i < specificationContent.length; i++) {
+                await createNewProductSpecification({
+                    productId,
                     numberOrder: i + 1,
-                    content: spec[i],
-                    value: specValue[i],
+                    content: specificationContent[i],
+                    value: specificationValue[i],
+                });
+            }
+        }
+
+        await deleteProductImage({ productId });
+
+        if (files) {
+            for (let i = 0; i < files.length; i++) {
+                await createNewProductImage({
+                    file: files[i],
+                    productId,
+                    numberOrder: i + 1,
                 });
             }
         }
@@ -145,6 +163,7 @@ export const editProduct = async (req, res) => {
         req.flash("success", "Sửa sản phẩm thành công");
         res.redirect(`/products/${productId}/edit`);
     } catch (error) {
+        console.log(error);
         req.flash("error", "Có lỗi xảy ra, vui lòng thử lại");
         res.redirect(`/products/${productId}/edit`);
     }

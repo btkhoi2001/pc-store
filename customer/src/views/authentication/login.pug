@@ -13,6 +13,24 @@ form(action='/auth/login' method="POST")
                 input.mb-0(type='password' name="password")
             .col-md-8
             .col-md-4.mt-10.mb-20.text-left.text-md-right
-                a(href='#') Quên mật khẩu
+                a(href='#' data-target="#pwdModal" data-toggle="modal") Quên mật khẩu
             .col-md-12
                 button.pointer.register-button.mt-0 Đăng nhập
+#pwdModal.modal.fade(tabindex='-1' role='dialog' aria-hidden='true')
+    .modal-dialog
+        .modal-content
+            .modal-header
+                h4.text-center Quên mật khẩu
+            .modal-body
+                .col-md-12
+                    .panel.panel-default
+                        .panel-body
+                            .text-center
+                                .panel-body
+                                    fieldset
+                                        form.form-group(method='POST' action=`/settings/change-password`)
+                                            input.form-control.input-lg(placeholder='Nhập email' name='currentPassword' type='text')
+                                            button.btn.btn-lg.btn-primary.btn-block.mt-20(type='submit') Gửi
+            .modal-footer
+                .col-md-3.ml-auto
+                    button.btn(data-dismiss='modal' aria-hidden='true') Đóng                        

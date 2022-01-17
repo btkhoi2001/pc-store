@@ -98,7 +98,6 @@ function updateCart() {
         dataType: "json",
         success: function (data) {
             const { cart } = data.cart;
-            console.log("cart " + cart.total);
 
             $(".cart-page-total ul li span").text(`${cart.total} VNĐ`);
             $("span.item-text").text(`${cart.total} VNĐ`);
@@ -220,7 +219,6 @@ function updateCartPage() {
         success: function (data) {
             const { cart } = data.cart;
 
-            console.log("cartPage " + cart.total);
             $(".cart-page-total ul li span").text(`${cart.total} VNĐ`);
         },
     });
@@ -381,7 +379,6 @@ function addItemToWishlist(productId) {
                 data: JSON.stringify({ productId }),
                 dataType: "json",
                 success: function (data) {
-                    console.log("test");
                     updateWishlist();
                 },
             });

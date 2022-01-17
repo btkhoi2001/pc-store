@@ -133,7 +133,7 @@ export const updateUser = async (contextObject) => {
 
 export const updateAdmin = async (contextObject) => {
     const { adminId, activated } = contextObject;
-    console.log(activated, adminId);
+
     await User.update(
         { activated },
         {

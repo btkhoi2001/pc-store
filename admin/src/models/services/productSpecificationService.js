@@ -30,3 +30,13 @@ export const getProductSpecificationByProductId = async (contextObject) => {
 
     return { productSpecifications };
 };
+
+export const deleteProductSpecification = async (contextObject) => {
+    const { productId } = contextObject;
+
+    await ProductSpecification.destroy({
+        where: {
+            productId,
+        },
+    });
+};

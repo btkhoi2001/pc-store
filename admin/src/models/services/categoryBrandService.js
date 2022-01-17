@@ -3,7 +3,7 @@ import sequelize from "../../config/database/index.js";
 
 const { QueryTypes } = pkg;
 
-export const getCategoryBrand = async (contextObject) => {
+export const getCategoryBrands = async (contextObject) => {
     const categoryBrands = await sequelize.query(
         `SELECT content categoryContent, id categoryId
         FROM category`,
@@ -28,7 +28,7 @@ export const getCategoryBrandById = async (contextObject) => {
     const { categoryId, brandId } = contextObject;
 
     const categoryBrand = await sequelize.query(
-        `SELECT id categoryBrandId
+        `SELECT id
         FROM category_brand
         WHERE categoryId = ? AND brandId = ?`,
         { replacements: [categoryId, brandId], type: QueryTypes.SELECT }

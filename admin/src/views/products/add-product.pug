@@ -5,7 +5,7 @@ block main_content
         .content-header
             h2.content-title Thêm sản phẩm
             div
-                a.btn.btn-outline-danger(href='#') &times; Loại bỏ
+                a.btn.btn-outline-danger(href='/add-product') &times; Loại bỏ
         .card.mb-4
             .card-body
                 include ./form-add.pug
@@ -17,7 +17,7 @@ block scriptjs
         $("#category select").on("change load", () => {
             const categoryId = $("#category select").val();
             $("#brand select").empty();
-
+            
             for (const categoryBrand of categoryBrands) {
                 if (categoryBrand.categoryId == categoryId) {
                     for (const brand of categoryBrand.brands) {

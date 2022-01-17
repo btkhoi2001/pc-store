@@ -45,7 +45,7 @@ export const getProducts = async (contextObject) => {
     const totalRows = await sequelize.query(
         `SELECT COUNT(*) AS 'rows'
         FROM product JOIN category_brand ON product.categoryBrandId = category_brand.id JOIN category ON category_brand.categoryId = category.id JOIN brand ON brand.id = category_brand.brandId
-        WHERE (? OR product.name LIKE ?) AND (? OR category.slug = ?) AND product.archive = 0 AND (? OR brand.content IN (?)) AND (? OR category.content IN (?)) AND (? IS NULL OR product.price >= ?)  AND (? IS NULL OR product.price <= ?)`,
+        WHERE (? OR product.name LIKE ?) AND (? OR category.slug = ?) AND (? OR brand.content IN (?)) AND (? OR category.content IN (?)) AND (? IS NULL OR product.price >= ?)  AND (? IS NULL OR product.price <= ?) AND product.published = 1 AND product.archive = 0`,
         {
             replacements: [
                 search === undefined,
@@ -77,8 +77,8 @@ export const getProducts = async (contextObject) => {
 
     const filterBrands = await sequelize.query(
         `SELECT DISTINCT brand.content
-            FROM product JOIN category_brand ON product.categoryBrandId = category_brand.id JOIN category ON category_brand.categoryId = category.id JOIN brand ON brand.id = category_brand.brandId
-            WHERE (? OR category.slug = ?) AND (? OR category.content IN (?))`,
+        FROM product JOIN category_brand ON product.categoryBrandId = category_brand.id JOIN category ON category_brand.categoryId = category.id JOIN brand ON brand.id = category_brand.brandId
+        WHERE (? OR category.slug = ?) AND (? OR category.content IN (?))`,
         {
             replacements: [
                 categorySlug === undefined,
@@ -94,8 +94,8 @@ export const getProducts = async (contextObject) => {
 
     const products = await sequelize.query(
         `SELECT brand.content as 'brandContent', category.slug AS 'categorySlug', category.content AS 'categoryContent', product.id, product.name, product.slug, product.description, product.price, product_image.imageUrl, IFNULL(AVG(review.rating), 0) AS 'averageRating'
-        FROM product JOIN category_brand ON product.categoryBrandId = category_brand.id JOIN category ON category_brand.categoryId = category.id JOIN product_image ON product_image.productId = product.id JOIN brand on brand.id = category_brand.brandId LEFT JOIN review ON product.id = review.productId
-        WHERE (? OR product.name LIKE ?) AND (? OR category.slug = ?) AND product.archive = 0 AND (? OR brand.content IN (?)) AND (? OR category.content IN (?)) AND (? IS NULL OR product.price >= ?)  AND (? IS NULL OR product.price <= ?)
+        FROM product JOIN category_brand ON product.categoryBrandId = category_brand.id JOIN category ON category_brand.categoryId = category.id LEFT JOIN product_image ON product_image.productId = product.id JOIN brand on brand.id = category_brand.brandId LEFT JOIN review ON product.id = review.productId
+        WHERE (? OR product.name LIKE ?) AND (? OR category.slug = ?) AND (? OR brand.content IN (?)) AND (? OR category.content IN (?)) AND (? IS NULL OR product.price >= ?)  AND (? IS NULL OR product.price <= ?) AND product.published = 1 AND product.archive = 0 AND product_image.numberOrder = 1
         GROUP BY category.slug, category.content, product.name, product.slug, product.description, product.price, product_image.imageUrl
         ${sortQuery}
         LIMIT ? OFFSET ?`,
@@ -135,7 +135,7 @@ export const getRelativeProducts = async (contextObject) => {
     const relativeProducts = await sequelize.query(
         `SELECT product.id, product.name, product.price, product.slug, product_image.imageUrl, IFNULL(AVG(review.rating), 0) AS 'averageRating'
         FROM product JOIN product_image ON product.id = product_image.productId JOIN category_brand ON product.categoryBrandId = category_brand.id JOIN category ON category_brand.categoryId = category.id LEFT JOIN review ON product.id = review.productId
-        WHERE (? OR category.slug IN (?)) AND product_image.numberOrder = 1
+        WHERE (? OR category.slug IN (?)) AND product_image.numberOrder = 1 AND product.published = 1 AND product.archive = 0
         GROUP BY product.id, product.name, product.price, product.slug, product_image.imageUrl
         ORDER BY RAND()
         LIMIT ?`,
@@ -160,7 +160,7 @@ export const getProduct = async (contextObject) => {
     const product = await sequelize.query(
         `SELECT product.id, product.name, product.description, product.price, product.slug, IFNULL(AVG(review.rating), 0) AS 'averageRating'
         FROM product LEFT JOIN review ON product.id = review.productId
-        WHERE product.slug = ? OR product.id = ?
+        WHERE product.slug = ? OR product.id = ? AND product.published = 1 AND product.archive = 0
         GROUP BY product.id, product.name, product.description, product.price, product.slug`,
         { replacements: [productSlug, productId], type: QueryTypes.SELECT }
     );

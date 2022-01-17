@@ -3,12 +3,7 @@ extends ../layouts/default.pug
 block main_content
     section.content-main(style='max-width: 720px')
         .content-header
-            a.btn.btn-light(href='javascript:history.back()')
-                i.material-icons.md-arrow_back
-                |  Quay lại
             h2.content-title Sửa sản phẩm
-            div
-                a.btn.btn-outline-danger(href='#') &times; Loại bỏ
         .card.mb-4
             .card-body
                 include ./form-edit.pug
@@ -17,10 +12,10 @@ block scriptjs
     script(type="text/javascript").
         const categoryBrands = !{JSON.stringify(data)};
         
-        $("#category select").on("change load", () => {
+        $("#category select").on("change", () => {
             const categoryId = $("#category select").val();
             $("#brand select").empty();
-
+            
             for (const categoryBrand of categoryBrands) {
                 if (categoryBrand.categoryId == categoryId) {
                     for (const brand of categoryBrand.brands) {

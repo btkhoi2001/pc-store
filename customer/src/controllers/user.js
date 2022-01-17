@@ -85,6 +85,9 @@ export const changePasswordAPI = async (req, res) => {
 
         await updateAccount({ userId, password: hashedPassword });
 
+        req.session.passport.user.password = hashedPassword;
+        req.session.save();
+
         res.status(200).json({});
     } catch (error) {
         res.status(500).json({});

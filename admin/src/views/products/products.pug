@@ -10,28 +10,56 @@ block main_content
             header.card-header
                 .row.gx-3
                     .col-lg-4.col-md-6.me-auto
-                        input.form-control(type='text' placeholder='Tìm kiếm...' value=pattern)
+                        input.form-control(type='text' placeholder='Tìm kiếm...' value=search)
                     .col-lg-2.col-6.col-md-3
-                        select.form-select
+                        select.form-select.products
                             option Mặt hàng
-                            option Màn hình
-                            option Vi xử lý
-                            option Bàn phím
+                            each item in categories
+                                if item.content === category
+                                    option(selected)= item.content
+                                else 
+                                    option= item.content
                     .col-lg-2.col-6.col-md-3
-                        select.form-select
-                            option Mới thêm
-                            option Giá thấp nhất
-                            option Giá cao nhất
+                        select.form-select.products-sort
+                            if sortBy === undefined || sortBy == "new"
+                                option(value="new" selected) Mới nhất
+                            else
+                                option(value="new") Mới nhất
+
+                            if sortBy == "old"
+                                option(value="old" selected) Cũ nhất
+                            else
+                                option(value="old") Cũ nhất
+
+                            if sortBy == "name-asc"
+                                option(value="name-asc" selected) Tên (A - Z)
+                            else
+                                option(value="name-asc") Tên (A - Z)
+
+                            if sortBy == "name-desc"
+                                option(value="name-desc" selected) Tên (Z - A)
+                            else
+                                option(value="name-desc") Tên (Z - A)
+
+                            if sortBy == "price-asc"
+                                option(value="price-asc" selected) Giá (Thấp &gt; Cao)
+                            else
+                                option(value="price-asc") Giá (Thấp &gt; Cao)
+
+                            if sortBy == "price-desc"
+                                option(value="price-desc" selected) Giá (Cao &gt; Thấp) 
+                            else
+                                option(value="price-desc") Giá (Cao &gt; Thấp)                          
             .card-body
                 .row.gx-3.row-cols-1.row-cols-sm-2.row-cols-md-3.row-cols-xl-4.row-cols-xxl-5
                     each product in products 
                         .col 
                             .card.card-product-grid 
                                 a.img-wrap(href='#')
-                                    img(src=product.imageUrl alt=product.name)
+                                    img(src=product.imageUrl)
                                 .info-wrap 
                                     a.title.text-truncate(href='#')= product.name 
-                                    .price.mb-2= product.price + " VNĐ"
+                                    .price.mb-2= `${product.price} VNĐ`
                                     a.btn.btn-sm.btn-light(href=`/products/${product.id}/edit`)
                                         i.material-icons.md-edit
                                         | Sửa

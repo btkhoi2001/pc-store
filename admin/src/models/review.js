@@ -36,10 +36,6 @@ const Review = sequelize.define(
             },
         },
         content: DataTypes.TEXT,
-        archived: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-        },
     },
     {
         tableName: "review",
