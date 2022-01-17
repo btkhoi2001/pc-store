@@ -1,8 +1,12 @@
 import express from "express";
-import { createResetPasswordTokenAPI } from "../controllers/token.js";
+import {
+    createResetPasswordTokenAPI,
+    submitResetPasswordTokenAPI,
+} from "../controllers/token.js";
 
 const api = express.Router({ mergeParams: true });
 
-api.get("/reset-password", createResetPasswordTokenAPI);
+api.post("/reset-password", createResetPasswordTokenAPI);
+api.post("/reset-password/:tokenId", submitResetPasswordTokenAPI);
 
 export default api;

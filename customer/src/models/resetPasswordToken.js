@@ -12,10 +12,6 @@ const ResetPasswordToken = sequelize.define(
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
-        tokenExpires: {
-            type: DataTypes.DATE,
-            defaultValue: Date.now() + 86400,
-        },
         userId: {
             type: DataTypes.INTEGER,
             references: {

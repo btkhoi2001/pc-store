@@ -1,26 +1,30 @@
 import pkg from "sequelize";
 import sequelize from "../../config/database/index.js";
-import VerificationToken from "../verificationToken.js";
+import ResetPasswordToken from "../resetPasswordToken.js";
 
 const { QueryTypes } = pkg;
 
-export const createVerificationToken = async (contextObject) => {
+export const createResetPasswordToken = async (contextObject) => {
     const { userId } = contextObject;
 
-    const newToken = await VerificationToken.upsert(
+    const newToken = await ResetPasswordToken.upsert(
         { userId },
-        { where: { userId } }
+        {
+            where: {
+                userId,
+            },
+        }
     );
 
     return { newToken: newToken[0] };
 };
 
-export const getVerificationToken = async (contextObject) => {
+export const getResetPasswordToken = async (contextObject) => {
     const { tokenId } = contextObject;
 
     const token = await sequelize.query(
         `SELECT *
-        FROM verification_token
+        FROM reset_password_token
         WHERE id = ?`,
         { replacements: [tokenId], type: QueryTypes.SELECT }
     );
@@ -28,10 +32,10 @@ export const getVerificationToken = async (contextObject) => {
     return { token: token[0] };
 };
 
-export const deleteVerificationToken = async (contextObject) => {
+export const deleteResetPasswordToken = async (contextObject) => {
     const { tokenId } = contextObject;
 
-    await VerificationToken.destroy({
+    await ResetPasswordToken.destroy({
         where: {
             id: tokenId,
         },

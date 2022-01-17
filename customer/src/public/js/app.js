@@ -727,3 +727,74 @@ $("#pagination-review li a").click((event) => {
         },
     });
 });
+
+$("form.reset-password.form-group").submit((event) => {
+    event.preventDefault();
+
+    const email = $("input.reset-password.form-control.input-lg").val();
+
+    $.ajax({
+        type: "POST",
+        url: "/api/token/reset-password",
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify({ email }),
+        success: function () {
+            $("p#message-reset-password").attr("class", "text-success");
+            $("p#message-reset-password").text(
+                "Vui lòng kiểm tra email trong 24 giờ"
+            );
+
+            setTimeout(() => {
+                $("p#message-reset-password").text("");
+            }, 5000);
+        },
+        error: function (data) {
+            const { message } = data.responseJSON;
+
+            $("p#message-reset-password").attr("class", "text-danger");
+            $("p#message-reset-password").text(message);
+
+            setTimeout(() => {
+                $("p#message-reset-password").text("");
+            }, 5000);
+        },
+    });
+});
+
+$("form.submit-reset-password.form-group").submit((event) => {
+    event.preventDefault();
+
+    const newPassword = $(
+        "input.submit-reset-password.form-control.input-lg"
+    ).val();
+    const url = $("form.submit-reset-password.form-group").attr("action");
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify({ newPassword }),
+        success: function () {
+            $("p#message-submit-reset-password").attr("class", "text-success");
+            $("p#message-submit-reset-password").text(
+                "Thay đổi mật khẩu thành công"
+            );
+
+            setTimeout(() => {
+                window.location.replace("/");
+            }, 5000);
+        },
+        error: function () {
+            $("p#message-submit-reset-password").attr("class", "text-danger");
+            $("p#message-submit-reset-password").text(
+                "Có lỗi xảy ra vui lòng thử lại"
+            );
+
+            setTimeout(() => {
+                $("p#message-submit-reset-password").text("");
+            }, 5000);
+        },
+    });
+});

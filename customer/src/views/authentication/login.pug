@@ -28,9 +28,10 @@ form(action='/auth/login' method="POST")
                             .text-center
                                 .panel-body
                                     fieldset
-                                        form.form-group(method='POST' action=`/settings/change-password`)
-                                            input.form-control.input-lg(placeholder='Nhập email' name='currentPassword' type='text')
-                                            button.btn.btn-lg.btn-primary.btn-block.mt-20(type='submit') Gửi
+                                        form.reset-password.form-group
+                                            input.reset-password.form-control.input-lg(placeholder='Nhập email' name='currentPassword' type='text')
+                                            button.reset-password.btn.btn-lg.btn-primary.btn-block.mt-20 Gửi
+                                        p#message-reset-password
             .modal-footer
                 .col-md-3.ml-auto
                     button.btn(data-dismiss='modal' aria-hidden='true') Đóng                        
