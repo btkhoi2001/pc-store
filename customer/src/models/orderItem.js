@@ -1,7 +1,7 @@
 import pkg from "sequelize";
 import sequelize from "../config/database/index.js";
 import Product from "./product.js";
-import Order from "./Order.js";
+import Order from "./order.js";
 
 const { DataTypes } = pkg;
 
