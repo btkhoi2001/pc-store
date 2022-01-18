@@ -31,6 +31,7 @@ app.use(
         secret: "secretString",
         resave: true,
         saveUninitialized: true,
+        cookie: { maxAge: 600000 },
     })
 );
 app.use(flash());

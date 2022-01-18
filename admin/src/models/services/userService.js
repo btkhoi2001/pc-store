@@ -40,7 +40,7 @@ export const getUsers = async (contextObject) => {
     }
 
     const totalRows = await sequelize.query(
-        `SELECT COUNT(*)
+        `SELECT COUNT(*) AS 'rows'
         FROM user
         WHERE (? OR user.id = ? OR user.fullName LIKE ? OR user.email LIKE ?) AND (? OR user.blocked = ?) AND user.role IN (?)`,
         {
@@ -57,6 +57,7 @@ export const getUsers = async (contextObject) => {
         }
     );
 
+    console.log(totalRows[0].rows);
     const totalPages = Math.ceil(totalRows[0].rows / limit) || 1;
 
     const users = await sequelize.query(

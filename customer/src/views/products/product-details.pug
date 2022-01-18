@@ -116,7 +116,7 @@ block main
                                                 .col-lg-6
                                                     .li-review-product
                                                         if productImages[0] !== undefined
-                                                            img(src=productImages[0])
+                                                            img(src=productImages[0].imageUrl style="max-width: 300px; max-height:300px;")
                                                         .li-review-product-desc
                                                             h2= product.name
                                                 .col-lg-6

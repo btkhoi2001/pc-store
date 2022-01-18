@@ -19,6 +19,8 @@ export const show = async (req, res) => {
             role: ["User"],
         });
 
+        console.log(currentPage, totalPages);
+
         res.render("./users/users", {
             currentMenu: "/users",
             title: "Người dùng",

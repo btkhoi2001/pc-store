@@ -24,10 +24,10 @@ export const showVerification = async (req, res) => {
         const userId = token.userId;
         const previous = token.createdAt;
         const current = Date.now();
-        const Difference_In_Time = current.getTime() - previous.getTime();
-        const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+        const oneDay = 24 * 60 * 60 * 1000;
+        const diffDays = Math.round(Math.abs((previous - current) / oneDay));
 
-        if (Difference_In_Days >= 1) return res.redirect("/404");
+        if (diffDays >= 1) return res.redirect("/404");
 
         await updateAccount({ activated: 1, userId });
         await createCart({ userId });

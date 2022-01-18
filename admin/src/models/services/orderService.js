@@ -40,7 +40,7 @@ export const getOrders = async (contextObject) => {
     }
 
     const totalRows = await sequelize.query(
-        `SELECT COUNT(*)
+        `SELECT COUNT(*) AS 'rows'
         FROM \`order\`
         WHERE (? OR \`order\`.fullName LIKE ? OR \`order\`.email LIKE ?) AND (? OR \`order\`.status = ?) AND (? OR \`order\`.userId = ?)`,
         {
@@ -187,9 +187,11 @@ export const getReport = async () => {
         )[0]
     );
 
-    report.totalProfit = report.totalProfit
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    if (report.totalProfit)
+        report.totalProfit = report.totalProfit
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    else report.totalProfit = 0;
 
     return { report };
 };

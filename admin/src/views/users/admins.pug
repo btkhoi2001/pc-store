@@ -1,6 +1,8 @@
 extends ../layouts/default.pug
 
 block main_content
+    - currentPage = parseInt(currentPage)
+    - totalPages = parseInt(totalPages)
     section.content-main
         .content-header
             h2.content-title Quản trị viên

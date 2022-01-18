@@ -24,6 +24,7 @@ export const registerUser = async (contextObject) => {
         fullName: name,
         email,
         password,
+        role: "User",
     });
 
     return { newUser };

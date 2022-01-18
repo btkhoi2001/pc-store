@@ -1,6 +1,6 @@
 import pkg from "sequelize";
 import sequelize from "../config/database/index.js";
-import Cart from "./Cart.js";
+import Cart from "./cart.js";
 
 const { DataTypes } = pkg;
 

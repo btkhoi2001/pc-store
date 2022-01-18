@@ -1228,12 +1228,12 @@ textarea:focus {
     width: 100%;
 }
 .product-details-thumbs .sm-image img {
-    width: 150px;
-    height: 150px;
+    max-width: 150px;
+    max-height: 150px;
 }
 .product-details-thumbs .lg-image img {
-    width: 300px;
-    height: 300px;
+    max-width: 300px;
+    max-height: 300px;
 }
 .product-details-thumbs .sm-image {
     cursor: pointer;
