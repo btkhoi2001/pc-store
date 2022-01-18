@@ -96,7 +96,7 @@ export const getProducts = async (contextObject) => {
         `SELECT brand.content as 'brandContent', category.slug AS 'categorySlug', category.content AS 'categoryContent', product.id, product.name, product.slug, product.description, product.price, product_image.imageUrl, IFNULL(AVG(review.rating), 0) AS 'averageRating'
         FROM product JOIN category_brand ON product.categoryBrandId = category_brand.id JOIN category ON category_brand.categoryId = category.id LEFT JOIN product_image ON product_image.productId = product.id JOIN brand on brand.id = category_brand.brandId LEFT JOIN review ON product.id = review.productId
         WHERE (? OR product.name LIKE ?) AND (? OR category.slug = ?) AND (? OR brand.content IN (?)) AND (? OR category.content IN (?)) AND (? IS NULL OR product.price >= ?)  AND (? IS NULL OR product.price <= ?) AND product.published = 1 AND product.archive = 0 AND product_image.numberOrder = 1
-        GROUP BY brand.content, category.slug, category.content, product.name, product.slug, product.description, product.price, product_image.imageUrl
+        GROUP BY brand.content, category.slug, category.content, product.id, product.name, product.slug, product.description, product.price, product_image.imageUrl
         ${sortQuery}
         LIMIT ? OFFSET ?`,
         {
