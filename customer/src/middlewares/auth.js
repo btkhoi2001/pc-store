@@ -11,7 +11,6 @@ export const passport = passportPkg.use(
         },
         async (email, password, done) => {
             try {
-                console.log(email, password);
                 const { user } = await getUser({ email });
 
                 if (!user || user.role != "User")

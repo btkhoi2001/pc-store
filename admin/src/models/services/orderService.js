@@ -124,7 +124,7 @@ export const getOrder = async (contextObject) => {
     order.items = await sequelize.query(
         `SELECT product.slug, product.name, product.price, product.id AS 'productId', order_item.quantity, product_image.imageUrl, order_item.quantity * product.price AS 'total'
         FROM \`order\` JOIN order_item ON \`order\`.id = order_item.orderId JOIN product ON order_item.productId = product.id LEFT JOIN product_image ON product.id = product_image.productId
-        WHERE \`order\`.id = ? AND (product_image.numberOrder = 1 OR 1)`,
+        WHERE \`order\`.id = ? AND (product_image.numberOrder = 1 OR product_image.numberOrder IS NULL)`,
         { replacements: [orderId], type: QueryTypes.SELECT }
     );
 

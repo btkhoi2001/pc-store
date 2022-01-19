@@ -18,7 +18,7 @@ export const getWishlist = async (contextObject) => {
     const wishlist = await sequelize.query(
         `SELECT product.slug, product.name, product.price, product.id, product_image.imageUrl
         FROM wishlist JOIN wishlist_item ON wishlist.id = wishlist_item.wishlistId JOIN product ON wishlist_item.productId = product.id LEFT JOIN product_image ON product.id = product_image.productId
-        WHERE wishlist.userId = ? AND (product_image.numberOrder = 1 OR 1)`,
+        WHERE wishlist.userId = ? AND (product_image.numberOrder = 1 OR product_image.numberOrder IS NULL)`,
         { replacements: [userId], type: QueryTypes.SELECT }
     );
 

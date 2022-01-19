@@ -144,19 +144,27 @@ function updateQuickView(productId) {
         success: function (data) {
             const { product, productImages } = data;
 
-            $(".product-details-images.slider-navigation-1").empty();
+            $(
+                ".modal-inner-area.row .product-details-images.slider-navigation-1"
+            ).empty();
 
             for (const productImage of productImages)
-                $(".product-details-images.slider-navigation-1").append(
+                $(
+                    ".modal-inner-area.row .product-details-images.slider-navigation-1"
+                ).append(
                     `<div class="lg-image">
                         <img src="${productImage.imageUrl}"/>
                     </div>`
                 );
 
-            $(".product-details-thumbs.slider-thumbs-1").empty();
+            $(
+                ".modal-inner-area.row .product-details-thumbs.slider-thumbs-1"
+            ).empty();
 
             for (const productImage of productImages)
-                $(".product-details-thumbs.slider-thumbs-1").append(
+                $(
+                    ".modal-inner-area.row .product-details-thumbs.slider-thumbs-1"
+                ).append(
                     `<div class="sm-image">
                         <img src="${productImage.imageUrl}"/>
                     </div>`

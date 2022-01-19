@@ -20,7 +20,7 @@ export const getCart = async (contextObject) => {
     cart.items = await sequelize.query(
         `SELECT product.slug, product.name, product.price, product.id, cart_item.quantity, product_image.imageUrl, cart_item.quantity * product.price AS 'total'
         FROM cart JOIN cart_item ON cart.id = cart_item.cartId JOIN product ON cart_item.productId = product.id LEFT JOIN product_image ON product.id = product_image.productId
-        WHERE (cart.id = ? OR cart.userId = ?) AND (product_image.numberOrder = 1 OR 1)`,
+        WHERE (cart.id = ? OR cart.userId = ?) AND (product_image.numberOrder = 1 OR product_image.numberOrder IS NULL)`,
         { replacements: [cartId, userId], type: QueryTypes.SELECT }
     );
 

@@ -8,7 +8,7 @@ export const show = (req, res) => {
 };
 
 export const createOrderAPI = async (req, res) => {
-    const { fullName, address, email, phoneNumber } = req.body;
+    const { fullName, address, email, phoneNumber, note } = req.body;
     const userId = req.user.id;
     const cart = res.locals.cart;
 
@@ -25,6 +25,7 @@ export const createOrderAPI = async (req, res) => {
             address,
             email,
             phoneNumber,
+            note,
         });
         await emptyCart({ cartId: cart.id });
 
