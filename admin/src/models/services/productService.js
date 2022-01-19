@@ -52,8 +52,8 @@ export const getProducts = async (contextObject) => {
 
     const products = await sequelize.query(
         `SELECT product.id, product.name, product.slug, product.description, product.price, product_image.imageUrl
-        FROM product JOIN category_brand ON product.categoryBrandId = category_brand.id JOIN category ON category_brand.categoryId = category.id JOIN product_image ON product_image.productId = product.id
-        WHERE (? OR product.name LIKE ?) AND (? OR category.content = ?) AND product.archive = 0 AND product_image.numberOrder = 1
+        FROM product JOIN category_brand ON product.categoryBrandId = category_brand.id JOIN category ON category_brand.categoryId = category.id LEFT JOIN product_image ON product_image.productId = product.id
+        WHERE (? OR product.name LIKE ?) AND (? OR category.content = ?) AND product.archive = 0 AND (product_image.numberOrder = 1 OR product_image.numberOrder IS NULL)
         ${sortQuery}
         LIMIT ? OFFSET ?`,
         {
