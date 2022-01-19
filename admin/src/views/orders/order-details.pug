@@ -25,7 +25,7 @@ block main_content
                             span.badge.rounded-pill.alert-success= order.status                         
                     .col-lg-6.col-md-6.ms-auto.text-md-end
                         form.orders(method='POST' action=`/orders/${order.id}`)
-                            select.form-select.d-inline-block.orders(name="status" style='max-width: 200px')
+                            select.form-select.d-inline-block(name="status" style='max-width: 200px')
                                 option Thay đổi trạng thái
                                 option Đang xử lý
                                 option Đang giao hàng
