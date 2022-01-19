@@ -5,7 +5,7 @@ import {
 } from "../models/services/userService.js";
 
 export const show = async (req, res) => {
-    const { search } = req.query;
+    const { search, activated } = req.query;
     const currentPage = req.query.page || 1;
     const limit = req.query.limit || 10;
 
@@ -16,6 +16,7 @@ export const show = async (req, res) => {
             search,
             role: ["Admin", "SubAdmin"],
             sortBy: "id-desc",
+            activated,
         });
 
         res.render("./users/admins", {
@@ -24,6 +25,7 @@ export const show = async (req, res) => {
             currentPage,
             totalPages,
             users,
+            activated,
             search,
         });
     } catch (error) {

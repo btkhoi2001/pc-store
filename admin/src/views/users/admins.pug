@@ -11,6 +11,22 @@ block main_content
                 .row.gx-3
                     .col-lg-4.col-md-6.me-auto
                         input.form-control(value=search type='text' placeholder='Tìm kiếm...')
+                    .col-lg-2.col-6.col-md-3
+                        select.form-select.admins
+                            if (activated === undefined)
+                                option(selected) Tình trạng
+                            else 
+                                option Tình trạng
+
+                            if (activated == 1)
+                                option(value="1" selected) Đã kích hoạt
+                            else 
+                                option(value="1") Đã kích hoạt
+
+                            if (activated == 0)
+                                option(value='0' selected) Chưa kích hoạt
+                            else 
+                                option(value='0') Chưa kích hoạt
             .card-body
                 .table-responsive
                     table.table.table-hover

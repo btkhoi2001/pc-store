@@ -143,3 +143,11 @@ $("select.form-select.products-sort").change((event) => {
     urlParams.set("sortBy", sortBy);
     window.location.search = urlParams;
 });
+
+$("select.form-select.admins").change((event) => {
+    const activated = $(event.target).val();
+    const urlParams = new URLSearchParams(window.location.search);
+
+    urlParams.set("activated", activated);
+    window.location.search = urlParams;
+});

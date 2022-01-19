@@ -5,7 +5,8 @@ import User from "../user.js";
 const { QueryTypes } = pkg;
 
 export const getUsers = async (contextObject) => {
-    const { search, page, limit, sortBy, blocked, role } = contextObject;
+    const { search, page, limit, sortBy, blocked, activated, role } =
+        contextObject;
 
     let sortQuery;
 
@@ -42,7 +43,7 @@ export const getUsers = async (contextObject) => {
     const totalRows = await sequelize.query(
         `SELECT COUNT(*) AS 'rows'
         FROM user
-        WHERE (? OR user.id = ? OR user.fullName LIKE ? OR user.email LIKE ?) AND (? OR user.blocked = ?) AND user.role IN (?)`,
+        WHERE (? OR user.id = ? OR user.fullName LIKE ? OR user.email LIKE ?) AND (? OR user.blocked = ?) AND (? OR user.activated = ?) AND user.role IN (?)`,
         {
             replacements: [
                 search === undefined,
@@ -51,6 +52,8 @@ export const getUsers = async (contextObject) => {
                 `%${search}%`,
                 blocked === undefined || blocked == "Tình trạng",
                 blocked,
+                activated === undefined || activated == "Tình trạng",
+                activated,
                 role,
             ],
             type: QueryTypes.SELECT,
@@ -63,7 +66,7 @@ export const getUsers = async (contextObject) => {
     const users = await sequelize.query(
         `SELECT user.id, user.fullName, user.email, user.createdAt, user.blocked, user.avatarUrl, user.address, user.phoneNumber, user.role, user.activated
         FROM user
-        WHERE (? OR user.id = ? OR user.fullName LIKE ? OR user.email LIKE ?) AND (? OR user.blocked = ?) AND user.role IN (?)
+        WHERE (? OR user.id = ? OR user.fullName LIKE ? OR user.email LIKE ?) AND (? OR user.blocked = ?) AND (? OR user.activated = ?) AND user.role IN (?)
         ${sortQuery}
         LIMIT ? OFFSET ?`,
         {
@@ -74,6 +77,8 @@ export const getUsers = async (contextObject) => {
                 `%${search}%`,
                 blocked === undefined || blocked == "Tình trạng",
                 blocked,
+                activated === undefined || activated == "Tình trạng",
+                activated,
                 role,
                 limit,
                 (page - 1) * limit,
